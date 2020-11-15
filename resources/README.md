@@ -20,3 +20,10 @@ Templates for MS Office. Set the location in Word's Preferences -> File Location
 
 ## Xcode Templates
 Templates for Xcode. `ln -s ~/.dotfiles/resources/Xcode\ Templates ~/Library/Developer/Xcode/Templates/Custom`
+
+## rstudio-prefs.json
+R Studio user preferences.
+```
+mkdir -p ~/.config/rstudio
+ln -s ~/.dotfiles/resources/rstudio-prefs.json ~/.config/rstudio
+```
