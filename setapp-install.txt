@@ -1,0 +1,28 @@
+Aeon Timeline.app
+Boom 3D.app
+BusyContacts.app
+ChronoSync Express.app
+CleanMyMac X.app
+Commander One.app
+Downie.app
+Grids.app
+IM+.app
+Magic Window Air.app
+MathKey.app
+Meeter.app
+MoneyWiz.app
+Mouseless.app
+NetSpot.app
+One Switch.app
+Permute.app
+PocketCAS.app
+Remote Mouse.app
+Session.app
+Simon.app
+Sip.app
+TaskPaper.app
+TextSoap.app
+ToothFairy.app
+Typeface.app
+WiFi Explorer.app
+iThoughtsX.app
