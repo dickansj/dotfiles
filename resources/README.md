@@ -1,9 +1,4 @@
-This directory contains binary resources that I take with me everywhere.
-
-## pandas
-I've been using this image as my user icon since college. No reason to change
-it yet. This is effectively as much a part of my dotfiles as my `$EDITOR`
-definition. 
+More resource files that I want on my new system.
 
 ## ssh_config.base
 The file that gets appended to the end of my `~/.ssh/config` after a new key is
