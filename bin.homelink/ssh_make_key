@@ -9,7 +9,7 @@ else
     read keyname
 fi
 
-email="shane@techie.net"
+email="jdickan@ucla.edu"
 byteSize=4096
 keyPath=$HOME/.ssh
 
