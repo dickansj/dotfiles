@@ -1,2 +1,2 @@
-BBEdit's basic preference settings are stored in /Users/USERNAME/Library/Containers/com.barebones.bbedit/Data/
-Library/Preferences/com.barebones.bbedit.plist, and you can link your existing file. I maintain this in a separate repository because it includes serials/some personal info.
+BBEdit's basic preference settings are stored in `~/Library/Containers/com.barebones.bbedit/Data/
+Library/Preferences/com.barebones.bbedit.plist`, and you can link your existing file. I maintain this in a separate repository because it includes serials/some personal info.

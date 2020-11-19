@@ -130,6 +130,16 @@
 			<key>UniqueID</key>
 			<string>759D6527-6688-4F6D-89D9-C9A622B5A363</string>
 		</dict>
+		<dict>
+			<key>ReplacePattern</key>
+			<string>mas '\2', id: \1</string>
+			<key>SearchPattern</key>
+			<string>^mas (?&lt;id&gt;\d{9,10}) (?&lt;appname&gt;\w{1,}\s*\w*) (?&lt;version&gt;\([0-9,.]{3,15}\))</string>
+			<key>Title</key>
+			<string>Brewfile arrange mas for install</string>
+			<key>UniqueID</key>
+			<string>1AF71FF7-ED32-49C7-8CE4-F759EA5EF71C</string>
+		</dict>
 	</array>
 </dict>
 </plist>
