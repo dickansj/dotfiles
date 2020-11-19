@@ -1,8 +1,19 @@
+tap 'homebrew/core'
+
+tap 'homebrew/bundle' # gives basic brewfile capability needed by provision-mac.sh
+
+tap 'rcmdnk/file' # a few other features for alternate brew file management
+brew 'brew-file'  # but it has to be set up/initiated if desired
+                  # https://homebrew-file.readthedocs.io/en/latest/
+
 # shells and standard command line utilities
 brew 'zsh'
 brew 'fish'
 brew 'bash'
+brew 'bash-completion'
 brew 'coreutils'
+brew 'findutils'
+brew 'grep'
 brew 'tmux'
 brew 'reattach-to-user-namespace'
 brew 'readline'
@@ -11,12 +22,18 @@ brew 'htop'
 brew 'z'
 brew 'p7zip'
 brew 'lbzip2'
+brew 'lz4'
 brew 'unrar'
 brew 'unar'
 brew 'gnupg'
 brew 'xz'
+brew 'tldr'
+brew 'zlib'
+brew 'thefuck'
+brew 'pv'
 
-# meta environments for my regularly used programming languages
+# meta environments
+brew 'python' # brew version is backup/allows global package sandbox with pipx
 brew 'pyenv'
 brew 'rbenv'
 brew 'ruby-build'
@@ -25,55 +42,48 @@ brew 'node-build'
 # brew 'rustup-init' # installed in provision-mac.sh
 
 # other programming languages
-## ones I actually use
 brew 'go'
 brew 'r'
 brew 'julia'
-
-## hoping these become a thing
-brew 'deno'
-brew 'zig'
-
-## ones I keep meaning to learn
-brew 'erlang'
-brew 'elixir'
-brew 'elm'
-brew 'mit-scheme'
-brew 'ghc'
-brew 'cabal-install'
-brew 'haskell-stack'
-brew 'haxe'
+brew 'lua'
+brew 'perl'
 
 # network stuff
 brew 'wget'
 brew 'nmap'
 brew 'tor'
 brew 'elinks'
+brew 'iperf3'
+brew 'openssl'
+brew 'openconnect'
+brew 'wifi-password'
+brew 'speedtest-cli'
 
 # dev tools
 brew 'git'
 brew 'git-lfs'
 brew 'mercurial'
 brew 'cmake'
-brew 'scons'
-brew 'automake'
 brew 'clang-format'
-brew 'swig'
 brew 'ctags'
-# brew 'valgrind' # doesn't work on latest macOS :(
-brew 'qcachegrind'
 brew 'hub'
 brew 'libyaml'
 brew 'ripgrep'
 brew 'jq'
 brew 'sqlite'
-brew 'flatbuffers'
+brew 'mycli'
 
 # cask tools
 tap 'vitorgalvao/tiny-scripts'
 brew 'cask-repair'
 
-# graphics tools
+# document and graphics tools
+brew 'emacs'
+brew 'pandoc'
+brew 'multimarkdown'
+brew 'sphinx-doc'
+brew 'xmlto'
+brew 'xpdf'
 brew 'imagemagick'
 brew 'ghostscript'
 brew 'pdf2svg'
@@ -85,139 +95,148 @@ brew 'zopfli'
 brew 'guetzli'
 brew 'mozjpeg'
 brew 'gifski'
+brew 'openjpeg'
+brew 'webp'
 
 # various and sundry
 brew 'hugo'
-brew 'pandoc'
-brew 'multimarkdown'
 brew 'lame'
+brew 'mpv'
 brew 'libdvdcss'
 brew 'youtube-dl'
 brew 'ffmpeg'
 brew 'libav'
-brew 'speedtest-cli'
-brew 'dieharder'
 brew 'dockutil'
 brew 'duti'
 brew 'trash'
+brew 'pidof'
+brew 'fdupes'
+brew 'weechat'
 
 # amusements!
 brew 'nethack'
 brew 'frotz'
 brew 'solarus'
 
-
 # now getting into full macOS apps
-tap 'homebrew/cask-cask'
 tap 'homebrew/cask-versions'
+cask 'affinity-publisher-beta' # license
+cask 'firefox-developer-edition'
+# cask 'little-snitch4' # big sur requires LS5
+						# license
 
-# infrastructure
-cask '1password'
-cask 'dropbox'
-cask 'google-backup-and-sync'
-# cask 'backblaze' # don't use homebrew for this; upgrade will bork things
+tap 'homebrew/cask-cask'
 
-# internet
-cask 'firefox'
-cask 'google-chrome'
-cask 'tor-browser'
-cask 'transmit'
-cask 'transmission'
-cask 'whatsapp'
-cask 'telegram'
-cask 'skype'
-cask 'slack'
-cask 'zoomus'
-cask 'microsoft-teams'
-cask 'discord'
-cask 'mullvadvpn'
-
-# writing and office
-cask 'scrivener'
-cask 'microsoft-office'
-cask 'zotero'
-cask 'basictex'
+cask '1password' # license
+cask 'adium'
+cask 'adventure'
+cask 'alfred' # license
 cask 'anki'
-
-# development
-cask 'sublime-text'
-cask 'visual-studio-code'
-cask 'visual-studio'
-cask 'dash'
-cask 'macdown'
-cask 'processing'
-cask 'kaleidoscope'
-cask 'sourcetree'
-cask 'insomnia'
-cask 'robo-3t'
-cask 'github'
-cask 'zerobranestudio'
-cask 'sf-symbols'
-
-# programming languages
-cask 'dotnet-sdk'
-cask 'mono-mdk'
-cask 'rstudio'
-cask 'java'
-
-# artsy/media
-cask 'unity-hub'
-cask 'godot'
-cask 'blender'
-cask 'texturepacker'
-cask 'bfxr'
-cask 'twine'
-cask 'nodebox'
-cask 'obs'
-
-# various virtualization thingies
-cask 'vmware-fusion'
-cask 'virtualbox'
-cask 'docker'
-
-# entertainment
-cask 'itch'
-cask 'gog-galaxy'
-cask 'epic-games'
-cask 'steam'
-cask 'nvidia-geforce-now'
-cask 'dwarf-fortress'
-cask 'minecraft'
-cask 'handbrake'
-cask 'vlc'
-cask 'iina'
-cask 'mpv'
-cask 'amazon-music'
-cask 'calibre'
-cask 'kindle'
-cask 'kindle-previewer'
-cask 'yacreader'
-cask 'cloudlibrary'
-cask 'adobe-digital-editions'
-
-# utilities
-cask 'hammerspoon'
-cask 'arq'
-cask 'the-unarchiver'
-cask 'selfcontrol'
-cask 'stretchly'
+cask 'applepi-baker'
+cask 'arduino'
+cask 'audio-hijack' # license
+cask 'authy' 
+cask 'autodesk-fusion360' # education license
+# cask 'backblaze' # don't use homebrew for this; upgrade will bork things
 cask 'balenaetcher'
-cask 'unetbootin'
-cask 'mkvtoolnix'
-cask 'keepingyouawake'
-cask 'a-better-finder-rename'
-cask 'pastebot'
+# cask 'bartender' # install/use setapp version
+cask 'basictex'
+cask 'bbedit' # license
+cask 'bettertouchtool' # license
+cask 'bitbar'
+cask 'calibre'
+cask 'carbon-copy-cloner' # license
+cask 'cheatsheet'
+# cask 'cleanmymac' # use setapp version
+cask 'cyberduck'
+cask 'dash' # license
+cask 'default-folder-x' # license
+cask 'devonthink' # license
+cask 'dhs'
+cask 'discord'
+cask 'docker'
+cask 'do-not-disturb'
+cask 'dropbox'
+cask 'emacs'
+cask 'firefox'
+cask 'fission' # license
+cask 'fluid'
+cask 'flux'
+cask 'gog-galaxy'
+cask 'google-backup-and-sync'
+cask 'google-chrome'
+cask 'hazel' #verify it now gives hazel 5 for big sur
+cask 'iina'
+cask 'imagej'
+cask 'imageoptim'
+cask 'imazing' # license
+cask 'insomnia'
+cask 'istat-menus' # license
+cask 'itch'
+cask 'ivpn'
+cask 'java'
+cask 'kextviewr'
+cask 'keyboard-maestro' # license
+cask 'kindle'
+cask 'knockknock'
+cask 'macupdater'
+cask 'marked' # license
+cask 'microsoft-office' # license
+cask 'microsoft-teams' # license
+cask 'nvalt'
+cask 'omnidisksweeper'
+cask 'onyx'
+cask 'openemu'
+cask 'oversight'
+cask 'path-finder' # license
+cask 'pdf-expert'
+cask 'pdfpenpro'
+cask 'phoenix'
+cask 'pingplotter'
+cask 'podcastmenu'
+cask 'post-haste'
+cask 'quitter'
+cask 'r' # seem to be cran issues if I just brew the cli
+cask 'resilio-sync'
+cask 'rstudio'
+cask 'screens' # license
+cask 'scrivener' # license
+cask 'send-to-kindle'
+cask 'setapp'
+cask 'signal'
+cask 'silentknight'
+cask 'skim'
+cask 'skype'
+cask 'soundsource' # license
+cask 'steam'
+cask 'synergy' # license/account
+cask 'taskexplorer'
+cask 'textexpander'
+cask 'tor-browser'
+cask 'tower' # edu license
+			 # make sure it gives tower 6 for big sur
+cask 'transmission'
+cask 'tripmode' # license
+cask 'virtualbox'
+cask 'visual-studio'
+cask 'visual-studio-code'
+cask 'vlc'
+cask 'whatsapp'
+cask 'wine-stable'
+cask 'wwdc'
+cask 'xquartz'
+cask 'xscope'
+cask 'zerobranestudio'
+cask 'zoomus'
+cask 'zotero'
 
-# quicklook stuff
+# quicklook stuff - https://github.com/markcarroll/quick-look-plugins
 cask 'qlstephen'
 cask 'qlmarkdown'
 cask 'quicklook-json'
 cask 'qlprettypatch'
 cask 'quicklook-csv'
 cask 'suspicious-package'
-# cask 'qlcolorcode'
-# cask 'qlimagesize'
-
 
 # a few monospaced fonts from caskroom
 #   (others handled outside of script)
@@ -226,41 +245,61 @@ cask 'font-inconsolata'
 cask 'font-hack'
 cask 'font-juliamono'
 
-
 # drivers
-# tap  'homebrew/cask-drivers'
-# cask 'xbox360-controller-driver-unofficial'
+tap  'homebrew/cask-drivers'
+cask 'sonos'
+cask 'ubiquiti-unifi-controller'
+cask 'luna-display'
+cask 'luna-secondary'
+cask '8bitdo-firmware-updater'
+cask 'caldigit-thunderbolt-charging'
+cask 'displaylink'
+cask 'logitech-options'
 
 
 # and finally, stuff from the Mac App Store
 brew 'mas'
 
-# development
-mas 'Xcode',              id: 497799835
-mas 'Base',               id: 402383384
-mas 'Soulver',            id: 413965349
-mas 'Calca',              id: 635758264
-
-# internet
-mas 'Tweetbot',           id: 557168941
-mas 'Messenger',          id: 1480068668
-
-# media
-# mas 'Kindle',             id: 405399194 # (installed with cask instead)
-# mas 'GarageBand',         id: 682658836 # (takes up too much space)
-mas 'iMovie',             id: 408981434
-
-# utility
-mas 'GrandPerspective',   id: 1111570163
-mas 'Menu World Time',    id: 1446377255
-
-# graphics and office
-# mas 'Pixelmator',         id: 407963104
-mas 'Pixelmator Pro',     id: 1289583905
-mas 'Affinity Designer',  id: 824171161
-mas 'GIF Brewery 3',      id: 1081413713
-mas 'GIPHY Capture',      id: 668208984
-mas 'Pages',              id: 409201541
-mas 'Numbers',            id: 409203825
-mas 'Keynote',            id: 409183694
-mas 'Highland 2',          id: 1171820258
+mas 'Affinity Designer', id: 824171161
+mas 'Affinity Photo', id: 824183456
+mas 'Airmail', id: 918858936
+mas 'Amphetamine', id: 937984704
+mas 'BetterSnapTool', id: 417375580
+mas 'Broadcasts', id: 1469995354
+mas 'Caffeine', id: 411246225
+mas 'Cardhop', id: 1290358394
+mas 'CARROT Weather', id: 993487541
+mas 'Clean Text', id: 414782261
+mas 'Deliveries', id: 924726344
+mas 'Drafts', id: 1435957248
+mas 'EtreCheck', id: 1423715984
+mas 'Fantastical', id: 975937182
+mas 'FruitJuice', id: 671736912
+# mas 'GarageBand', id: 682658836 # these updates are tough on my net
+mas 'Gemini 2', id: 1090488118
+mas 'HazeOver', id: 430798174
+mas 'iMovie', id: 408981434
+mas 'Interact Scratchpad', id: 1199660222
+mas 'iPulse', id: 1028916583
+mas 'KeyKey', id: 1035137927
+mas 'Keynote', id: 409183694
+mas 'Mactracker', id: 430255202
+mas 'Magnet', id: 441258766
+mas 'MPlayerX', id: 421131143
+mas 'Numbers', id: 409203825
+mas 'OneDrive', id: 823766827
+mas 'Pages', id: 409201541
+mas 'Pastebot', id: 1179623856
+mas 'PCalc', id: 403504866
+mas 'PiPifier', id: 1160374471
+mas 'Pocket', id: 568494494
+mas 'PopClip', id: 445189367
+mas 'Slack', id: 803453959
+mas 'SwitchGlass', id: 1498546559
+mas 'The Unarchiver', id: 425424353
+mas 'Todoist', id: 585829637
+mas 'uBlock', id: 1385985095
+mas 'Unclutter', id: 577085396
+mas 'Wallpaper Wizard', id: 1266674560
+mas 'Xcode', id: 497799835
+mas 'Zen Timer', id: 1031035430
