@@ -165,7 +165,7 @@ cask 'flux'
 cask 'gog-galaxy'
 cask 'google-backup-and-sync'
 cask 'google-chrome'
-cask 'hazel' #verify it now gives hazel 5 for big sur
+cask 'hazel'
 cask 'iina'
 cask 'imagej'
 cask 'imageoptim'
