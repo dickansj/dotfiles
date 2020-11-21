@@ -209,6 +209,7 @@ cask 'skype'
 cask 'soundsource' # license
 cask 'swiftdefaultappsprefpane'
 cask 'steam'
+cask 'sublime-text'
 cask 'synergy' # license/account
 cask 'taskexplorer'
 cask 'textexpander'
