@@ -36,6 +36,12 @@ source $ZSH/vendor/zsh-autosuggestions/zsh-autosuggestions.zsh
 # fish-style line-edit coloring
 source $ZSH/vendor/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+## Brewfile brew-wrap to autoupdate
+## https://homebrew-file.readthedocs.io/en/latest/installation.html
+if [ -f $(brew --prefix)/etc/brew-wrap ];then
+  source $(brew --prefix)/etc/brew-wrap
+fi
+
 # if we start a tmux session from a virtualenved environment
 if [ -n "$VIRTUAL_ENV" ]; then
   source "$VIRTUAL_ENV/bin/activate"
