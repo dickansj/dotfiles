@@ -37,13 +37,13 @@ Update-Environment
 # set up the git stuff
 if (!(Test-Path -Path ".git")) {
     git init
-    git remote add origin https://github.com/sjml/dotfiles.git
+    git remote add origin https://github.com/dickansj/dotfiles.git
     git fetch
     git reset origin/main
     git branch --set-upstream-to=origin/main main
     git checkout .
 }
-git remote set-url origin git@github.com:sjml/dotfiles.git
+git remote set-url origin git@github.com:dickansj/dotfiles.git
 
 # TODO: install vim plugins
 

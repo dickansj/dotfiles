@@ -45,6 +45,10 @@ targetZShell="/usr/local/bin/zsh"
 echo $targetZShell | sudo tee -a /etc/shells
 sudo chsh -s $targetZShell $USER
 
+# Reveal IP address, hostname, OS version, etc. when clicking the clock
+# in the login window
+sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
+
 # no more sudo needed!
 still_need_sudo=0
 sudo -k
@@ -61,14 +65,14 @@ timerData "POST-BREW"
 #  (this hooks us in if we were set up from the bootstrap script)
 if [[ ! -d .git ]]; then
   git init
-  git remote add origin https://github.com/sjml/dotfiles.git
+  git remote add origin https://github.com/dickansj/dotfiles.git
   git fetch
   git reset origin/main
   git branch --set-upstream-to=origin/main main
   git checkout .
 fi
 # swap to ssh; credentials can get added later
-git remote set-url origin git@github.com:sjml/dotfiles.git
+git remote set-url origin git@github.com:dickansj/dotfiles.git
 
 # Projects folder is where most code stuff lives; link this there, too,
 #  because otherwise I'll forget where it is
@@ -177,7 +181,9 @@ osascript 2>/dev/null <<EOD
 EOD
 
 # set up default associations
-duti ~/.duti
+# duti ~/.duti # 
+
+## We'll see how these go with Big Sur...
 
 # Turn off unneeded menu bar items
 defaults -currentHost write dontAutoLoad -array-add "/System/Library/CoreServices/Menu Extras/Displays.menu"
@@ -194,6 +200,18 @@ defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
 # Text selection in QuickLook
 defaults write com.apple.finder QLEnableTextSelection -bool true
 
+# Enable full keyboard access for all controls
+# (e.g. enable Tab in modal dialogs)
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+# Set language and text formats
+# Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
+# `Inches`, `en_GB` with `en_US`, and `true` with `false`.
+defaults write NSGlobalDomain AppleLanguages -array "en" "ar"
+defaults write NSGlobalDomain AppleLocale -string "en_US@currency=USD"
+defaults write NSGlobalDomain AppleMeasurementUnits -string "Inches"
+defaults write NSGlobalDomain AppleMetricUnits -bool false
+
 # Don't open folders in tabs
 defaults write com.apple.finder FinderSpawnTab -bool false
 
@@ -203,7 +221,7 @@ defaults write com.apple.finder NewWindowTargetPath -string "file://$HOME/"
 
 # Show icons for external hard drives, servers, and removable media on the desktop
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
-defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
+defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
 defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 
@@ -244,6 +262,9 @@ defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 
 # Automatically quit printer app once the print jobs complete
 defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
+
+# Disable “natural” (Lion-style) scrolling
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
 # disable tap to click
 defaults write com.apple.AppleMultitouchTrackpad Clicking -int 0
@@ -286,6 +307,37 @@ defaults -currentHost write com.apple.screensaver modulePath -string "/System/Li
 defaults -currentHost write com.apple.screensaver moduleName -string "Shell"
 defaults -currentHost write com.apple.screensaver showClock -bool true
 
+# Show language menu in the top right corner of the boot screen
+sudo defaults write /Library/Preferences/com.apple.loginwindow showInputMenu -bool true
+
+# Show the full URL in the address bar (note: this still hides the scheme)
+defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
+
+# Remove useless icons from Safari’s bookmarks bar
+defaults write com.apple.Safari ProxiesInBookmarksBar "()"
+
+# Enable the Develop menu and the Web Inspector in Safari
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
+
+# Add a context menu item for showing the Web Inspector in web views
+defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+
+# Block pop-up windows
+defaults write com.apple.Safari WebKitJavaScriptCanOpenWindowsAutomatically -bool false
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically -bool false
+
+# Enable “Do Not Track”
+defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
+
+# Update extensions automatically
+defaults write com.apple.Safari InstallExtensionUpdatesAutomatically -bool true
+
+# Chrome - Disable the all too sensitive backswipe on trackpads
+defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
+defaults write com.google.Chrome.canary AppleEnableSwipeNavigateWithScrolls -bool false
+
 # Disable shadow in screenshots
 defaults write com.apple.screencapture disable-shadow -bool true
 
@@ -296,7 +348,7 @@ defaults write -g CGFontRenderingFontSmoothingDisabled -bool false
 defaults write com.apple.dashboard mcx-disabled -bool true
 
 # Set the icon size of Dock items to biggest
-defaults write com.apple.dock tilesize -int 128
+# defaults write com.apple.dock tilesize -int 128
 
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
@@ -304,12 +356,15 @@ defaults write com.apple.dock autohide -bool true
 # Turn off Dock magnification
 defaults write com.apple.dock magnification -bool false
 
+# Don’t show recent applications in Dock
+defaults write com.apple.dock show-recents -bool false
+
 # Allow slow-motion minimize effects when holding down shift (relic from old OS X :D)
 defaults write com.apple.dock slow-motion-allowed -bool true
 
-# Hot corner, bottom-left: Start screen saver
-defaults write com.apple.dock wvous-bl-corner -int 5
-defaults write com.apple.dock wvous-bl-modifier -int 0
+# Hot corner, bottom-right: Start screen saver
+defaults write com.apple.dock wvous-br-corner -int 5
+defaults write com.apple.dock wvous-br-modifier -int 0
 
 # Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app
 defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" "@\U21a9"
@@ -329,23 +384,33 @@ defaults write com.apple.commerce AutoUpdate -bool false
 # Install System data files & security updates
 defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
 
-# set up Dock
+## set up Dock
+# move to bottom
+defaults write com.apple.dock orientation bottom
+
 dockutil --remove all --no-restart
 declare -a dockList=(\
-  App\ Store\
-  Firefox\
-  Mail\
+  Finder\
+  Path\ Finder\
+  System\ Preferences\
   Messages\
+  Facetime\
   WhatsApp\
   Music\
   Photos\
-  Pixelmator\ Pro\
-  Affinity\ Designer\
-  Sublime\ Text\
+  Fantastical\
+  Firefox\ Developer\ Edition
+  Firefox\
+  Safari\
+  Airmail\
+  PDFpenPro
+  Drafts\
+  BBEdit\
   Visual\ Studio\ Code\
-  Xcode\
+  Tower\
   Utilities/Terminal\
-  System\ Preferences\
+  Setapp\
+  App\ Store\
 )
 for app in "${dockList[@]}"; do
   dockutil --add "/Applications/$app.app" --no-restart
@@ -357,6 +422,8 @@ killall SystemUIServer
 killall Finder
 killall Dock
 killall Mail
+killall Safari
+killall Google\ Chrome
 
 timerData "POST-GUI"
 

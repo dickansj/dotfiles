@@ -28,14 +28,14 @@ cp resources/ssh_config.base ~/.ssh/config
 #  (this hooks us in if we were set up from the bootstrap script)
 if [[ ! -d .git ]]; then
   git init
-  git remote add origin https://github.com/sjml/dotfiles.git
+  git remote add origin https://github.com/dickansj/dotfiles.git
   git fetch
   git reset origin/master
   git branch --set-upstream-to=origin/master master
   git checkout .
 fi
 # swap to ssh; credentials can get added later
-git remote set-url origin git@github.com:sjml/dotfiles.git
+git remote set-url origin git@github.com:dickansj/dotfiles.git
 
 # Projects folder is where most code stuff lives; link this there, too,
 #  because otherwise I'll forget where it is
