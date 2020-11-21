@@ -1,6 +1,6 @@
 [ui]
-username = Shane Liesegang <shane@techie.net>
-merge = Kaleidoscope
+username = Joseph Dickan <jdickan@ucla.edu>
+# merge = Kaleidoscope
 ssh = ssh -C
 
 [extensions]
@@ -10,10 +10,10 @@ mq =
 hgext.extdiff =
 shelve =
 
-[extdiff]
-cmd.ksdiff = /usr/local/bin/ksdiff
-opts.ksdiff = --changeset --wait --filelist
+# [extdiff]
+# cmd.ksdiff = /usr/local/bin/ksdiff
+# opts.ksdiff = --changeset --wait --filelist
 
-[merge-tools]
-Kaleidoscope.executable = /usr/local/bin/ksdiff
-Kaleidoscope.args = --merge --output $output --base $base -- $local $other
+# [merge-tools]
+# Kaleidoscope.executable = /usr/local/bin/ksdiff
+# Kaleidoscope.args = --merge --output $output --base $base -- $local $other

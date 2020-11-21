@@ -3,6 +3,10 @@ My dotfiles, to get a computer running the way I like it.
 ## Installation
 To get the whole repo: 
 ```shell-script
+# My fork
+git clone https://github.com/dickansj/dotfiles ~/.dotfiles
+
+# Or the original
 git clone https://github.com/sjml/dotfiles ~/.dotfiles
 ```
 
