@@ -45,6 +45,7 @@ targetZShell="/usr/local/bin/zsh"
 echo $targetZShell | sudo tee -a /etc/shells
 sudo chsh -s $targetZShell $USER
 
+# Now the UI config that requires sudo
 # Reveal IP address, hostname, OS version, etc. when clicking the clock
 # in the login window
 sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
