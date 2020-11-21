@@ -107,7 +107,6 @@ brew 'youtube-dl'
 brew 'ffmpeg'
 brew 'libav'
 brew 'dockutil'
-brew 'duti'
 brew 'trash'
 brew 'pidof'
 brew 'fdupes'
@@ -208,13 +207,13 @@ cask 'silentknight'
 cask 'skim'
 cask 'skype'
 cask 'soundsource' # license
+cask 'swiftdefaultappsprefpane'
 cask 'steam'
 cask 'synergy' # license/account
 cask 'taskexplorer'
 cask 'textexpander'
 cask 'tor-browser'
 cask 'tower' # edu license
-			 # make sure it gives tower 6 for big sur
 cask 'transmission'
 cask 'tripmode' # license
 cask 'virtualbox'
