@@ -399,11 +399,11 @@ declare -a dockList=(\
   Music\
   Photos\
   Fantastical\
-  Firefox\ Developer\ Edition
+  Firefox\ Developer\ Edition\
   Firefox\
   Safari\
   Airmail\
-  PDFpenPro
+  PDFpenPro\
   Drafts\
   BBEdit\
   Visual\ Studio\ Code\
