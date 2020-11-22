@@ -394,6 +394,7 @@ declare -a dockList=(\
   Finder\
   Path\ Finder\
   System\ Preferences\
+  1Password\ 7\
   Messages\
   Facetime\
   WhatsApp\
@@ -405,7 +406,9 @@ declare -a dockList=(\
   Safari\
   Airmail\
   PDFpenPro\
+  TaskPaper\
   Drafts\
+  Marked\ 2\
   BBEdit\
   Visual\ Studio\ Code\
   Tower\
