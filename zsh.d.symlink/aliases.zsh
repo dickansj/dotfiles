@@ -27,7 +27,11 @@ fi
  alias ...='cd ../../'         # Go up 2 dir levels
  alias .3='cd ../../../'       # Go up 3 dir levels
 
- # Homebrew shortcut alias
- # Consider doing environment upgrade
- # https://gist.github.com/indiesquidge/ec010eca3ffa254788c2
- alias brewup='brew update; brew upgrade; brew cleanup; brew doctor'
+# Homebrew shortcut alias
+# Consider doing environment upgrade with envup
+# https://gist.github.com/indiesquidge/ec010eca3ffa254788c2
+alias brewup='brew update; brew upgrade; brew cleanup; brew doctor'
+ 
+# thefuck error correction
+# https://github.com/nvbn/thefuck
+eval $(thefuck --alias fuck)

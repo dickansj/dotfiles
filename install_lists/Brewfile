@@ -188,7 +188,7 @@ cask 'onyx'
 cask 'openemu'
 cask 'oversight'
 cask 'path-finder' # license
-cask 'pdf-expert'
+cask 'pdf-expert' # license
 cask 'pdfpenpro'
 cask 'phoenix'
 cask 'pingplotter'
