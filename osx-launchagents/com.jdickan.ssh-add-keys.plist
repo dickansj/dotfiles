@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
    <key>Label</key>
-   <string>com.shaneliesegang.ssh-add-keys</string>
+   <string>com.jdickan.ssh-add-keys</string>
    <key>ProgramArguments</key>
     <array>
       <string>/usr/bin/ssh-add</string>
