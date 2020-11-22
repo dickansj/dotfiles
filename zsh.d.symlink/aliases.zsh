@@ -30,7 +30,7 @@ fi
 # Homebrew shortcut alias
 # Consider doing environment upgrade with envup
 # https://gist.github.com/indiesquidge/ec010eca3ffa254788c2
-alias brewup='brew update; brew upgrade; brew cleanup; brew doctor'
+alias brewup='brew update; brew upgrade; brew cask upgrade; brew cleanup; brew doctor --verbose'
  
 # thefuck error correction
 # https://github.com/nvbn/thefuck
