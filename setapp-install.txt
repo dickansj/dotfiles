@@ -1,4 +1,5 @@
 Aeon Timeline.app
+Bartender.app
 Boom 3D.app
 BusyContacts.app
 ChronoSync Express.app
