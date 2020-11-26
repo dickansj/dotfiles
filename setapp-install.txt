@@ -6,6 +6,7 @@ ChronoSync Express.app
 CleanMyMac X.app
 Commander One.app
 Downie.app
+ForkLift.app
 Grids.app
 IM+.app
 Magic Window Air.app
