@@ -121,8 +121,6 @@ brew 'solarus'
 tap 'homebrew/cask-versions'
 cask 'affinity-publisher-beta' # license
 cask 'firefox-developer-edition'
-# cask 'little-snitch4' # big sur requires LS5
-						# license
 
 tap 'homebrew/cask-cask'
 
@@ -178,6 +176,7 @@ cask 'kextviewr'
 cask 'keyboard-maestro' # license
 cask 'kindle'
 cask 'knockknock'
+cask 'little-snitch' # license
 cask 'macupdater'
 cask 'marked' # license
 cask 'microsoft-office' # license
