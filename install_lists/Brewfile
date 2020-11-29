@@ -44,7 +44,6 @@ brew 'node-build'
 # other programming languages
 brew 'go'
 brew 'r'
-brew 'julia'
 brew 'lua'
 brew 'perl'
 
@@ -122,8 +121,12 @@ tap 'homebrew/cask-versions'
 cask 'affinity-publisher-beta' # license
 cask 'firefox-developer-edition'
 
-tap 'homebrew/cask-cask'
+tap 'homebrew/cask'
 
+# dependencies to be installed first
+cask 'xquartz' # wine-stable dependency
+
+# now cask apps
 cask '1password' # license
 cask 'adium'
 cask 'adventure'
@@ -172,6 +175,7 @@ cask 'istat-menus' # license
 cask 'itch'
 cask 'ivpn'
 cask 'java'
+cask 'julia'
 cask 'kextviewr'
 cask 'keyboard-maestro' # license
 cask 'kindle'
@@ -223,7 +227,6 @@ cask 'vlc'
 cask 'whatsapp'
 cask 'wine-stable'
 cask 'wwdc'
-cask 'xquartz'
 cask 'xscope'
 cask 'zerobranestudio'
 cask 'zoomus'
