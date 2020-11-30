@@ -123,6 +123,7 @@ cask 'firefox-developer-edition'
 tap 'homebrew/cask'
 
 # dependencies to be installed first
+cask 'adoptopenjdk' #imagej dependency
 cask 'xquartz' # wine-stable dependency
 
 # now cask apps
@@ -156,7 +157,6 @@ cask 'discord'
 cask 'docker'
 cask 'do-not-disturb'
 cask 'dropbox'
-cask 'emacs'
 cask 'firefox'
 cask 'fission' # license
 cask 'fluid'
@@ -173,7 +173,6 @@ cask 'insomnia'
 cask 'istat-menus' # license
 cask 'itch'
 cask 'ivpn'
-cask 'java'
 cask 'julia'
 cask 'kextviewr'
 cask 'keyboard-maestro' # license
@@ -186,7 +185,7 @@ cask 'microsoft-office' # license
 cask 'microsoft-teams' # license
 cask 'nvalt'
 cask 'omnidisksweeper'
-cask 'onyx'
+cask 'onyx' # not yet Big Sur compatible, install will fail until it is
 cask 'openemu'
 cask 'oversight'
 cask 'path-finder' # license
