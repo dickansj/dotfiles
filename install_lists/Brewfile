@@ -189,6 +189,7 @@ cask 'omnidisksweeper'
 cask 'onyx' # not yet Big Sur compatible, install will fail until it is
 cask 'openemu'
 cask 'oversight' # CAVEAT: need to quit oversight from menu bar or else brew hangs
+cask 'pacifist'
 cask 'path-finder' # license
 cask 'pdf-expert' # license
 cask 'pdfpenpro'
