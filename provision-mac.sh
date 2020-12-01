@@ -21,7 +21,7 @@ echo "Linking dotfiles..."
 # ssh config
 echo "Creating SSH configuration..."
 mkdir -p ~/.ssh
-cp resources/ssh_config.base ~/.ssh/config
+# cp resources/ssh_config.base ~/.ssh/config # turning off to prevent overwrite of necessary attr
 
 # Ask for the administrator password
 echo "Now we need sudo access to install homebrew, some GUI apps, and change the shell."
