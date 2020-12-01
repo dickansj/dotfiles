@@ -15,6 +15,7 @@ Meeter.app
 MoneyWiz.app
 Mouseless.app
 NetSpot.app
+News Explorer.app
 One Switch.app
 Permute.app
 PocketCAS.app
