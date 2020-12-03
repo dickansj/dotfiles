@@ -150,7 +150,8 @@ cask 'cheatsheet'
 # cask 'cleanmymac' # use setapp version
 cask 'cyberduck'
 cask 'dash' # license
-cask 'default-folder-x' # license
+# cask 'default-folder-x' # license
+                          # use setapp version
 cask 'devonthink' # license
 cask 'dhs'
 cask 'discord'
