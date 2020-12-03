@@ -5,13 +5,12 @@ Boom 3D.app
 BusyContacts.app
 ChronoSync Express.app
 CleanMyMac X.app
-Commander One.app
+Default Folder X.app
 Diagrams.app
 Downie.app
 Dropzone.app
 ForkLift.app
 Grids.app
-IM+.app
 Magic Window Air.app
 MathKey.app
 Meeter.app
