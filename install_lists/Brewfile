@@ -230,7 +230,7 @@ cask 'wine-stable'
 cask 'wwdc'
 cask 'xscope'
 cask 'zerobranestudio'
-cask 'zoomus'
+cask 'zoom'
 cask 'zotero'
 
 # quicklook stuff - https://github.com/markcarroll/quick-look-plugins
