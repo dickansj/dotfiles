@@ -288,7 +288,7 @@ mas 'Mactracker', id: 430255202
 mas 'Magnet', id: 441258766
 mas 'MPlayerX', id: 421131143
 mas 'Numbers', id: 409203825
-mas 'OneDrive', id: 823766827
+# mas 'OneDrive', id: 823766827 #installed by office cask
 mas 'Pages', id: 409201541
 mas 'Pastebot', id: 1179623856
 mas 'PCalc', id: 403504866
