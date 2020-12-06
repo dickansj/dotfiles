@@ -162,7 +162,6 @@ cask 'firefox'
 cask 'fission' # license
 cask 'fluid'
 cask 'flux'
-cask 'gog-galaxy'
 cask 'google-backup-and-sync'
 cask 'google-chrome'
 cask 'hazel'
