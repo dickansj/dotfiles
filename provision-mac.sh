@@ -182,7 +182,7 @@ osascript 2>/dev/null <<EOD
 EOD
 
 # set up default associations
-# duti ~/.duti # 
+# duti ~/.duti #
 
 ## We'll see how these go with Big Sur...
 
@@ -401,6 +401,8 @@ declare -a dockList=(\
   Music\
   Photos\
   Fantastical\
+  Cardhop\
+  CARROTweather\
   Firefox\ Developer\ Edition\
   Firefox\
   Safari\
@@ -413,6 +415,8 @@ declare -a dockList=(\
   Visual\ Studio\ Code\
   Tower\
   Utilities/Terminal\
+  RStudio\
+  PCalc\
   Setapp\
   App\ Store\
 )
