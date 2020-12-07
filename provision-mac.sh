@@ -252,6 +252,10 @@ defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 # Show the ~/Library folder
 chflags nohidden ~/Library
 
+# Eliminate Finder proxy icon hover delay in Big Sur
+# These are the kinds of things that keep me using a Finder alternative most of the time...
+defaults write com.apple.Finder NSToolbarTitleViewRolloverDelay -float 0
+
 # Expand save and print panels by default
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
