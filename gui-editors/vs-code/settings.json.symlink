@@ -8,7 +8,7 @@
     },
     "workbench.startupEditor": "newUntitledFile",
     "window.zoomLevel": 0,
-    "editor.fontSize": 18,
+    "editor.fontSize": 14,
     "editor.fontFamily": "Hack",
     "window.restoreWindows": "all",
     "editor.renderWhitespace": "all",
@@ -32,7 +32,6 @@
     "explorer.incrementalNaming": "smart",
     "window.openFoldersInNewWindow": "on",
     "javascript.format.placeOpenBraceOnNewLineForControlBlocks": true,
-    "python.dataScience.askForKernelRestart": false,
     "cSpell.enabledLanguageIds": [
       "asciidoc",
       "git-commit",
@@ -67,8 +66,32 @@
     "[markdown]": {
         "diffEditor.renderSideBySide": false
     },
+    "[Log]": {
+        "editor.wordWrap": "on"
+    },
     "bracket-pair-colorizer-2.excludedLanguages": [
       "*.html",
       "*.md"
+    ],
+    "jupyter.askForKernelRestart": false,
+    "omnisharp.useGlobalMono": "always",
+    "explorer.compactFolders": false,
+    "output.smartScroll.enabled": false,
+    "terminal.integrated.showExitAlert": false,
+    "[jsonc]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "workbench.editorAssociations": [
+      {
+        "viewType": "jupyter.notebook.ipynb",
+        "filenamePattern": "*.ipynb"
+      }
+    ],
+    "code-runner.enableAppInsights": false,
+    "terminal.integrated.commandsToSkipShell": [
+      "language-julia.interrupt"
     ]
-  }
+}

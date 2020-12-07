@@ -21,7 +21,7 @@ echo "Linking dotfiles..."
 # ssh config
 echo "Creating SSH configuration..."
 mkdir -p ~/.ssh
-# cp resources/ssh_config.base ~/.ssh/config # turning off to prevent overwrite of necessary attr
+cp resources/ssh_config.base ~/.ssh/config
 
 # Ask for the administrator password
 echo "Now we need sudo access to install homebrew, some GUI apps, and change the shell."
@@ -92,7 +92,9 @@ pyPath="$HOME/.pyenv/shims"
 pyenv="/usr/local/bin/pyenv"
 
 py3version=$(env_remVer pyenv 3)
-$pyenv install $py3version
+LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib" \
+  CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include" \
+  $pyenv install $py3version
 $pyenv global $py3version
 $pyenv rehash
 $pyPath/pip3 install --upgrade pip
@@ -100,7 +102,9 @@ $pyPath/pip3 install -r install_lists/python3-dev-packages.txt
 $pyenv rehash
 
 py2version=$(env_remVer pyenv 2)
-$pyenv install $py2version
+LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib" \
+  CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include" \
+  $pyenv install $py2version
 $pyenv global $py3version $py2version
 $pyenv rehash
 $pyPath/pip2 install --upgrade pip
@@ -180,6 +184,11 @@ osascript 2>/dev/null <<EOD
     end repeat
   end tell
 EOD
+
+# let QuickLook stuff run without Gatekeeper complaining
+xattr -cr ~/Library/QuickLook/*
+qlmanage -r
+qlmanage -r cache
 
 # set up default associations
 # duti ~/.duti #
@@ -389,10 +398,16 @@ defaults write com.apple.commerce AutoUpdate -bool false
 # Install System data files & security updates
 defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
 
+# Set archive utility to not open a new window when it extracts things
 ## set up Dock
 # move to bottom
+defaults write com.apple.archiveutility dearchive-reveal-after -int 0
 defaults write com.apple.dock orientation bottom
 
+# set up Dock
+# NB: paths to system applications won't work in Big Sur;
+# remember to update this list when getting a new machine
+# (not planning on going Big Sur until then)
 dockutil --remove all --no-restart
 declare -a dockList=(\
   Finder\

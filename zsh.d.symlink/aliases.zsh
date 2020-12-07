@@ -18,9 +18,7 @@ alias mkdir="mkdir -p"
 
 # Mac-specific aliases
 if [[ $OSTYPE == darwin* ]]; then
-  if type hub > /dev/null; then
-    alias git="hub"
-  fi
+  alias edot="code ~/.dotfiles"
 fi
 
  alias ..='cd ../'             # Go up 1 dir level
