@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Take APFS snapshot for quick rollback just in case
+echo "Creating APFS snapshot..."
+echo "If you need to rollback, use: Recovery Mode > Recover from Time Machine > [Select Startup Drive] > [Select Snapshot]."
+tmutil snapshot
+
 function timerData() {
   echo $1: $SECONDS >> provision_timing.txt
 }
@@ -399,15 +404,16 @@ defaults write com.apple.commerce AutoUpdate -bool false
 defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
 
 # Set archive utility to not open a new window when it extracts things
-## set up Dock
-# move to bottom
 defaults write com.apple.archiveutility dearchive-reveal-after -int 0
+
+## set up Dock
+
+# move to bottom
 defaults write com.apple.dock orientation bottom
 
-# set up Dock
 # NB: paths to system applications won't work in Big Sur;
+# now require "/System/Applications/$app.app";
 # remember to update this list when getting a new machine
-# (not planning on going Big Sur until then)
 dockutil --remove all --no-restart
 declare -a dockList=(\
   Finder\
