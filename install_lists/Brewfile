@@ -197,7 +197,6 @@ cask 'pacifist'
 cask 'path-finder' # license
 cask 'pdf-expert' # license
 cask 'pdfpenpro'
-cask 'phoenix'
 cask 'pingplotter'
 cask 'podcastmenu'
 cask 'post-haste'
@@ -307,3 +306,12 @@ mas 'Unclutter', id: 577085396
 mas 'Wallpaper Wizard', id: 1266674560
 mas 'Xcode', id: 497799835
 mas 'Zen Timer', id: 1031035430
+
+
+## Other apps to remember (not brew, MAS, Setapp)
+# Twitterific (non-MAS Project Phoenix version) # copy from /Applications
+                                                # license
+# News Explorer                                 # license
+# CalHash
+# Consolation3
+# BlockBlock Helper
