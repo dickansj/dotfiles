@@ -153,7 +153,6 @@ cask 'carbon-copy-cloner' # license
 cask 'cheatsheet'
 # cask 'cleanmymac' # use setapp version
 cask 'cyberduck'
-cask 'dash' # license
 # cask 'default-folder-x' # license
                           # use setapp version
 cask 'devonthink' # license
@@ -308,7 +307,9 @@ mas 'Xcode', id: 497799835
 mas 'Zen Timer', id: 1031035430
 
 
-## Other apps to remember (not brew, MAS, Setapp)
+## Other apps to remember (not managed by brew, MAS, Setapp)
+
+# Setapp
 # Twitterific (non-MAS Project Phoenix version) # copy from /Applications
                                                 # license
 # News Explorer                                 # license
