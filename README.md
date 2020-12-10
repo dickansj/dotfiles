@@ -1,4 +1,4 @@
-My dotfiles, to get a computer running the way I like it. 
+My dotfiles, to get a computer running the way I like it. I have built upon the upstream [sjml/dotfiles](https://github.com/sjml/dotfiles) with some customizations for my own workflows, though the underlying setup is predominantly derived from his work there.
 
 ## Installation
 To get the whole repo: 
@@ -62,10 +62,14 @@ The Windows version (`provision-windows.ps1`) is pretty experimental, but it att
   * Enable the Windows Subsystem for Linux
   * Set a number of sensible Windows options 
   * Remove installation cruft
+  
+## Mac Terminal
+
+By default, `provision-mac.sh` sets the Terminal profile to the upstream `SJML.terminal`. For convenience, I also include `dickansj.terminal`, the profile I use on my main system, which slightly modifies those settings and defaults to a licensed font ([Dank Mono](https://gumroad.com/l/dank-mono)).
 
 ## Custom ZSH prompt
 
-My tweaked setup for ZSH includes a prompt that does some fun things. 
+My setup for ZSH includes sjml's prompt, which does some fun things. 
 
 ![Basic](http://shaneliesegang.com/prompt-shots/suggestions.png)
 
