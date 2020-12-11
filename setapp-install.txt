@@ -18,6 +18,7 @@ Meeter.app
 Mouseless.app
 NetSpot.app
 News Explorer.app
+Path Finder.app
 Permute.app
 PocketCAS.app
 Remote Mouse.app
