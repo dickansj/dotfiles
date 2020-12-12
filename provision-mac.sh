@@ -413,6 +413,7 @@ defaults write com.apple.dock orientation bottom
 
 # NB: paths to system applications won't work in Big Sur;
 # now require "/System/Applications/$app.app";
+# also includes some manually installed apps;
 # remember to update this list when getting a new machine
 dockutil --remove all --no-restart
 declare -a dockList=(\
@@ -432,6 +433,9 @@ declare -a dockList=(\
   Firefox\
   Safari\
   Airmail\
+  News\ Explorer\
+  Twitterific\
+  Discord\
   PDFpenPro\
   TaskPaper\
   Drafts\
