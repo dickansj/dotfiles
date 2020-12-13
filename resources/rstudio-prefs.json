@@ -1,9 +1,12 @@
 {
     "show_margin": false,
     "editor_theme": "Dracula",
-    "pdf_previewer": "rstudio",
+    "pdf_previewer": "system",
     "wrap_tab_navigation": false,
     "reuse_sessions_for_project_links": true,
     "font_size_points": 14,
-    "posix_terminal_shell": "zsh"
+    "posix_terminal_shell": "zsh",
+    "help_font_size_points": 12,
+    "default_encoding": "UTF-8",
+    "editor_keybindings": "vim"
 }
