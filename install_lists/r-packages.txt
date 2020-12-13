@@ -2,3 +2,9 @@
 # Load: library(PACKAGE)
 
 tidyverse
+devtools
+
+# aocodeR - read Advent of Code inputs
+# https://github.com/annakrystalli/aocodeR
+library(devtools)
+install_github("annakrystalli/aocodeR")
