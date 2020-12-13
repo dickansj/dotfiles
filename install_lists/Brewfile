@@ -68,6 +68,7 @@ brew 'clang-format'
 brew 'ctags'
 brew 'hub'
 brew 'gh'
+brew 'libgit2' # r devtools dep
 brew 'libyaml'
 brew 'ripgrep'
 brew 'jq'
