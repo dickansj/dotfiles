@@ -147,7 +147,6 @@ cask 'balenaetcher'
 cask 'basictex'
 cask 'bbedit' # license
 cask 'bettertouchtool' # license
-cask 'bitbar'
 cask 'calibre'
 cask 'carbon-copy-cloner' # license
 cask 'cheatsheet'
@@ -232,6 +231,10 @@ cask 'xscope'
 cask 'zerobranestudio'
 cask 'zoom'
 cask 'zotero'
+
+# swiftbar - https://github.com/swiftbar/SwiftBar
+tap 'melonamin/formulae'
+cask 'swiftbar'
 
 # quicklook stuff - https://github.com/markcarroll/quick-look-plugins
 cask 'qlstephen'
