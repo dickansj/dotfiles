@@ -4,7 +4,7 @@ tap 'homebrew/bundle' # gives basic brewfile capability needed by provision-mac.
 
 tap 'rcmdnk/file' # a few other features for alternate brew file management
 brew 'brew-file'  # but it has to be set up/initiated if desired
-                  # https://homebrew-file.readthedocs.io/en/latest/
+                        # https://homebrew-file.readthedocs.io/en/latest/
 
 # shells and standard command line utilities
 brew 'zsh'
@@ -314,8 +314,8 @@ mas 'Zen Timer', id: 1031035430
 
 # Setapp
 # Twitterific (non-MAS Project Phoenix version) # copy from /Applications
-                                                # license
-# News Explorer                                 # license
+                                                                      # license
+# News Explorer                                               # license
 # CalHash
 # Consolation3
 # BlockBlock Helper
