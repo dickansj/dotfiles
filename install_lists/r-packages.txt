@@ -3,6 +3,7 @@
 
 tidyverse
 devtools
+renv
 
 # aocodeR - read Advent of Code inputs
 # https://github.com/annakrystalli/aocodeR

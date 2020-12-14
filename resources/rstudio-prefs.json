@@ -8,5 +8,6 @@
     "posix_terminal_shell": "zsh",
     "help_font_size_points": 12,
     "default_encoding": "UTF-8",
-    "editor_keybindings": "vim"
+    "editor_keybindings": "vim",
+    "jobs_tab_visibility": "shown"
 }
