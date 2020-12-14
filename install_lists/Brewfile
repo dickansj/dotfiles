@@ -175,7 +175,7 @@ cask 'imazing' # license
 cask 'insomnia'
 cask 'istat-menus' # license
 cask 'itch'
-cask 'ivpn'
+# cask 'ivpn' # cask has loading issues, use direct
 cask 'julia'
 cask 'kaleidoscope' # license
 cask 'kextviewr'
@@ -319,3 +319,4 @@ mas 'Zen Timer', id: 1031035430
 # CalHash
 # Consolation3
 # BlockBlock Helper
+# iVPN                                          # license
