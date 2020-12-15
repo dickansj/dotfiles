@@ -220,7 +220,6 @@ cask 'textexpander'
 cask 'tor-browser'
 cask 'tower' # edu license
 cask 'transmission'
-cask 'tripmode' # license
 cask 'virtualbox'
 cask 'visual-studio'
 cask 'visual-studio-code'

@@ -28,6 +28,7 @@ Sip.app
 TaskPaper.app
 TextSoap.app
 ToothFairy.app
+TripMode.app
 Typeface.app
 WiFi Explorer.app
 iThoughtsX.app
