@@ -161,6 +161,7 @@ cask 'discord'
 cask 'docker'
 cask 'do-not-disturb'
 cask 'dropbox'
+cask 'epic-games'
 cask 'firefox'
 cask 'fission' # license
 cask 'fluid'
@@ -189,7 +190,7 @@ cask 'microsoft-office' # license
 cask 'microsoft-teams' # license
 cask 'nvalt'
 cask 'omnidisksweeper'
-cask 'onyx' # not yet Big Sur compatible, install will fail until it is
+cask 'onyx'
 cask 'openemu'
 cask 'oversight' # CAVEAT: need to quit oversight from menu bar or else brew hangs
 cask 'pacifist'
@@ -306,7 +307,7 @@ mas 'uBlock', id: 1385985095
 mas 'Unclutter', id: 577085396
 mas 'Wallpaper Wizard', id: 1266674560
 mas 'Xcode', id: 497799835
-mas 'Zen Timer', id: 1031035430
+# mas 'Zen Timer', id: 1031035430 # gone from store rip
 
 
 ## Other apps to remember (not managed by brew, MAS, Setapp)
