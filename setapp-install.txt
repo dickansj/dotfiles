@@ -10,7 +10,6 @@ Default Folder X.app
 Diagrams.app
 Downie.app
 Dropzone.app
-Due.app
 ForkLift.app
 Grids.app
 Magic Window Air.app
