@@ -166,6 +166,7 @@ cask 'firefox'
 cask 'fission' # license
 cask 'fluid'
 cask 'flux'
+cask 'fontforge'
 cask 'google-backup-and-sync'
 cask 'google-chrome'
 cask 'hazel'
@@ -248,9 +249,17 @@ cask 'suspicious-package'
 # a few monospaced fonts from caskroom
 #   (others handled outside of script)
 tap  'homebrew/cask-fonts'
-cask 'font-inconsolata'
+cask 'font-academicons'
+cask 'font-anonymous-pro'
+cask 'font-atkinson-hyperlegible'
+cask 'font-dejavu'                  # ar
 cask 'font-hack'
+cask 'font-inconsolata'
 cask 'font-juliamono'
+cask 'font-katibeh'                 # ar/en
+cask 'font-national-park'
+cask 'font-noto-sans-arabic'        # ar
+cask 'font-scheherazade'            # ar
 
 # drivers
 tap  'homebrew/cask-drivers'
