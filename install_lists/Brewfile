@@ -255,6 +255,7 @@ cask 'font-atkinson-hyperlegible'
 cask 'font-dejavu'                  # ar
 cask 'font-hack'
 cask 'font-inconsolata'
+cask 'font-jomhuria'                # ar/en display
 cask 'font-juliamono'
 cask 'font-katibeh'                 # ar/en
 cask 'font-national-park'
