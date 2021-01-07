@@ -222,6 +222,7 @@ cask 'textexpander'
 cask 'tor-browser'
 cask 'tower' # edu license
 cask 'transmission'
+cask 'unclack'
 cask 'virtualbox'
 cask 'visual-studio'
 cask 'visual-studio-code'
