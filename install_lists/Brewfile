@@ -19,11 +19,9 @@ brew 'reattach-to-user-namespace'
 brew 'readline'
 brew 'tree'
 brew 'htop'
-brew 'z'
 brew 'p7zip'
 brew 'lbzip2'
 brew 'lz4'
-brew 'unrar'
 brew 'unar'
 brew 'gnupg'
 brew 'xz'
@@ -33,8 +31,7 @@ brew 'thefuck'
 brew 'pv'
 
 # meta environments
-brew 'python' # brew version is backup/allows global package sandbox with pipx
-brew 'pyenv'
+brew 'python' # brew version is backup
 brew 'rbenv'
 brew 'ruby-build'
 brew 'nodenv'
@@ -59,6 +56,7 @@ brew 'wifi-password'
 brew 'speedtest-cli'
 
 # dev tools
+brew 'neovim'
 brew 'git'
 brew 'git-lfs'
 brew 'bfg'
@@ -76,10 +74,6 @@ brew 'sqlite'
 brew 'mycli'
 brew 'podman'
 brew 'doctl'
-
-# cask tools
-tap 'vitorgalvao/tiny-scripts'
-brew 'cask-repair'
 
 # document and graphics tools
 brew 'emacs'
@@ -110,6 +104,7 @@ brew 'youtube-dl'
 brew 'ffmpeg'
 brew 'libav'
 brew 'dockutil'
+brew 'defaultbrowser'
 brew 'trash'
 brew 'pidof'
 brew 'fdupes'
@@ -254,6 +249,7 @@ cask 'font-academicons'
 cask 'font-anonymous-pro'
 cask 'font-atkinson-hyperlegible'
 cask 'font-dejavu'                  # ar
+cask 'font-fira-code'
 cask 'font-hack'
 cask 'font-inconsolata'
 cask 'font-jomhuria'                # ar/en display
@@ -262,6 +258,10 @@ cask 'font-katibeh'                 # ar/en
 cask 'font-national-park'
 cask 'font-noto-sans-arabic'        # ar
 cask 'font-scheherazade'            # ar
+
+# sjml (upstream author) apps
+tap  'sjml/sjml'
+cask 'dotfile-watcher'
 
 # drivers
 tap  'homebrew/cask-drivers'

@@ -10,6 +10,18 @@ the bibliography should also be double-spaced, which I think is just indulgent. 
 the `MLA_8_Tight_Bibliography.csl` file is a [Citation Style Language](https://citationstyles.org/) 
 specification, forked from the [official Zotero one](http://www.zotero.org/styles/modern-language-association), with a less expansive bibliography style.
 
+## Fira Mod
+[Fira Code](https://github.com/tonsky/FiraCode) is nice, but I'm not a fan of programming
+ligatures. Most applications let you turn them off, but macOS's Terminal.app, inexplicably,
+does not. So this is a version of the font with the GSUB table cleared out so it can't do 
+any replacements. (I could have also just changed to a different terminal emulator, but 
+one change at a time.) (I am also aware of the ligature-less nature of the original 
+Fira Mono, but want to retain the otherwise-nice box-drawing characters and other things 
+from Fira Code.)
+
+## Terminal.app Profile
+By default, `provision-mac.sh` sets the Terminal profile to the upstream `SJML.terminal`. For convenience, I also include `dickansj.terminal`, the profile I use on my main system, which slightly modifies those settings and defaults to a licensed font ([Dank Mono](https://gumroad.com/l/dank-mono)) rather than the Fira Mod.
+
 ## Office Templates
 Templates for MS Office. Set the location in Word's Preferences -> File Locations -> User Templates.
 

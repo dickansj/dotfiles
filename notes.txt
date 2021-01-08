@@ -1,11 +1,57 @@
 TODO:
-Mercurial indicator in zsh prompt is slow
-  - profile which parts of it are the worst
-  - maybe move the whole thing to a single Python script to save invocations?
 Modify Tor script to check for available network connections (with networksetup + ifconfig)
   - if there's only one active, just use it
   - if more than one, take choice from command line? allow user to choose from menu?
 Add command to excerpt from YouTube
     - example: ffmpeg $(youtube-dl -f 22 -g 'https://www.youtube.com/watch?v=yh5hpd1osKo' | sed "s/.*/-ss 00:05 -i &/") -t 01:00 -c copy train.mp4
-Think about switching to fish
-Set up auto install of DotfileWatcher, DualCam (could just be my own cask tap?)
+lscolors+fish theme
+
+Stuff to install on Windows:
+    (commented lines have no entry in winget)
+    subsystem for linux
+    - ubuntu
+    Python.Python
+    OpenJS.NodeJS
+    Golang.go
+    //zig
+    //neovim
+    Git.Git
+    GitHub.GitLFS
+    Kitware.CMake
+    //scons
+    //swig
+    //hub
+    GitHub.cli
+
+    Mozilla.Firefox
+    Google.Chrome
+    TorProject.TorBrowser
+    NVAccess.NVDA
+    Transmission.Transmission
+    WhatsApp.WhatsApp
+    Microsoft.Teams
+    Discord.Discord
+    SublimeHQ.SublimeText
+    GitHub.GitHubDesktop
+    Microsoft.VisualStudioCode
+    Microsoft.VisualStudio.Community
+    UnityTechnologies.UnityHub
+    OBSProject.OBSStudio
+    VMware.WorkstationPlayer
+    Oracle.VirtualBox
+    Docker.DockerDesktop
+    //itch
+    GOG.Galaxy
+    EpicGames.EpicGamesLauncher
+    Valve.Steam
+    Nvidia.GeForceNow
+    Mojang.MinecraftLauncher
+    VideoLAN.VLC
+    TheHandBrakeTeam.HandBrake
+    AgileBits.1Password
+    MullvadVPN.MullvadVPN
+    WinMerge.WinMerge
+    //paint.net
+    Adobe.AdobeAcrobatReaderDC
+    WinSCP.WinSCP
+    WinDirStat.WinDirStat

@@ -1,15 +1,6 @@
 My dotfiles, to get a computer running the way I like it. I have built upon the upstream [sjml/dotfiles](https://github.com/sjml/dotfiles) with some customizations for my own workflows, though the underlying setup is predominantly derived from his work there.
 
 ## Installation
-To get the whole repo: 
-```shell-script
-# My fork
-git clone https://github.com/dickansj/dotfiles ~/.dotfiles
-
-# Or the original
-git clone https://github.com/sjml/dotfiles ~/.dotfiles
-```
-
 To bootstrap onto a fresh *nix computer (that may not have git, like Macs out of the box): 
 ```shell-script
 curl -fsSL https://raw.githubusercontent.com/dickansj/dotfiles/main/bootstrap.sh | bash
@@ -24,16 +15,19 @@ Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw
 ```
 
 ## What it does
-Running `provision-mac.sh` on a clean user account will:
+Running `provision-mac.sh` on a fresh Mac will:
   * Take everything in this directory that ends with `.symlink` and make a
-    symbolic link to it in the home directory, minus the `.symlink` and
-    prepended with a `.`
-  * Symlink files in `osx-launchagents` to ~/Library/LaunchAgents
+    symbolic link to it in the current user's home directory, minus the 
+    `.symlink` and prepended with a `.`
+    * Similarly, anything with `.configlink` gets linked into `.config`
+      without a prepended `.`
+    * `.homelink` gets the same treatment, but into `~`
+  * Symlink files in `osx-launchagents` to `~/Library/LaunchAgents`
   * Install [homebrew](http://brew.sh) with analytics turned off
-  * Attempt to change the default shell to zsh
-  * Install all the packages and GUI apps listed in the `install_lists/Brewfile`
-  * Install Inconsolata and Hack fonts
-  * Attempt to install Mac App Store stuff from the mas section of the Brewfile
+  * Install all the brew packages, GUI apps, and fonts listed in `install_lists/Brewfile`. This includes Mac App Store apps specified under the mas section there.
+  * Change the default shell to [fish](https://fishshell.com/)
+  * Set Homebrew's version of OpenJDK to be used instead of system's
+  * Sets up the directory to be a proper git repository if it was pulled during a bootstrap
   * Make a `~/Projects` directory and symlink the dotfiles there
   * Install a set of vim bundles, managed by [Vundle](https://github.com/VundleVim/Vundle.vim)
   * Install latest versions of Python 2 and 3 (3 as default) via [pyenv](https://github.com/pyenv/pyenv)
@@ -43,59 +37,17 @@ Running `provision-mac.sh` on a clean user account will:
   * Install all Node-based programs listed in `install_lists/node-packages.txt`
   * Install the latest version of Rust via [rustup](https://www.rustup.rs/)
   * Set up appearance of Terminal.app
+  * Set default browser to Firefox
   * Various and sundry macOS GUI settings (Finder behaviors, Trackpad settings, etc.)
   * Set up the Dock
 
 The `provision-linux.sh` is much simpler because I don't have root on most Linux
 machines I use, and tend to not have them quite as customized. All it does:
-  * Attempt to change the default shell to zsh
   * Symlink the designated dotfiles
   * Symlink this to ~/Projects/dotfiles
   * Install the vim bundles
-  * Install pip, but not the Python packages
+  * Install pyenv, but nothing else
 
-The Windows version (`provision-windows.ps1`) is pretty experimental, but it attempts to:
-  * Install [Chocolatey](http://chocolatey.org/)
-  * Install all the packages listed in `install_lists/chocolatey-packages.config`
-  * Install all packages listed in `install_lists/python3-dev-packages.txt`
-  * Install all Node-based programs listed in `install_lists/node-packages.txt`
-  * Enable the Windows Subsystem for Linux
-  * Set a number of sensible Windows options 
-  * Remove installation cruft
-  
-## Mac Terminal
+The Windows version (`provision-windows.ps1`) is pretty sparse. Used to use
+[Chocolatey](http://chocolatey.org/), but want to shift it to use [WinGet](https://github.com/microsoft/winget-cli) before I set up another Windows machine. 
 
-By default, `provision-mac.sh` sets the Terminal profile to the upstream `SJML.terminal`. For convenience, I also include `dickansj.terminal`, the profile I use on my main system, which slightly modifies those settings and defaults to a licensed font ([Dank Mono](https://gumroad.com/l/dank-mono)).
-
-## Custom ZSH prompt
-
-My setup for ZSH includes sjml's prompt, which does some fun things. 
-
-![Basic](http://shaneliesegang.com/prompt-shots/suggestions.png)
-
-It's a double-tall prompt (controversial, but I like being able to easily skim for inputs). It shows your current working directory, username, machine name, and time. It does simple syntax coloring and suggestions based on previous inputs. 
-***
-![Suggestions](http://shaneliesegang.com/prompt-shots/brew-cleanup.png) 
-
-This is particular handy for commands that are kinda wonky but you may execute periodically. 
-***
-![Path Shortening](http://shaneliesegang.com/prompt-shots/path-shortening.png)
-
-It does clever shortening to get as much relevant information into the heads-up display as possible. Each path component is shortened as much as it can be without becoming ambiguous.
-***
-![Root Warning](http://shaneliesegang.com/prompt-shots/root-prompt.png)
-
-It dramatically changes when you're working with root privileges so you're less likely to accidentally screw something up. 
-***
-![Virtual Environment](http://shaneliesegang.com/prompt-shots/virtualenv.png)
-
-A cute little snake appears when you've activated a Python virtual environment. 
-***
-![Git Statuses](http://shaneliesegang.com/prompt-shots/git-statuses.png)
-
-The indicator at the right changes when you're in a git repo, showing if there are uncommitted or unpushed changes. (Mercurial code is there but disabled because it's slow. 😫)
-***
-![Status Messages](http://shaneliesegang.com/prompt-shots/messages.png)
-
-The prompt can also expand to give status messages about detached tmux sessions, long execution times, and error codes. 
-***

@@ -5,13 +5,13 @@
 #     Homebrew's Casks (GUI apps)
 #     Mac App Store (flakily, as the mas tool struggles at times)
 #     Python 3/2, Node.js LTS, and Ruby environments
-#     # Stable branch of Rust toolchain
+#     Stable branch of Rust toolchain
 #
 # Specifically does not monitor packages within script environments;
 #   those might be pinned to specific versions and need to be checked
 #   individually.
 
-local -a envs=(brew cask mas python3 python2 node ruby) # rust)
+local -a envs=(brew cask mas python3 python2 node ruby rust)
 local -a cmds=(check up)
 
 
@@ -65,7 +65,7 @@ brew_check() {
 
 brew_up() {
     HOMEBREW_NO_AUTO_UPDATE=1 /usr/local/bin/brew upgrade --formula
-    # /usr/local/bin/brew cleanup -s
+    /usr/local/bin/brew cleanup -s
     rm -rf $(/usr/local/bin/brew --cache)
     all_check # since this might have updated one of the envs
 }
@@ -190,6 +190,7 @@ node_up() {
 }
 
 python3_check() {
+    pyenv update > /dev/null 2>&1
     env_check pyenv 3 "Python 3"
 }
 
@@ -203,7 +204,9 @@ python3_up() {
         return
     fi
 
-    LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib" CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include" pyenv install $newVersion
+    LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib" \
+        CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include" \
+        pyenv install $newVersion
     pyenv global $newVersion $version2 miniconda3-latest
     pyenv rehash
 
@@ -222,6 +225,7 @@ python3_up() {
 
 
 python2_check() {
+    # > /dev/null 2>&1  # no need to check
     env_check pyenv 2 "Python 2"
 }
 
@@ -235,7 +239,9 @@ python2_up() {
         return
     fi
 
-    LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib" CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include" pyenv install $newVersion
+    LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib" \
+        CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include" \
+        pyenv install $newVersion
     pyenv global $version3 $newVersion miniconda3-latest
     pyenv rehash
 
@@ -254,12 +260,12 @@ python2_up() {
 
 
 ruby_check() {
-    env_check rbenv 2 "Ruby"
+    env_check rbenv 3 "Ruby"
 }
 
 ruby_up() {
-    local newVersion=$( env_remVer rbenv 2 )
-    local oldVersion=$( env_locVer rbenv 2 )
+    local newVersion=$( env_remVer rbenv 3 )
+    local oldVersion=$( env_locVer rbenv 3 )
 
     if [[ $newVersion == $oldVersion ]]; then
         print_check "Ruby" $newVersion $newVersion
@@ -291,25 +297,25 @@ ruby_up() {
 }
 
 
-# rust_check() {
-#     local rustStatus=$(rustup check | grep stable)
-#     local currentVersion=$(echo $rustStatus | sed -n -E "s/^.*: ([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+).*$/\1/p")
+rust_check() {
+    local rustStatus=$(rustup check | grep stable)
+    local currentVersion=$(echo $rustStatus | sed -n -E "s/^.*: ([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+).*$/\1/p")
 
-#     local info=""
-#     if echo $rustStatus | grep -q "Up to date"; then
-#         info="  ✅  Rust is up to date. ($currentVersion)"
-#     else
-#         local newVersion=$(echo $rustStatus | sed -n -E "s/^.*-> ([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+).*$/\1/p")
-#         info="  ⚠️   Rust latest version is $newVersion; installed is $currentVersion."
-#     fi
+    local info=""
+    if echo $rustStatus | grep -q "Up to date"; then
+        info="  ✅  Rust is up to date. ($currentVersion)"
+    else
+        local newVersion=$(echo $rustStatus | sed -n -E "s/^.*-> ([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+).*$/\1/p")
+        info="  ⚠️   Rust latest version is $newVersion; installed is $currentVersion."
+    fi
 
-#     echo ${info} | fold -s -w $COLUMNS
-# }
+    echo ${info} | fold -s -w $COLUMNS
+}
 
-# rust_up() {
-#     rustup update stable
-#     rust_check
-# }
+rust_up() {
+    rustup update stable
+    rust_check
+}
 
 
 [[ $ZSH_EVAL_CONTEXT =~ :file$ ]] && sourced=1 || sourced=0
