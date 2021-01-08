@@ -224,13 +224,12 @@ xattr -cr ~/Library/QuickLook/*
 qlmanage -r
 qlmanage -r cache
 
-# set up default associations
-# duti ~/.duti #
 
 ## We'll see how these go with Big Sur...
+
 # this will pop a permissions window, but no way around it
 #   (this is a good thing to have security around, I will agree)
-defaultbrowser firefox
+defaultbrowser firefoxdeveloperedition
 
 # Turn off unneeded menu bar items
 defaults -currentHost write dontAutoLoad -array-add "/System/Library/CoreServices/Menu Extras/Displays.menu"

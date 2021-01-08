@@ -37,7 +37,7 @@ Running `provision-mac.sh` on a fresh Mac will:
   * Install all Node-based programs listed in `install_lists/node-packages.txt`
   * Install the latest version of Rust via [rustup](https://www.rustup.rs/)
   * Set up appearance of Terminal.app
-  * Set default browser to Firefox
+  * Set default browser to Firefox Developer Edition
   * Various and sundry macOS GUI settings (Finder behaviors, Trackpad settings, etc.)
   * Set up the Dock
 
