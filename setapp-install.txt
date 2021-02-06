@@ -7,12 +7,13 @@ ChronoSync Express.app
 CleanMyMac X.app
 Dash.app
 Default Folder X.app
-DevUtils.app.app
+DevUtils.app
 Diagrams.app
 Downie.app
 Dropzone.app
 ForkLift.app
 Grids.app
+HoudahSpot.app
 Magic Window Air.app
 MathKey.app
 Meeter.app
@@ -26,7 +27,9 @@ Remote Mouse.app
 Session.app
 Simon.app
 Sip.app
+Sizzy.app
 TaskPaper.app
+TextSniper.app
 TextSoap.app
 ToothFairy.app
 TripMode.app
