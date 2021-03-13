@@ -147,6 +147,7 @@ cask 'calibre'
 cask 'carbon-copy-cloner' # license
 cask 'cheatsheet'
 # cask 'cleanmymac' # use setapp version
+cask 'crunch'
 cask 'cyberduck'
 # cask 'default-folder-x' # license
                           # use setapp version
