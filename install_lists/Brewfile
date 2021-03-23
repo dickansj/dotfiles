@@ -158,6 +158,7 @@ cask 'docker'
 cask 'do-not-disturb'
 cask 'dropbox'
 cask 'epic-games'
+cask 'etrecheckpro'
 cask 'firefox'
 cask 'fission' # license
 cask 'fluid'
@@ -291,7 +292,6 @@ mas 'Clean Text', id: 414782261
 mas 'Craft', id: 1487937127
 mas 'Deliveries', id: 290986013
 mas 'Drafts', id: 1435957248
-mas 'EtreCheck', id: 1423715984
 mas 'Fantastical', id: 975937182
 mas 'Front and Center', id: 1493996622
 mas 'FruitJuice', id: 671736912
@@ -299,7 +299,6 @@ mas 'FruitJuice', id: 671736912
 mas 'Gemini 2', id: 1090488118
 mas 'HazeOver', id: 430798174
 mas 'iMovie', id: 408981434
-mas 'Interact Scratchpad', id: 1199660222
 mas 'iPulse', id: 1028916583
 mas 'KeyKey', id: 1035137927
 mas 'Keynote', id: 409183694
