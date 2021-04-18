@@ -243,6 +243,10 @@ defaults write com.apple.menuextra.clock FlashDateSeparators -bool false
 # Always show scrollbars
 defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
 
+# Globally remove proxy icon hover delay
+# (introduced in Big Sur)
+defaults write -g NSToolbarTitleViewRolloverDelay -float 0
+
 # Text selection in QuickLook
 defaults write com.apple.finder QLEnableTextSelection -bool true
 
