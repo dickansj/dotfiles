@@ -15,6 +15,7 @@ ForkLift.app
 Grids.app
 HoudahSpot.app
 Magic Window Air.app
+Mate Translate.app
 MathKey.app
 Meeter.app
 Mouseless.app
