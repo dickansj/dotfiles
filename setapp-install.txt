@@ -33,6 +33,7 @@ TaskPaper.app
 TextSniper.app
 TextSoap.app
 ToothFairy.app
+Transloader.app
 TripMode.app
 Typeface.app
 WiFi Explorer.app
