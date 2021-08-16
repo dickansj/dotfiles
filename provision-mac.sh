@@ -398,8 +398,10 @@ defaults write com.google.Chrome.canary AppleEnableSwipeNavigateWithScrolls -boo
 # Disable shadow in screenshots
 defaults write com.apple.screencapture disable-shadow -bool true
 
-# Try to re-enable subpixel anti-aliasing post-Mojave
-defaults write -g CGFontRenderingFontSmoothingDisabled -bool false
+# Remove font smoothing
+# https://www.fontsmoothingadjuster.com/
+# https://tonsky.me/blog/monitors/ for setting integer scaling
+defaults -currentHost write -g AppleFontSmoothing -int 0
 
 # Disable Dashboard
 defaults write com.apple.dashboard mcx-disabled -bool true
