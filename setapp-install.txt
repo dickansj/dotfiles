@@ -29,6 +29,7 @@ Session.app
 Simon.app
 Sip.app
 Sizzy.app
+Squash.app
 TaskPaper.app
 TextSniper.app
 TextSoap.app
