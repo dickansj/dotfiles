@@ -159,6 +159,7 @@ cask 'do-not-disturb'
 cask 'dropbox'
 cask 'epic-games'
 cask 'etrecheckpro'
+cask 'fing'
 cask 'firefox'
 cask 'fission' # license
 cask 'fluid'
