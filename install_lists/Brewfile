@@ -307,6 +307,7 @@ mas 'KeyKey', id: 1035137927
 mas 'Keynote', id: 409183694
 mas 'Mactracker', id: 430255202
 mas 'Magnet', id: 441258766
+mas 'Mela', id: 1568924476
 mas 'Morpho', id: 1494942612
 mas 'Numbers', id: 409203825
 # mas 'OneDrive', id: 823766827 # installed by office cask
