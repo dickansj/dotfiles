@@ -412,6 +412,12 @@ defaults write com.apple.dashboard mcx-disabled -bool true
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
 
+# Eliminate Dock autohide-delay
+# https://swissmacuser.ch/show-macos-dock-instantly-without-delay/
+# For Apple Silicon: defaults write com.apple.dock autohide-delay -float 0 && defaults write com.apple.dock autohide-time-modifier -float 0.4
+# For Intel:
+defaults write com.apple.dock autohide-delay -float 0
+
 # Turn off Dock magnification
 defaults write com.apple.dock magnification -bool false
 
