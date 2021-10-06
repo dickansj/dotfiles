@@ -284,6 +284,7 @@ cask 'logitech-options'
 # and finally, stuff from the Mac App Store
 brew 'mas'
 
+mas 'ActiveTab', id: 1588852241
 mas 'Affinity Designer', id: 824171161
 mas 'Affinity Photo', id: 824183456
 mas 'Airmail', id: 918858936
