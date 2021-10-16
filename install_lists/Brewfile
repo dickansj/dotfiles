@@ -29,6 +29,7 @@ brew 'tldr'
 brew 'zlib'
 brew 'thefuck'
 brew 'pv'
+brew 'fzf'
 
 # meta environments
 brew 'python' # brew version is backup
