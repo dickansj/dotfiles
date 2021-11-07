@@ -24,6 +24,7 @@ News Explorer.app
 Path Finder.app
 Permute.app
 PocketCAS.app
+Quit All.app
 Remote Mouse.app
 Session.app
 Simon.app
