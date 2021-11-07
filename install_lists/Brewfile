@@ -157,7 +157,6 @@ cask 'dhs'
 cask 'discord'
 cask 'docker'
 cask 'do-not-disturb'
-cask 'dropbox'
 cask 'epic-games'
 cask 'etrecheckpro'
 cask 'fing'
@@ -187,6 +186,7 @@ cask 'kindle'
 cask 'knockknock'
 cask 'little-snitch' # license
 cask 'macupdater'
+cask 'maestral'
 cask 'marked' # license
 cask 'microsoft-office' # license
 cask 'microsoft-teams' # license
