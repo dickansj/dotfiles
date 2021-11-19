@@ -220,6 +220,7 @@ cask 'steam'
 cask 'sublime-text'
 cask 'synergy' # license/account
 cask 'taskexplorer'
+cask 'temurin'
 cask 'textexpander'
 cask 'tor-browser'
 cask 'tower' # edu license
