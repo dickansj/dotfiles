@@ -30,6 +30,7 @@ Session.app
 Simon.app
 Sip.app
 Sizzy.app
+Speech Central.app
 Squash.app
 TaskPaper.app
 TextSniper.app
