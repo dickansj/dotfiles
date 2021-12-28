@@ -37,6 +37,7 @@ TextSniper.app
 TextSoap.app
 ToothFairy.app
 Transloader.app
+Trickster.app
 TripMode.app
 Typeface.app
 WiFi Explorer.app
