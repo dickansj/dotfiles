@@ -152,6 +152,7 @@ cask 'crunch'
 cask 'cyberduck'
 # cask 'default-folder-x' # license
                           # use setapp version
+cask 'devonagent' # license
 cask 'devonthink' # license
 cask 'dhs'
 cask 'discord'
