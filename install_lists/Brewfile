@@ -191,6 +191,7 @@ cask 'maestral'
 cask 'marked' # license
 cask 'microsoft-office' # license
 cask 'microsoft-teams' # license
+cask 'mountain' # license
 cask 'nvalt'
 cask 'obsidian'
 cask 'omnidisksweeper'
