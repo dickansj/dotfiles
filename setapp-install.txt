@@ -5,6 +5,7 @@ Boom 3D.app
 BusyContacts.app
 ChronoSync Express.app
 CleanMyMac X.app
+CleanShot X.app
 Dash.app
 Default Folder X.app
 DevUtils.app
