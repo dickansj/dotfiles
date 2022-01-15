@@ -346,6 +346,6 @@ mas 'Xcode', id: 497799835
 # BlockBlock Helper
 # iVPN                                          # license
 # Displays (Jibapps)                            # license
-# Interact Scratchpad
+# Interact Scratchpad                           # https://docs.getdrafts.com/docs/misc/interact-scratchpad#download-the-interact-scratchpad
 # Oracle Java 8                                 # Ubiquiti requires JRE 8 and expects Oracle Java
                                                 # https://www.java.com/en/download/
