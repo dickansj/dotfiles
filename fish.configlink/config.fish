@@ -34,3 +34,11 @@ set fish_greeting
 ## let the terminal emulator handle the titling
 function fish_title
 end
+
+## brew-wrap for homebrew brew-file package
+## brew-file maintains install list separate from dotfile list and is handy for keeping multiple Macs in sync wrt apps
+## wraps the original `brew` command for an automatic update of Brewfile when you run `brew install` or `brew uninstall`
+## https://homebrew-file.readthedocs.io/en/latest/installation.html
+if test -f (brew --prefix)/etc/brew-wrap.fish
+  source (brew --prefix)/etc/brew-wrap.fish
+end
