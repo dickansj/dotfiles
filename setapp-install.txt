@@ -8,6 +8,7 @@ CleanMyMac X.app
 CleanShot X.app
 Dash.app
 Default Folder X.app
+Detail.app
 DevUtils.app
 Diagrams.app
 Downie.app
