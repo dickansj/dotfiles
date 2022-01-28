@@ -350,3 +350,4 @@ mas 'Xcode', id: 497799835
 # Interact Scratchpad                           # https://docs.getdrafts.com/docs/misc/interact-scratchpad#download-the-interact-scratchpad
 # Oracle Java 8                                 # Ubiquiti requires JRE 8 and expects Oracle Java
                                                 # https://www.java.com/en/download/
+# TrackerZapper                                 # https://github.com/rknightuk/TrackerZapper
