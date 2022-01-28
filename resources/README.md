@@ -36,4 +36,4 @@ ln -s ~/.dotfiles/resources/rstudio-prefs.json ~/.config/rstudio
 ```
 
 ## Path Finder Preferences
-I use Path Finder as a Finder (partial) alternative. Path Finder preference export is [not supported](https://support.cocoatech.com/discussions/problems/135101-how-to-save-all-path-finder-application-settings-for-use-on-my-other-mac), linking support files across versions has sometimes caused issues, and some functionality is likely to change under Big Sur . . . so I am maintaining a PDF of the preferences I am setting through the GUI settings.
+I use Path Finder as a Finder (partial) alternative. Path Finder preference export is [not supported](https://support.cocoatech.com/discussions/problems/135101-how-to-save-all-path-finder-application-settings-for-use-on-my-other-mac), linking support files across versions has sometimes caused issues, and some functionality is likely to change under Big Sur … so I am maintaining a PDF of the preferences I am setting through the GUI settings.
