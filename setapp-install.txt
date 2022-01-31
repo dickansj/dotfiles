@@ -14,6 +14,7 @@ Diagrams.app
 Downie.app
 Dropzone.app
 ForkLift.app
+GreenBooks.app
 Grids.app
 HoudahSpot.app
 Magic Window Air.app
