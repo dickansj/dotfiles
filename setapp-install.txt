@@ -14,6 +14,7 @@ DevUtils.app
 Diagrams.app
 Downie.app
 Dropzone.app
+Expressions.app
 ForkLift.app
 GreenBooks.app
 Grids.app
