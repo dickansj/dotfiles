@@ -6,6 +6,7 @@
 ### Downloads
 - Watches `~/Desktop/Downloads`.
 - Applies blue color to newly added items for 1 day
+- Checks PDFs for OCR layer. If it is missing, the PDF is opened in PDFpenPro, OCRed, saved, and closed.
 - Makes `~/Downloads/DMGs` and moves there DMGs added more than 1 week ago.
 - Creates `~/Downloads/ Downloads Offload` and moves there non-directory files neither created nor opened in the last 6 months. These could be moved off to an external drive when attached (I use a [Keyboard Maestro](https://www.keyboardmaestro.com/) mounted volume trigger).
 - Some file type sorting rules, off by default.
