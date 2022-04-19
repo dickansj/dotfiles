@@ -178,7 +178,7 @@ cask 'imazing' # license
 cask 'insomnia'
 cask 'istat-menus' # license
 cask 'itch'
-# cask 'ivpn' # cask has loading issues, use direct
+cask 'ivpn'  # license
 cask 'julia'
 cask 'kaleidoscope' # license
 cask 'kextviewr'
@@ -344,7 +344,6 @@ mas 'Xcode', id: 497799835
 # CalHash
 # Consolation3
 # BlockBlock Helper
-# iVPN                                          # license
 # Displays (Jibapps)                            # license
 # Interact Scratchpad                           # https://docs.getdrafts.com/docs/misc/interact-scratchpad#download-the-interact-scratchpad
 # Oracle Java 8                                 # Ubiquiti requires JRE 8 and expects Oracle Java
