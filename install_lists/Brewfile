@@ -186,6 +186,7 @@ cask 'keyboard-maestro' # license
 cask 'kindle'
 cask 'knockknock'
 cask 'little-snitch' # license
+cask 'macs-fan-control'
 cask 'macupdater'
 cask 'maestral'
 cask 'marked' # license
