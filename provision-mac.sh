@@ -469,6 +469,7 @@ declare -a dockList=(\
   /Applications/1Password\ 7\
   /Applications/Pastebot\
   /Applications/Setapp/Session\
+  /Applications/Anki\
   /System/Applications/Messages\
   /System/Applications/Facetime\
   /Applications/WhatsApp\
