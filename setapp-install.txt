@@ -29,7 +29,7 @@ News Explorer.app
 Path Finder.app
 Permute.app
 PocketCAS.app
-Quit All.app
+QuitAll.app
 Remote Mouse.app
 Session.app
 Simon.app
