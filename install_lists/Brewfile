@@ -214,6 +214,7 @@ cask 'screens' # license
 cask 'scrivener' # license
 cask 'send-to-kindle'
 # cask 'setapp' # cask has issues, use direct app
+cask 'sf-symbols'
 cask 'signal'
 cask 'silentknight'
 cask 'skim'
