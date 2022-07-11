@@ -98,12 +98,9 @@
     "[javascript]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "workbench.editorAssociations": [
-      {
-        "viewType": "jupyter.notebook.ipynb",
-        "filenamePattern": "*.ipynb"
-      }
-    ],
+    "workbench.editorAssociations": {
+      "*.ipynb": "jupyter.notebook.ipynb"
+    },
     "code-runner.enableAppInsights": false,
     "terminal.integrated.commandsToSkipShell": [
       "language-julia.interrupt"

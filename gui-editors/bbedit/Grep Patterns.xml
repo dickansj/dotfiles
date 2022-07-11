@@ -140,6 +140,56 @@
 			<key>UniqueID</key>
 			<string>1AF71FF7-ED32-49C7-8CE4-F759EA5EF71C</string>
 		</dict>
+		<dict>
+			<key>ReplacePattern</key>
+			<string>[[\1]{#\1}](#\1)\.</string>
+			<key>SearchPattern</key>
+			<string>^([0-9]+)\.</string>
+			<key>Title</key>
+			<string>Section number to pandoc interpage link</string>
+			<key>UniqueID</key>
+			<string>B343C910-975F-4CFF-A126-42E429E7A0BA</string>
+		</dict>
+		<dict>
+			<key>ReplacePattern</key>
+			<string>\[\^\1\]</string>
+			<key>SearchPattern</key>
+			<string>\^\[([0-9]+)\]\(#%[0-9]+[a-z]*\)\{.{1,6}\}\^</string>
+			<key>Title</key>
+			<string>Clean up Vatican inline footnotes</string>
+			<key>UniqueID</key>
+			<string>7C1EFF0F-97A7-4767-954D-740991B651B1</string>
+		</dict>
+		<dict>
+			<key>ReplacePattern</key>
+			<string>\1_\2_\3</string>
+			<key>SearchPattern</key>
+			<string>([^\*])\*{1}([^\*]+)\*([^\*])</string>
+			<key>Title</key>
+			<string>Italics convert single asterisk to underscore</string>
+			<key>UniqueID</key>
+			<string>B58D9122-E46F-4581-93E2-A11F1785BD2A</string>
+		</dict>
+		<dict>
+			<key>ReplacePattern</key>
+			<string>\[\^\1\]:</string>
+			<key>SearchPattern</key>
+			<string>^\*{2}\[([0-9]+)\]\(#-.{1,2}\)\{.{1,6}\}\*{2}</string>
+			<key>Title</key>
+			<string>Vatican clean up endnotes</string>
+			<key>UniqueID</key>
+			<string>D6B22DE8-F25C-450D-8605-8DF2C3C852BC</string>
+		</dict>
+		<dict>
+			<key>ReplacePattern</key>
+			<string>\1 \2</string>
+			<key>SearchPattern</key>
+			<string>([^\*\n\\])\n([^\n\*])</string>
+			<key>Title</key>
+			<string>Vatican soft wrap most paragraphs</string>
+			<key>UniqueID</key>
+			<string>548D9CAC-7E52-4641-BCE6-B09696749952</string>
+		</dict>
 	</array>
 </dict>
 </plist>
