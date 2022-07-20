@@ -144,6 +144,7 @@ cask 'balenaetcher'
 cask 'basictex'
 cask 'bbedit' # license
 cask 'bettertouchtool' # license
+cask 'bunch'
 cask 'calibre'
 cask 'carbon-copy-cloner' # license
 cask 'cheatsheet'
