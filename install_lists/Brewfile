@@ -130,6 +130,7 @@ cask 'xquartz' # wine-stable dependency
 # now cask apps
 cask '1password' # license
 cask 'adium'
+cask 'adobe-digital-editions'
 cask 'adventure'
 cask 'alfred' # license
 cask 'anki'
