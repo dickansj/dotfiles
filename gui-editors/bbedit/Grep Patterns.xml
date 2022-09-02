@@ -190,6 +190,26 @@
 			<key>UniqueID</key>
 			<string>548D9CAC-7E52-4641-BCE6-B09696749952</string>
 		</dict>
+		<dict>
+			<key>ReplacePattern</key>
+			<string>\[\^\1\]:</string>
+			<key>SearchPattern</key>
+			<string>^\[\\\[([0-9]+)\\\]\]</string>
+			<key>Title</key>
+			<string>Vatican clean [\[##\]] endnotes</string>
+			<key>UniqueID</key>
+			<string>0AEBA257-E715-4D84-A92D-23CA5618539A</string>
+		</dict>
+		<dict>
+			<key>ReplacePattern</key>
+			<string>\1\[\^\2\]</string>
+			<key>SearchPattern</key>
+			<string>([^\n])\[\\\[([0-9]+)\\\]\]</string>
+			<key>Title</key>
+			<string>Vatican clean [\[##\]] footnotes</string>
+			<key>UniqueID</key>
+			<string>378184BE-1A4E-473E-A6E9-0C7D8BA99455</string>
+		</dict>
 	</array>
 </dict>
 </plist>
