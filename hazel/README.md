@@ -1,4 +1,4 @@
-[Hazel](https://www.noodlesoft.com/) watches folders and executes actions (including your scripts) when conditions are matched. These are the Hazel rules I am currently using, and they can be imported into Hazel for customization. Hazel v5 was recently released as a standalone app, but it appears these [can still be imported](https://www.noodlesoft.com/kb/hazel-5-faq/).
+[Hazel](https://www.noodlesoft.com/) watches folders and executes actions (including your scripts) when conditions are matched. These are a few of the Hazel rules I am currently using, and they can be imported into Hazel for customization.
 
 ### Desktop
 - Watches `~/Desktop`. Creates `~/Desktop/Workbench` and moves here non-directory files added >7 days ago and not opened in the last 2 days.
