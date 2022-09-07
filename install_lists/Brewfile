@@ -97,6 +97,7 @@ brew 'openjpeg'
 brew 'webp'
 
 # various and sundry
+brew 'brightness'
 brew 'hugo'
 brew 'lame'
 brew 'mpv'
