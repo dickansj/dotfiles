@@ -75,6 +75,7 @@ brew 'sqlite'
 brew 'mycli'
 brew 'podman'
 brew 'doctl'
+brew 'protobuf'
 
 # document and graphics tools
 brew 'emacs'
