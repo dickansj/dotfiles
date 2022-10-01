@@ -47,4 +47,5 @@ Trickster.app
 TripMode.app
 Typeface.app
 WiFi Explorer.app
+Xnapper.app
 iThoughtsX.app
