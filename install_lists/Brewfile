@@ -118,6 +118,11 @@ brew 'nethack'
 brew 'frotz'
 brew 'solarus'
 
+# Gather (URLs to Markdown)
+# https://brettterpstra.com/projects/gather-cli/
+tap 'ttscoff/thelab'
+brew 'gather-cli'
+
 # now getting into full macOS apps
 tap 'homebrew/cask-versions'
 cask 'affinity-publisher-beta' # license
