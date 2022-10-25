@@ -26,6 +26,7 @@ Meeter.app
 Mouseless.app
 NetSpot.app
 News Explorer.app
+Nitro PDF Pro.app
 Paletro.app
 Path Finder.app
 Permute.app
