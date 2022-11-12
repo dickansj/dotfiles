@@ -292,7 +292,6 @@ cask 'luna-secondary'
 cask '8bitdo-firmware-updater'
 cask 'caldigit-thunderbolt-charging'
 cask 'displaylink'
-cask 'logitech-options'
 
 
 # and finally, stuff from the Mac App Store
@@ -354,6 +353,7 @@ mas 'Xcode', id: 497799835
 # Displays (Jibapps)                            # license
 # Interact Scratchpad                           # https://docs.getdrafts.com/docs/misc/interact-scratchpad#download-the-interact-scratchpad
 # IVPN                                          # license
+# Logi Options+                                 # or maybe just use BetterTouchTool?
 # News Explorer                                 # license
 # Oracle Java 8                                 # Ubiquiti requires JRE 8 and expects Oracle Java
                                                 # https://www.java.com/en/download/
