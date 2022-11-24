@@ -125,7 +125,6 @@ brew 'gather-cli'
 
 # now getting into full macOS apps
 tap 'homebrew/cask-versions'
-cask 'affinity-publisher-beta' # license
 cask 'firefox-developer-edition'
 
 tap 'homebrew/cask'
@@ -139,6 +138,9 @@ cask '1password' # license
 cask 'adium'
 cask 'adobe-digital-editions'
 cask 'adventure'
+cask 'affinity-designer' # license
+cask 'affinity-photo' # license
+cask 'affinity-publisher' # license
 cask 'alfred' # license
 cask 'anki'
 cask 'applepi-baker'
@@ -298,8 +300,6 @@ cask 'displaylink'
 brew 'mas'
 
 mas 'ActiveTab', id: 1588852241
-mas 'Affinity Designer', id: 824171161
-mas 'Affinity Photo', id: 824183456
 mas 'Airmail', id: 918858936
 mas 'Amphetamine', id: 937984704
 mas 'BetterSnapTool', id: 417375580
