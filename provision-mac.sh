@@ -465,8 +465,8 @@ dockutil --remove all --no-restart
 declare -a dockList=(\
   /System/Library/CoreServices/Finder\
   /Applications/Setapp/Path\ Finder\
-  /System/Applications/System\ Preferences\
-  /Applications/1Password\ 7\
+  /System/Applications/System\ Settings\
+  /Applications/1Password\
   /Applications/Pastebot\
   /Applications/Setapp/Session\
   /Applications/Anki\
