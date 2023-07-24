@@ -181,7 +181,6 @@ cask 'gog-galaxy'
 cask 'google-chrome'
 cask 'google-drive'
 cask 'hazel'
-cask 'hook' # license
 cask 'iina'
 cask 'imagej'
 cask 'imageoptim'

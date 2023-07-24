@@ -1,5 +1,6 @@
 24 Hour Wallpaper.app
 Aeon Timeline.app
+AirBuddy.app
 AlDente Pro.app
 Bartender.app
 Boom 3D.app
@@ -18,6 +19,8 @@ Expressions.app
 ForkLift.app
 GreenBooks.app
 Grids.app
+Hand Mirror.app
+Hookmark.app
 HoudahSpot.app
 Magic Window Air.app
 Mate Translate.app
