@@ -310,13 +310,14 @@ mas 'Craft', id: 1487937127
 mas 'Drafts', id: 1435957248
 mas 'Fantastical', id: 975937182
 mas 'Front and Center', id: 1493996622
-# mas 'GarageBand', id: 682658836 # these updates are tough on my net
+mas 'GarageBand', id: 682658836
 mas 'Gemini 2', id: 1090488118
 mas 'HazeOver', id: 430798174
 mas 'iMovie', id: 408981434
 mas 'iPulse', id: 1028916583
 mas 'KeyKey', id: 1035137927
 mas 'Keynote', id: 409183694
+mas 'LosslessCut', id: 1505323402
 mas 'Mactracker', id: 430255202
 mas 'Magnet', id: 441258766
 mas 'Mela', id: 1568924476
@@ -330,7 +331,6 @@ mas 'Pastebot', id: 1179623856
 mas 'PCalc', id: 403504866
 mas 'Peek', id: 1554235898
 mas 'PiPifier', id: 1160374471
-mas 'Pocket', id: 568494494
 mas 'PopClip', id: 445189367
 mas 'Slack', id: 803453959
 mas 'SwitchGlass', id: 1498546559
