@@ -150,7 +150,6 @@ cask 'authy'
 cask 'autodesk-fusion360' # education license
 # cask 'backblaze' # don't use homebrew for this; upgrade will bork things
 cask 'balenaetcher'
-# cask 'bartender' # install/use setapp version
 cask 'basictex'
 cask 'bbedit' # license
 cask 'bettertouchtool' # license
@@ -158,11 +157,8 @@ cask 'bunch'
 cask 'calibre'
 cask 'carbon-copy-cloner' # license
 cask 'cheatsheet'
-# cask 'cleanmymac' # use setapp version
 cask 'crunch'
 cask 'cyberduck'
-# cask 'default-folder-x' # license
-                          # use setapp version
 cask 'devonagent' # license
 cask 'devonthink' # license
 cask 'dhs'
@@ -298,7 +294,6 @@ cask 'displaylink'
 # and finally, stuff from the Mac App Store
 brew 'mas'
 
-mas 'ActiveTab', id: 1588852241
 mas 'Airmail', id: 918858936
 mas 'Amphetamine', id: 937984704
 mas 'BetterSnapTool', id: 417375580
@@ -339,7 +334,6 @@ mas 'uBlock', id: 1385985095
 mas 'Unclutter', id: 577085396
 mas 'Wallpaper Wizard', id: 1266674560
 mas 'Xcode', id: 497799835
-# mas 'Zen Timer', id: 1031035430 # gone from store rip
 
 
 ## Other apps to remember (not managed by brew, MAS, Setapp)
@@ -352,10 +346,9 @@ mas 'Xcode', id: 497799835
 # Displays (Jibapps)                            # license
 # Interact Scratchpad                           # https://docs.getdrafts.com/docs/misc/interact-scratchpad#download-the-interact-scratchpad
 # IVPN                                          # license
-# Logi Options+                                 # or maybe just use BetterTouchTool?
 # News Explorer                                 # license
 # Oracle Java 8                                 # Ubiquiti requires JRE 8 and expects Oracle Java
                                                 # https://www.java.com/en/download/
-# TrackerZapper                                 # https://github.com/rknightuk/TrackerZapper
-# Twitterific (non-MAS Project Phoenix version) # copy from /Applications
+# Synergy (v3)                                  # https://symless.com/synergy/
                                                 # license
+# TrackerZapper                                 # https://github.com/rknightuk/TrackerZapper
