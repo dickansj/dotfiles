@@ -30,6 +30,7 @@ Mouseless.app
 NetSpot.app
 News Explorer.app
 Nitro PDF Pro.app
+PDF Search.app
 Paletro.app
 Path Finder.app
 Permute.app
