@@ -51,6 +51,7 @@ Transloader.app
 Trickster.app
 TripMode.app
 Typeface.app
+TypingMind.app
 WiFi Explorer.app
 Xnapper.app
 iThoughtsX.app

@@ -465,6 +465,7 @@ dockutil --remove all --no-restart
 declare -a dockList=(\
   /System/Library/CoreServices/Finder\
   /Applications/Setapp/Path\ Finder\
+  /Applications/DEVONthink\ 3\
   /System/Applications/System\ Settings\
   /Applications/1Password\
   /Applications/Pastebot\
@@ -474,6 +475,7 @@ declare -a dockList=(\
   /System/Applications/Facetime\
   /Applications/WhatsApp\
   /System/Applications/Music\
+  /Applications/Spotify\
   /System/Applications/Photos\
   /Applications/Fantastical\
   /Applications/Cardhop\
