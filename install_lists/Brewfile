@@ -294,6 +294,7 @@ cask 'displaylink'
 # and finally, stuff from the Mac App Store
 brew 'mas'
 
+mas 'AdBlock Pro', id: 1018301773
 mas 'Airmail', id: 918858936
 mas 'Amphetamine', id: 937984704
 mas 'BetterSnapTool', id: 417375580
