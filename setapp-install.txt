@@ -3,6 +3,7 @@ Aeon Timeline.app
 AirBuddy.app
 AlDente Pro.app
 Bartender.app
+BoltAl.app
 Boom 3D.app
 BusyContacts.app
 ChronoSync Express.app
@@ -35,6 +36,7 @@ Paletro.app
 Path Finder.app
 Permute.app
 PocketCAS.app
+PopClip.app
 QuitAll.app
 Remote Mouse.app
 Session.app
