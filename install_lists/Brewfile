@@ -137,7 +137,6 @@ cask 'xquartz' # wine-stable dependency
 cask '1password' # license
 cask 'adium'
 cask 'adobe-digital-editions'
-cask 'adventure'
 cask 'affinity-designer' # license
 cask 'affinity-photo' # license
 cask 'affinity-publisher' # license
