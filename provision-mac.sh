@@ -487,7 +487,7 @@ declare -a dockList=(\
   /Applications/Setapp/News\ Explorer\
   /Applications/Twitterific\
   /Applications/Discord\
-  /Applications/Setapp/Nitro\ PDF\ Pro\
+  /Applications/PDF\ Expert\
   /Applications/Setapp/TaskPaper\
   /Applications/Drafts\
   /Applications/Marked\ 2\
