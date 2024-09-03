@@ -189,6 +189,7 @@ cask 'kextviewr'
 cask 'keyboard-maestro' # license
 cask 'kindle'
 cask 'knockknock'
+cask 'logi-options+'
 cask 'little-snitch' # license
 cask 'macs-fan-control'
 cask 'macupdater'
@@ -203,6 +204,7 @@ cask 'omnidisksweeper'
 cask 'onyx'
 cask 'openemu'
 cask 'oversight' # CAVEAT: need to quit oversight from menu bar or else brew hangs
+cask 'moom'
 cask 'pacifist'
 cask 'pdf-expert' # license
 cask 'pingplotter'

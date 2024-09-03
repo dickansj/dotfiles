@@ -54,6 +54,7 @@ Trickster.app
 TripMode.app
 Typeface.app
 TypingMind.app
+Voice Dream Reader.app
 WiFi Explorer.app
 Xnapper.app
 iThoughtsX.app
