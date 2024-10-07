@@ -3,7 +3,7 @@ Aeon Timeline.app
 AirBuddy.app
 AlDente Pro.app
 Bartender.app
-BoltAl.app
+BoltAI.app
 Boom 3D.app
 BusyContacts.app
 ChronoSync Express.app
@@ -57,4 +57,5 @@ TypingMind.app
 Voice Dream Reader.app
 WiFi Explorer.app
 Xnapper.app
+iStat Menus.app
 iThoughtsX.app

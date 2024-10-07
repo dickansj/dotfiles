@@ -181,7 +181,6 @@ cask 'imagej'
 cask 'imageoptim'
 cask 'imazing' # license
 cask 'insomnia'
-cask 'istat-menus' # license
 cask 'itch'
 cask 'julia'
 cask 'kaleidoscope' # license

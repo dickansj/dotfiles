@@ -468,6 +468,7 @@ declare -a dockList=(\
   /Applications/DEVONthink\ 3\
   /System/Applications/System\ Settings\
   /Applications/1Password\
+  /Applications/iPhone\ Mirroring\
   /Applications/Pastebot\
   /Applications/Setapp/Session\
   /Applications/Anki\
@@ -481,14 +482,13 @@ declare -a dockList=(\
   /Applications/Cardhop\
   /Applications/CARROTweather\
   /Applications/Firefox\ Developer\ Edition\
-  /Applications/Firefox\
   /System/Applications/Safari\
   /Applications/Airmail\
   /Applications/Setapp/News\ Explorer\
-  /Applications/Twitterific\
   /Applications/Discord\
   /Applications/PDF\ Expert\
   /Applications/Setapp/TaskPaper\
+   /Applications/Scrivener\
   /Applications/Drafts\
   /Applications/Marked\ 2\
   /Applications/BBEdit\
