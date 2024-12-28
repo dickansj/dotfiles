@@ -7,7 +7,7 @@ BoltAI.app
 Boom 3D.app
 BusyContacts.app
 ChronoSync Express.app
-CleanMyMac X.app
+CleanMyMac.app
 CleanShot X.app
 Dash.app
 Default Folder X.app
@@ -18,6 +18,7 @@ Downie.app
 Dropzone.app
 Expressions.app
 ForkLift.app
+FreeYourMusic.app
 GreenBooks.app
 Grids.app
 Hand Mirror.app
@@ -31,6 +32,7 @@ Mouseless.app
 NetSpot.app
 News Explorer.app
 Nitro PDF Pro.app
+PDF Pals.app
 PDF Search.app
 Paletro.app
 Path Finder.app
