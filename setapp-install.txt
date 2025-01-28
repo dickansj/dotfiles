@@ -61,3 +61,4 @@ WiFi Explorer.app
 Xnapper.app
 iStat Menus.app
 iThoughtsX.app
+superwhisper.app
