@@ -1,0 +1,24 @@
+name: Check Brewfile Validity
+
+on:
+  push:
+  schedule:
+    # every Sunday at 3:23am
+    - cron: '23 3 * * 0'
+
+jobs:
+  brewfile-check:
+    # just checks against the public listings, so don't need to be on a mac
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Run Brewfile Audit
+        run: |
+          python ./utility/audit-brewfile.py
+
+

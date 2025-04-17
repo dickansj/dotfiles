@@ -6,7 +6,7 @@ SETUVAR __fish_git_prompt_show_informative_status:true
 SETUVAR __fish_git_prompt_showcolorhints:true
 SETUVAR __fish_git_prompt_showstashstate:true
 SETUVAR __fish_git_prompt_showuntrackedfiles:true
-SETUVAR __fish_initialized:3800
+SETUVAR __fish_initialized:3400
 SETUVAR fish_color_autosuggestion:626262
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:87d75f
@@ -25,7 +25,7 @@ SETUVAR fish_color_operator:00a6b2
 SETUVAR fish_color_param:eeeeee
 SETUVAR fish_color_quote:d7af5f
 SETUVAR fish_color_redirection:00afff
-SETUVAR fish_color_search_match:white\x1e\x2d\x2dbackground\x3dbrblack
+SETUVAR fish_color_search_match:bryellow\x1e\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_color_selection:white\x1e\x2d\x2dbold\x1e\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_color_status:red
 SETUVAR fish_color_user:brgreen

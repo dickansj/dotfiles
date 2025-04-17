@@ -31,45 +31,62 @@ timerData "START"
 ./install_symlinks.sh
 
 # ssh config
-mkdir -p ~/.ssh
+mkdir -p -m 700 ~/.ssh
 cp resources/ssh_config.base ~/.ssh/config
 
 # Ask for the administrator password
-echo "Now we need sudo access to install homebrew, some GUI apps, and change the shell."
+echo "Now we need sudo access to install {(Rosetta),Homebrew,some GUI apps} and change the shell."
 sudo -v
 still_need_sudo=1
-while still_need_sudo; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+while [ $still_need_sudo -ne 0 ]; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-timerData "PRE-BREW"
+if [[ $(uname -m) == 'arm64' ]]; then
+  HBBASE=/opt/homebrew
+
+  timerData "PRE-ROSETTA"
+  /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+  timerData "POST-ROSETTA"
+else
+  HBBASE=/usr/local
+
+  timerData "PRE-BREW"
+fi
+
+HBBIN=$HBBASE/bin
 
 # install homebrew
 export HOMEBREW_NO_ANALYTICS=1
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval $($HBBIN/brew shellenv)
 
 # Turning off quarantine for casks; assuming I trust any apps that
 #   made it into the Brewfile. *slightly* perilous, though.
 HOMEBREW_CASK_OPTS="--no-quarantine" \
-  brew bundle install --no-lock --file=$DOTFILES_ROOT/install_lists/Brewfile
+  $HBBIN/brew bundle install --no-lock --file=$DOTFILES_ROOT/install_lists/Brewfile
 
 # set fish as user shell
-targetShell="/usr/local/bin/fish"
+targetShell="$HBBIN/fish"
 echo $targetShell | sudo tee -a /etc/shells
 sudo chsh -s $targetShell $USER
 
 # homebrew doesn't link OpenJDK by default; do it while we still have sudo
-sudo ln -sfn /usr/local/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+sudo ln -sfn $HBBASE/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
 
 # Reveal IP address, hostname, OS version, etc. when clicking the clock
 # in the login window
 sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
+
+# allow Touch ID to enable sudo on the command line
+sudo cp /etc/pam.d/sudo_local.template /etc/pam.d/sudo_local
+sudo sed -i "" "s/#auth/auth/" /etc/pam.d/sudo_local
 
 # no more sudo needed!
 still_need_sudo=0
 sudo -k
 
 # clean up after homebrew
-brew cleanup -s
-rm -rf $(brew --cache)
+$HBBIN/brew cleanup -s
+rm -rf $($HBBIN/brew --cache)
 export HOMEBREW_NO_AUTO_UPDATE=0
 
 timerData "POST-BREW"
@@ -77,17 +94,12 @@ timerData "POST-BREW"
 # make sure we're running in a local git working copy
 #  (this hooks us in if we were set up from the bootstrap script)
 if [[ ! -d .git ]]; then
-  (
-    # don't look at the ~/.gitconfig
-    unset HOME
-
     git init --initial-branch=main
     git remote add origin https://github.com/dickansj/dotfiles.git
     git fetch
     git reset origin/main
     git branch --set-upstream-to=origin/main main
     git checkout .
-  )
 fi
 # swap to ssh; credentials can get added later
 git remote set-url origin git@github.com:dickansj/dotfiles.git
@@ -95,21 +107,27 @@ git remote set-url origin git@github.com:dickansj/dotfiles.git
 # Projects folder is where most code stuff lives; link this there, too,
 #  because otherwise I'll forget where it is
 if [[ ! -d ~/Projects/dotfiles ]]; then
-  mkdir -p ~/Projects
+  mkdir -p -m 700 ~/Projects
   ln -s $DOTFILES_ROOT ~/Projects/dotfiles
 fi
 
 # any vim bundles
-(
-  # forget about the gitconfig for now
-  unset HOME
-  vim +PluginInstall +qall
-)
+vim +PluginInstall +qall
 
+# make parallel chill
+mkdir -p $HOME/.parallel
+touch $HOME/.parallel/will-cite
+
+# setup asdf
+source $($HBBIN/brew --prefix asdf)/asdf.sh
+shimPath="$HOME/.asdf/shims"
+asdf plugin add python
+asdf plugin add nodejs
+asdf plugin add ruby
 
 # copying version check from envup
 env_remVer() {
-    $1 install -l 2>&1 \
+    asdf list all $1 2>&1 \
         | grep -vE "\s*[a-zA-Z-]" \
         | sort -V \
         | grep "^\s*$2" \
@@ -118,72 +136,51 @@ env_remVer() {
 }
 
 # python setup
-git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
-git clone https://github.com/pyenv/pyenv-update.git $HOME/.pyenv/plugins/pyenv-update
-pyPath="$HOME/.pyenv/shims"
-pyenv="$HOME/.pyenv/bin/pyenv"
+py3version=$(env_remVer python 3)
+LDFLAGS="-L$HBBASE/opt/zlib/lib -L$HBBASE/opt/sqlite/lib" \
+  CPPFLAGS="-I$HBBASE/opt/zlib/include -I$HBBASE/opt/sqlite/include" \
+  asdf install python $py3version
 
-py3version=$(env_remVer $pyenv 3)
-LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib" \
-  CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include" \
-  $pyenv install $py3version
-$pyenv global $py3version
-$pyenv rehash
-$pyPath/pip3 install --upgrade pip
-$pyPath/pip3 install -r install_lists/python3-dev-packages.txt
-$pyenv rehash
+asdf global python $py3version
+asdf reshim python
+$shimPath/python3 -m pip install --upgrade pip
+$shimPath/pip3 install wheel
+$shimPath/pip3 install -r install_lists/python3-dev-packages.txt
+asdf reshim python
 
-py2version=$(env_remVer $pyenv 2)
-LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib" \
-  CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include" \
-  $pyenv install $py2version
-$pyenv global $py3version $py2version
-$pyenv rehash
-$pyPath/pip2 install --upgrade pip
-$pyPath/pip2 install -r install_lists/python2-dev-packages.txt
-$pyenv rehash
+# asdf install python miniconda3-latest
+# asdf global python $py3version $py2version miniconda3-latest
+# $shimPath/conda update --all -y
 
-$pyenv install miniconda3-latest
-$pyenv global $py3version $py2version miniconda3-latest
-$pyPath/conda update --all -y
-$pyPath/conda install anaconda-navigator -y
-
-eval "$($pyenv init -)"
-
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | $pyPath/python
-$HOME/.poetry/bin/poetry config virtualenvs.in-project true
+curl -sSL https://install.python-poetry.org/ | $shimPath/python -
+$HOME/.local/bin/poetry config virtualenvs.in-project true
 
 timerData "POST-PYTHON"
 
 # ruby setup
-rbPath="$HOME/.rbenv/shims"
-rbenv="/usr/local/bin/rbenv"
-rbversion=$(env_remVer $rbenv 3)
-RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)" \
-  $rbenv install $rbversion
-$rbenv global $rbversion
-eval "$($rbenv init -)"
+rbversion=$(env_remVer ruby 3)
+RUBY_CONFIGURE_OPTS="--with-openssl-dir=$($HBBIN/brew --prefix openssl@1.1)" \
+  asdf install ruby $rbversion
+asdf global ruby $rbversion
+asdf reshim ruby
 
-$rbPath/gem update --system
-yes | $rbPath/gem update
-yes | $rbPath/gem install bundler
-$rbPath/gem cleanup
+$shimPath/gem update --system
+yes | $shimPath/gem update
+yes | $shimPath/gem install bundler
+$shimPath/gem cleanup
 
 timerData "POST-RUBY"
 
 # node setup
-nodePath="$HOME/.nodenv/shims"
-nodenv="/usr/local/bin/nodenv"
-git clone https://github.com/nodenv/node-build-update-defs.git "$(nodenv root)"/plugins/node-build-update-defs
-$nodenv update-version-defs
-nodeversion=$(env_remVer $nodenv "\d*[02468]\.")
-$nodenv install $nodeversion
+nodeversion=$(env_remVer nodejs "\d*[02468]\.")
+NODEJS_CHECK_SIGNATURES="no" asdf install nodejs $nodeversion
 
-$nodenv global $nodeversion
-eval "$($nodenv init -)"
+asdf global nodejs $nodeversion
+asdf reshim nodejs
 
-$nodePath/npm install -g npm
-$nodePath/npm install -g $(cat install_lists/node-packages.txt)
+ASDF_SKIP_RESHIM=1 $shimPath/npm install -g npm
+ASDF_SKIP_RESHIM=1 $shimPath/npm install -g $(cat install_lists/node-packages.txt)
+asdf reshim nodejs
 
 timerData "POST-NODE"
 
@@ -193,7 +190,8 @@ curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path
 timerData "POST-RUST"
 
 # set up Terminal
-cp ./resources/FiraMod/* $HOME/Library/Fonts/
+cp ./resources/FiraMod/*.ttf $HOME/Library/Fonts/
+cp ./resources/FiraMod/patched/*.ttf $HOME/Library/Fonts/
 
 osascript 2>/dev/null <<EOD
   tell application "Terminal"
@@ -224,8 +222,8 @@ xattr -cr ~/Library/QuickLook/*
 qlmanage -r
 qlmanage -r cache
 
-
-## We'll see how these go with Big Sur...
+# set up default associations
+duti ~/.duti
 
 # this will pop a permissions window, but no way around it
 #   (this is a good thing to have security around, I will agree)
@@ -242,10 +240,6 @@ defaults write com.apple.menuextra.clock FlashDateSeparators -bool false
 
 # Always show scrollbars
 defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
-
-# Globally remove proxy icon hover delay
-# (introduced in Big Sur)
-defaults write -g NSToolbarTitleViewRolloverDelay -float 0
 
 # Text selection in QuickLook
 defaults write com.apple.finder QLEnableTextSelection -bool true
@@ -269,11 +263,14 @@ defaults write com.apple.finder FinderSpawnTab -bool false
 defaults write com.apple.finder NewWindowTarget -string "PfHm"
 defaults write com.apple.finder NewWindowTargetPath -string "file://$HOME/"
 
-# Show icons for external hard drives, servers, and removable media on the desktop
+# Only show icons for *external* hard drives, servers, and removable media on the desktop
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
-defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
+defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
 defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+
+# Don't bug me about using new hard drives for Time Machine
+defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool "true"
 
 # Finder: show all filename extensions
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
@@ -283,6 +280,12 @@ defaults write com.apple.finder ShowStatusBar -bool true
 
 # Finder: show path bar
 defaults write com.apple.finder ShowPathbar -bool true
+
+# Finder: turn off delay on proxy icon display (>= Big Sur)
+defaults write com.apple.Finder NSToolbarTitleViewRolloverDelay -float 0
+
+# Finder: show proxy icons all the time (>= Monterey)
+defaults write com.apple.universalaccess showWindowTitlebarIcons -bool "true"
 
 # When performing a search, search the current folder by default
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
@@ -302,10 +305,6 @@ defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 xattr -d com.apple.FinderInfo ~/Library
 chflags nohidden ~/Library
 
-# Eliminate Finder proxy icon hover delay in Big Sur
-# These are the kinds of things that keep me using a Finder alternative most of the time...
-defaults write com.apple.Finder NSToolbarTitleViewRolloverDelay -float 0
-
 # Expand save and print panels by default
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
@@ -314,6 +313,9 @@ defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 
 # Save to disk (not to iCloud) by default
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+
+# Turn off the "feature" where iCloud offloads files you haven't used in a while
+defaults write com.apple.bird optimize-storage -int 0
 
 # Automatically quit printer app once the print jobs complete
 defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
@@ -348,6 +350,9 @@ defaults write com.apple.dock showDesktopGestureEnabled -bool true
 
 # disable Launchpad gesture
 defaults write com.apple.dock showLaunchpadGestureEnabled -bool false
+
+# show the app switcher on every monitor
+defaults write com.apple.dock appswitcher-all-displays -bool true
 
 # Enable Control-Scroll to zoom screen
 defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
@@ -414,9 +419,10 @@ defaults write com.apple.dock autohide -bool true
 
 # Eliminate Dock autohide-delay
 # https://swissmacuser.ch/show-macos-dock-instantly-without-delay/
-# For Apple Silicon: defaults write com.apple.dock autohide-delay -float 0 && defaults write com.apple.dock autohide-time-modifier -float 0.4
+# For Apple Silicon: 
+defaults write com.apple.dock autohide-delay -float 0 && defaults write com.apple.dock autohide-time-modifier -float 0.4
 # For Intel:
-defaults write com.apple.dock autohide-delay -float 0
+# defaults write com.apple.dock autohide-delay -float 0
 
 # Turn off Dock magnification
 defaults write com.apple.dock magnification -bool false
@@ -427,9 +433,19 @@ defaults write com.apple.dock show-recents -bool false
 # Allow slow-motion minimize effects when holding down shift (relic from old OS X :D)
 defaults write com.apple.dock slow-motion-allowed -bool true
 
+# Tighten up the graphics on level three... er... the menu bar
+defaults -currentHost write -globalDomain NSStatusItemSpacing -int 6
+defaults -currentHost write -globalDomain NSStatusItemSelectionPadding -int 3
+
+# Move windows with ⌘-⌃-click anywhere in them
+defaults write -g NSWindowShouldDragOnGesture -bool true
+
 # Hot corner, bottom-right: Start screen saver
 defaults write com.apple.dock wvous-br-corner -int 5
 defaults write com.apple.dock wvous-br-modifier -int 0
+
+# Don't rearrange spaces based on my random ⌘-tabbing around
+defaults write com.apple.dock mru-spaces -bool false
 
 # Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app
 defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" "@\U21a9"
@@ -452,58 +468,66 @@ defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
 # Set archive utility to not open a new window when it extracts things
 defaults write com.apple.archiveutility dearchive-reveal-after -int 0
 
+# Have Xcode remember which project I had open last
+defaults write com.apple.dt.Xcode NSQuitAlwaysKeepsWindows -bool true
+
+# UGH ads in Xcode? The very name of this setting should be a source of shame to someone at Apple
+defaults write com.apple.dt.Xcode XcodeCloudUpsellPromptEnabled -bool false
+
 ## set up Dock
 
 # move to bottom
 defaults write com.apple.dock orientation bottom
 
-# NB: paths to system applications won't work in Big Sur;
-# now require "/System/Applications/$app.app";
+# NB: System apps require "/System/Applications/$app.app";
 # also includes some manually installed apps;
 # remember to update this list when getting a new machine
 dockutil --remove all --no-restart
 declare -a dockList=(\
-  /System/Library/CoreServices/Finder\
-  /Applications/Setapp/Path\ Finder\
-  /Applications/DEVONthink\ 3\
-  /System/Applications/System\ Settings\
-  /Applications/1Password\
-  /Applications/iPhone\ Mirroring\
-  /Applications/Pastebot\
-  /Applications/Setapp/Session\
-  /Applications/Anki\
-  /System/Applications/Messages\
-  /System/Applications/Facetime\
-  /Applications/WhatsApp\
-  /System/Applications/Music\
-  /Applications/Spotify\
-  /System/Applications/Photos\
-  /Applications/Fantastical\
-  /Applications/Cardhop\
-  /Applications/CARROTweather\
-  /Applications/Firefox\ Developer\ Edition\
-  /System/Applications/Safari\
-  /Applications/Airmail\
-  /Applications/Setapp/News\ Explorer\
-  /Applications/Discord\
-  /Applications/PDF\ Expert\
-  /Applications/Setapp/TaskPaper\
-   /Applications/Scrivener\
-  /Applications/Drafts\
-  /Applications/Marked\ 2\
-  /Applications/BBEdit\
-  /Applications/Visual\ Studio\ Code\
-  /Applications/Tower\
-  /System/Applications/Utilities/Terminal\
-  /Applications/RStudio\
-  /Applications/PCalc\
-  /Applications/Setapp\
-  /System/Applications/App\ Store\
+  /System/Library/CoreServices/Finder.app \
+  /Applications/Setapp/Path\ Finder.app \
+  /Applications/DEVONthink\ 3.app \
+  /System/Applications/System\ Settings.app \
+  /Applications/1Password. app\
+  /Applications/iPhone\ Mirroring.app \
+  /Applications/Pastebot.app \
+  /Applications/Setapp/Session.app \
+  /Applications/Anki.app \
+  /System/Applications/Messages.app \
+  /System/Applications/Facetime.app \
+  /Applications/WhatsApp.app \
+  /System/Applications/Music.app \
+  /Applications/Spotify.app \
+  /System/Applications/Photos.app \
+  /Applications/Fantastical.app \
+  /Applications/Cardhop.app \
+  /Applications/CARROTweather.app \
+  /Applications/Firefox\ Developer\ Edition.app \
+  /System/Applications/Safari.app \
+  /Applications/Airmail.app \
+  /Applications/Setapp/News\ Explorer.app \
+  /Applications/Discord.app \
+  /Applications/PDF\ Expert.app \
+  /Applications/Setapp/TaskPaper.app \
+   /Applications/Scrivener.app \
+  /Applications/Drafts.app \
+  /Applications/Marked\ 2.app \
+  /Applications/BBEdit.app \
+  /Applications/Visual\ Studio\ Code.app \
+  /Applications/Tower.app \
+  /System/Applications/Utilities/Terminal.app \
+  /Applications/RStudio.app \
+  /Applications/PCalc.app \
+  /Applications/Setapp.app \
+  /System/Applications/App\ Store.app \
 )
 for app in "${dockList[@]}"; do
   dockutil --add "$app" --no-restart
 done
 dockutil --add "~/Downloads" --section others --view grid --display stack --no-restart
+
+# Make iCloud Drive documents somewhat findable from the command line
+ln -s $HOME/Library/Mobile\ Documents/com~apple~CloudDocs $HOME/iCloudDocs
 
 # killall complains if there's no instances running, so ignore it
 #   (and don't error)

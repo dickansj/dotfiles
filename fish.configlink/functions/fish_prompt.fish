@@ -94,6 +94,7 @@ function fish_prompt
 
   set snake "🐍"
   set dragon "🐉" # ♻️
+  set box "📦"
 
   set prettyPath (rtab)
   set hostName (string split '.' $hostname)[1]
@@ -108,6 +109,8 @@ function fish_prompt
     if test $CONDA_SHLVL -gt 1
       set scaffold "$scaffold\[$dragon\]"
     end
+  else if test -n "$DEVBOX_SHELL_ENABLED"; or test -n "$DEVBOX_PROJECT_ROOT"
+    set scaffold "$scaffold\[$box\]"
   end
 
   set topLen (math  \
@@ -148,12 +151,15 @@ function fish_prompt
   set lcount (math $lcount + 2 + (string length $prettyPath))
   if test -n "$VIRTUAL_ENV"
     echo -n "[$snake]"
-    set lcount (math $lcount + 2 + (string length $snake))
+    set lcount (math $lcount + 3 + (string length $snake))
   else if test -n "$CONDA_SHLVL"
     if test $CONDA_SHLVL -gt 1
       echo -n "[$dragon]"
-      set lcount (math $lcount + 2 + (string length $dragon))
+      set lcount (math $lcount + 3 + (string length $dragon))
     end
+  else if test -n "$DEVBOX_SHELL_ENABLED"; or test -n "$DEVBOX_PROJECT_ROOT"
+    echo -n "[$box]"
+    set lcount (math $lcount + 3 + (string length $box))
   end
   set rcount 6
   if $incUser;
@@ -208,6 +214,18 @@ function fish_prompt
       echo -n (string repeat -n (math $COLUMNS - 4 - (string length $alp)) " ")
       set_color $outlineColor
       echo $vertBar
+    end
+  end
+
+  if test $cmdDur -gt 10000
+    if ! string match --quiet " *" $history[1]
+      if test $__CFBundleIdentifier != (mdls -name kMDItemCFBundleIdentifier -r (get-frontmost))
+        if test $errStatus -eq 0
+          teller success --message $history[1] --title Success --sound Glass
+        else
+          teller failure --message $history[1] --title ERROR --sound Basso
+        end
+      end
     end
   end
 

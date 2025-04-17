@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+# Boston College requires an AnyConnect VPN to access certain services.
+#   I don't like extra VPN software running, so I use the OpenConnect
+#   command line program instead.
+
+sudocheck=$(sudo -nv 2>&1)
+if [ $? -ne 0 ]; then
+    echo "Need sudo password:"
+    sudo -v
+fi
+
+mullvad_connected=0
+MULLVAD=$(which mullvad)
+if [[ ${#MULLVAD} -ne 0 ]]; then
+    mullvad_status=$($MULLVAD status)
+    if [[ $mullvad_status == Connected* ]]; then
+        mullvad_connected=1
+    fi
+fi
+
+if [[ $mullvad_connected -eq 1 ]]; then
+    echo "Temporarily disconnecting from Mullvad VPN..."
+    mullvad disconnect
+    echo "Waiting for Mullvad disconnection to settle..."
+    sleep 5
+fi
+
+set -e
+
+# used to be able to do an expect script that would also request 2FA
+#   validation from Duo, but BC changed the backend and I can't get it
+#   to properly interact anymore.
+# not quite as automated as it used to be, but at least now I just paste
+#   and manually request the 2FA instead of having to dig out the password.
+echo "Getting BC password from 1Password..."
+eval $(op signin)
+bcpw=$(op item get "Boston College" --format=json | jq --raw-output '.fields[] | select(.id=="password").value')
+echo $bcpw | secure-pbcopy
+
+clear_pb_in_30 () {
+    sleep 30
+    echo "" | secure-pbcopy
+}
+
+echo "Starting up VPN..."
+echo "(Password is in clipboard! Will clear in 30 seconds.)"
+clear_pb_in_30 &
+
+# *could* pipe the password through stdin, but then can't request the 2FA because
+#   the TTY isn't interactive. :(
+sudo openconnect eaglevpn.bc.edu --config=$HOME/.config/bcvpn.conf --useragent='AnyConnect'
+
+if [[ $mullvad_connected -eq 1 ]]; then
+    echo "Waiting for OpenConnect disconnection to settle..."
+    sleep 5
+    echo "Reconnecting to Mullvad VPN..."
+    mullvad connect
+fi

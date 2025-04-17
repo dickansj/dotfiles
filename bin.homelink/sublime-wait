@@ -1,3 +1,15 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-/usr/local/bin/subl -w $*
+if [[ $(uname -m) == 'arm64' ]]; then
+  SUBL="/opt/homebrew/bin/subl"
+else
+  SUBL="/usr/local/bin/subl"
+fi
+
+if [[ -x $SUBL ]]; then
+    $SUBL -w $*
+else
+    # fallback for if ST doesn't actually exist
+    $EDITOR $*
+fi
+
