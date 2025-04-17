@@ -38,6 +38,8 @@ brew 'pigz'
 
 
 # programming languages
+brew 'asdf' # not sure if i'll stick with asdf or fall back to brew
+
 ## main
 brew 'uv' # for Python
 brew 'node'
