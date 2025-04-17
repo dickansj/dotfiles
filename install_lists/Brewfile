@@ -3,7 +3,7 @@ tap 'homebrew/core'
 tap 'homebrew/bundle' # gives basic brewfile capability needed by provision-mac.sh
 
 tap 'rcmdnk/file'     # a few other features for alternate brew file management
-brew 'brew-file'      # but it has to be set up/initiated if desired
+brew 'rcmdnk/file/brew-file'      # but it has to be set up/initiated if desired
                       # https://homebrew-file.readthedocs.io/en/latest/
 
 # shells and standard command line utilities
@@ -38,6 +38,8 @@ brew 'pigz'
 
 
 # programming languages
+brew 'asdf' # not sure if i'll stick with asdf or fall back to brew
+
 ## main
 brew 'uv' # for Python
 brew 'node'
@@ -186,7 +188,7 @@ brew 'solarus'
 # Gather (URLs to Markdown)
 # https://brettterpstra.com/projects/gather-cli/
 tap 'ttscoff/thelab'
-brew 'gather-cli'
+brew 'ttscoff/thelab/gather-cli'
 
 # now getting into full macOS apps
 tap 'homebrew/cask-versions'
@@ -309,7 +311,7 @@ cask 'tor-browser'
 cask 'tower' # edu license
 cask 'transmission'
 cask 'unclack'
-cask 'virtualbox'
+# cask 'virtualbox' # no arm support
 cask 'visual-studio'
 cask 'visual-studio-code'
 cask 'vlc'
@@ -324,7 +326,7 @@ cask 'zotero'
 
 # swiftbar - https://github.com/swiftbar/SwiftBar
 tap 'melonamin/formulae'
-cask 'swiftbar'
+cask 'melonamin/formulae/swiftbar'
 
 # quicklook stuff - https://github.com/markcarroll/quick-look-plugins
 cask 'qlstephen'
@@ -358,12 +360,11 @@ cask 'font-scheherazade'            # ar
 
 # SJML (upstream author) tools
 # https://github.com/sjml
-
 tap  'sjml/sjml'
 brew 'sjml/sjml/beschi'
 brew 'sjml/sjml/paper'
 brew 'sjml/sjml/secure-pbcopy'
-cask 'dotfile-watcher'
+cask 'sjml/sjml/dotfile-watcher'
 
 # drivers
 tap  'homebrew/cask-drivers'

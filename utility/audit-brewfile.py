@@ -18,6 +18,9 @@ brewfile_contents = open("../install_lists/Brewfile", "r").read()
 allow = [
     r"^font-*",
     r"^sjml/sjml/*",
+    r"^rcmdnk/file/*",
+    r"^melonamin/formulae/*",
+    r"^ttscoff/thelab/*",
 ]
 
 brews = []
