@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Proxies all WiFi traffic through an SSH tunnel given at the command line
+#   as user@host; requires an existing keypair setup.
+
+SOCKET_PATH=/tmp/ssh-temp-proxy
+
+connection_id=$1
+
+ssh -f -N -D 9090 $connection_id -o ControlMaster=yes -o ControlPath=$SOCKET_PATH -S $SOCKET_PATH
+networksetup -setsocksfirewallproxy "Wi-Fi" localhost 9090
+networksetup -setsocksfirewallproxystate "Wi-Fi" on
+
+cleanup() {
+    echo
+    echo "Cleaning up!"
+    networksetup -setsocksfirewallproxystate "Wi-Fi" off
+    networksetup -setsocksfirewallproxy "Wi-Fi" "" ""
+    ssh -S $SOCKET_PATH -O exit $connection_id
+    exit 0
+}
+
+trap cleanup SIGINT
+
+echo "Proxying..."
+read -r -d '' _ </dev/tty
+
+

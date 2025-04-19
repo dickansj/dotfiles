@@ -1,0 +1,10 @@
+---
+sources: ["~/Documents/Zotero_Library.json"]
+data:
+  author: "Joseph Dickan"
+sentinels:
+  - '[['
+  - ']]'
+  - 'TODO:'
+  - 'FIXME:'
+---

@@ -7,6 +7,10 @@ exec </dev/tty >/dev/tty
 cd "$(dirname "$0")"
 DOTFILES_ROOT=$(pwd -P)
 
+# check that we've installed the basics
+GIT=$(which git)
+VIM=$(which vim)
+
 # symlink the designated dotfiles
 echo "Linking dotfiles; hang out for a second to answer potential prompts about overwriting..."
 ./install_symlinks.sh
@@ -19,19 +23,20 @@ cp resources/ssh_config.base ~/.ssh/config
 # make sure we're running in a local git working copy
 #  (this hooks us in if we were set up from the bootstrap script)
 if [[ ! -d .git ]]; then
-  (
-    # don't look at the ~/.gitconfig
-    unset HOME
-    git init
-    git remote add origin https://github.com/dickansj/dotfiles.git
-    git fetch
-    git reset origin/master
-    git branch --set-upstream-to=origin/master master
-    git checkout .
-  )
+  if [[ ${#GIT} -eq 0 ]]; then
+    echo "git is not available, so skipping repo-ization"
+  else
+    $GIT init
+    $GIT checkout -b main
+    $GIT remote add origin https://github.com/dickansj/dotfiles.git
+    $GIT fetch
+    $GIT reset origin/main
+    $GIT branch --set-upstream-to=origin/main main
+    $GIT checkout .
+  fi
 fi
 # swap to ssh; credentials can get added later
-git remote set-url origin git@github.com:dickansj/dotfiles.git
+$GIT remote set-url origin git@github.com:dickansj/dotfiles.git
 
 # Projects folder is where most code stuff lives; link this there, too,
 #  because otherwise I'll forget where it is
@@ -39,11 +44,14 @@ mkdir -p ~/Projects
 ln -s $DOTFILES_ROOT ~/Projects/dotfiles
 
 # any vim bundles
-vim +PluginInstall +qall
+if [[ ${#VIM} -eq 0 ]]; then
+  echo "vim is not available, so skipping plugin installation."
+else
+  $VIM +PluginInstall +qall
+fi
 
 # Install pyenv
-git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
-git clone https://github.com/pyenv/pyenv-update.git $HOME/.pyenv/plugins/pyenv-update
+curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
 
 cd ~
 echo "And that's it! You're good to go."

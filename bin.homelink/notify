@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# plays a sound and pops a notification banner when a
+#  command finishes, indicating whether it succeeded or not
+# (useful for long-running tests or the like)
+
+# now uses my own Teller app(s): https://github.com/sjml/Teller
+
+
+# actually run the wrapped command
+"$@"
+
+# report on how it went
+if [ $? = 0 ]; then
+  teller success  --message "$(echo ${@})" --title "Success" --sound Glass
+else
+  teller failure --message "$(echo ${@})" --title "ERROR" --sound Basso
+fi

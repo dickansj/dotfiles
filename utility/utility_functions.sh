@@ -1,6 +1,8 @@
 #!/bin/bash
 
 link_file () {
+  # modified from https://github.com/holman/dotfiles/blob/master/script/bootstrap
+  
   local src=$1 dst=$2
 
   local overwrite= backup= skip=
@@ -60,6 +62,6 @@ link_file () {
   if [ "$skip" != "true" ]  # "false" or empty
   then
     ln -s "$1" "$2"
-    # echo "linked $1 to $2"
+    echo "linked $1 to $2"
   fi
 }

@@ -1,20 +1,14 @@
 
-if type -q gls
-  alias ls="gls -F --color"
-  alias ll="gls -lh --color"
-  alias la="gls -FA --color"
-  alias lla="gls -lhA --color"
-  alias lsp="gls -lhA --color"
-else
-  alias ls="ls -F --color"
-  alias ll="ls -lh --color"
-  alias la="ls -FA --color"
-  alias lla="ls -lhA --color"
-  alias lsp="ls -lhA --color"
-end
+alias ls="eza -F --icons --no-quotes"
+alias ll="eza -lh -F --icons --no-quotes --git"
+alias llm="eza -lh -F --icons --no-quotes --git --sort=modified --reverse"
+alias la="eza -a -F --icons --no-quotes"
+alias lla="eza -lha -F --icons --no-quotes --git"
 
 alias mkdir="mkdir -p"
-alias vim="nvim"
+# alias vim="nvim" # nvim starup is slow and I'm not really using the fanciness
+
+alias ghwatch='gh run watch --exit-status $(gh run list -L 1 --json databaseId | jq ".[].databaseId")'
 
 alias ..='cd ../'             # Go up 1 dir level
 alias ...='cd ../../'         # Go up 2 dir levels
@@ -23,10 +17,15 @@ alias .3='cd ../../../'       # Go up 3 dir levels
 # platform-specific aliases
 switch (uname)
   case Darwin
-    alias c="code ."
+    function c;if test (count $argv) -eq 0;code .;else;code $argv;end;end
+    function o;if test (count $argv) -eq 0;open .;else;open $argv;end;end
     alias edot="code ~/.dotfiles"
 
-    function o;open -a $argv;end
-    complete -c o -a (basename -s .app /Applications{,/Utilities}/*.app|awk '{printf "\"%s\" ", $0 }')
+    function oapp;open -a $argv;end
+    complete -c oapp -a (basename -s .app /Applications{,/Utilities}/*.app|awk '{printf "\"%s\" ", $0 }')
+
+    alias clear="printf '\33c\e[3J'"
+
+		alias python=python3
 end
 
