@@ -62,7 +62,7 @@ eval $($HBBIN/brew shellenv)
 # Turning off quarantine for casks; assuming I trust any apps that
 #   made it into the Brewfile. *slightly* perilous, though.
 HOMEBREW_CASK_OPTS="--no-quarantine" \
-  $HBBIN/brew bundle install --no-lock --file=$DOTFILES_ROOT/install_lists/Brewfile
+  $HBBIN/brew bundle install --file=$DOTFILES_ROOT/install_lists/Brewfile
 
 # set fish as user shell
 targetShell="$HBBIN/fish"
@@ -419,7 +419,7 @@ defaults write com.apple.dock autohide -bool true
 
 # Eliminate Dock autohide-delay
 # https://swissmacuser.ch/show-macos-dock-instantly-without-delay/
-# For Apple Silicon: 
+# For Apple Silicon:
 defaults write com.apple.dock autohide-delay -float 0 && defaults write com.apple.dock autohide-time-modifier -float 0.4
 # For Intel:
 # defaults write com.apple.dock autohide-delay -float 0
