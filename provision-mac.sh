@@ -119,7 +119,7 @@ mkdir -p $HOME/.parallel
 touch $HOME/.parallel/will-cite
 
 # setup asdf
-source $($HBBIN/brew --prefix asdf)/asdf.sh
+source $($HBBIN/brew --prefix asdf)/libexec/asdf.sh
 shimPath="$HOME/.asdf/shims"
 asdf plugin add python
 asdf plugin add nodejs
