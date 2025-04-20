@@ -1,7 +1,5 @@
 tap 'homebrew/core'
 
-tap 'homebrew/bundle' # gives basic brewfile capability needed by provision-mac.sh
-
 tap 'rcmdnk/file'     # a few other features for alternate brew file management
 brew 'rcmdnk/file/brew-file'      # but it has to be set up/initiated if desired
                       # https://homebrew-file.readthedocs.io/en/latest/
@@ -165,11 +163,9 @@ brew 'ocrmypdf'
 brew 'lame'
 brew 'mpv'
 brew 'libdvdcss'
-brew 'youtube-dl'
 brew 'yt-dlp'
 brew 'gallery-dl'
 brew 'ffmpeg'
-brew 'libav'
 brew 'dockutil'
 brew 'defaultbrowser'
 brew 'duti'
@@ -179,22 +175,14 @@ brew 'entr'
 brew 'molten-vk'
 brew 'm1ddc'
 brew 'hyperfine'
+brew 'synergy-core' # license/account
 
 # amusements!
 brew 'nethack'
 brew 'frotz'
 brew 'solarus'
 
-# Gather (URLs to Markdown)
-# https://brettterpstra.com/projects/gather-cli/
-tap 'ttscoff/thelab'
-brew 'ttscoff/thelab/gather-cli'
-
 # now getting into full macOS apps
-tap 'homebrew/cask-versions'
-cask 'firefox-developer-edition'
-
-tap 'homebrew/cask'
 
 # infrastructure
 cask '1password'
@@ -204,7 +192,6 @@ cask 'backblaze-downloader'
 cask 'little-snitch'
 
 # dependencies to be installed first
-cask 'adoptopenjdk' #imagej dependency
 cask 'xquartz' # wine-stable dependency
 
 # now cask apps
@@ -217,9 +204,8 @@ cask 'affinity-publisher' # license
 cask 'alfred' # license
 cask 'anki'
 cask 'applepi-baker'
-cask 'arduino'
+cask 'arduino-ide'
 cask 'audio-hijack' # license
-cask 'authy'
 cask 'autodesk-fusion360' # education license
 # cask 'backblaze' # don't use homebrew for this; upgrade will bork things
 cask 'balenaetcher'
@@ -229,7 +215,6 @@ cask 'bettertouchtool' # license
 cask 'bunch'
 cask 'calibre'
 cask 'carbon-copy-cloner' # license
-cask 'cheatsheet'
 cask 'crunch'
 cask 'cyberduck'
 cask 'devonagent' # license
@@ -237,11 +222,11 @@ cask 'devonthink' # license
 cask 'dhs'
 cask 'discord'
 cask 'docker'
-cask 'do-not-disturb'
 cask 'epic-games'
 cask 'etrecheckpro'
 cask 'fing'
 cask 'firefox'
+cask 'firefox@developer-edition'
 cask 'fission' # license
 cask 'fluid'
 cask 'flux'
@@ -261,7 +246,6 @@ cask 'julia'
 cask 'kaleidoscope' # license
 cask 'kextviewr'
 cask 'keyboard-maestro' # license
-cask 'kindle'
 cask 'knockknock'
 cask 'logi-options+'
 cask 'little-snitch' # license
@@ -303,7 +287,6 @@ cask 'soundsource' # license
 cask 'steam'
 cask 'sublime-text'
 cask 'swiftdefaultappsprefpane'
-cask 'synergy' # license/account
 cask 'taskexplorer'
 cask 'temurin'
 cask 'textexpander'
@@ -336,14 +319,12 @@ cask 'qlprettypatch'
 cask 'quicklook-csv'
 cask 'suspicious-package'
 cask 'qlcolorcode'
-cask 'qlimagesize'
 cask 'qlvideo'
 cask 'apparency'
 
 
 # a few monospaced fonts from caskroom
 #   (others handled outside of script)
-tap  'homebrew/cask-fonts'
 cask 'font-academicons'
 cask 'font-anonymous-pro'
 cask 'font-atkinson-hyperlegible'
@@ -367,10 +348,9 @@ brew 'sjml/sjml/secure-pbcopy'
 cask 'sjml/sjml/dotfile-watcher'
 
 # drivers
-tap  'homebrew/cask-drivers'
 cask 'sonos'
 cask 'ubiquiti-unifi-controller'
-cask '8bitdo-firmware-updater'
+cask '8bitdo-ultimate-software'
 cask 'caldigit-thunderbolt-charging'
 cask 'displaylink'
 
@@ -439,3 +419,9 @@ mas 'Xcode', id: 497799835
 # Synergy (v3)                                  # https://symless.com/synergy/
                                                 # license
 # TrackerZapper                                 # https://github.com/rknightuk/TrackerZapper
+
+# Gather (URLs to Markdown)
+# https://brettterpstra.com/projects/gather-cli/
+# Requires full Xcode
+# tap 'ttscoff/thelab'
+# brew 'ttscoff/thelab/gather-cli'
