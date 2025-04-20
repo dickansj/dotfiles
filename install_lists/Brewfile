@@ -1,5 +1,3 @@
-tap 'homebrew/core'
-
 tap 'rcmdnk/file'     # a few other features for alternate brew file management
 brew 'rcmdnk/file/brew-file'      # but it has to be set up/initiated if desired
                       # https://homebrew-file.readthedocs.io/en/latest/
@@ -221,7 +219,6 @@ cask 'devonagent' # license
 cask 'devonthink' # license
 cask 'dhs'
 cask 'discord'
-cask 'docker'
 cask 'epic-games'
 cask 'etrecheckpro'
 cask 'fing'
