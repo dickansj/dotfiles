@@ -132,7 +132,6 @@ brew 'sqlite-utils'
 brew 'testdisk'
 
 # document and graphics tools
-brew 'emacs'
 brew 'pandoc'
 brew 'multimarkdown'
 brew 'sphinx-doc'
