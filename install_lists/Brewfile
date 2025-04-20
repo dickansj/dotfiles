@@ -182,17 +182,16 @@ brew 'solarus'
 # now getting into full macOS apps
 
 # infrastructure
-cask '1password'
+cask '1password' #license
 cask '1password-cli'
 # cask 'backblaze' # don't use homebrew for this; upgrade will bork things
 cask 'backblaze-downloader'
-cask 'little-snitch'
+cask 'little-snitch' #license
 
 # dependencies to be installed first
 cask 'xquartz' # wine-stable dependency
 
 # now cask apps
-cask '1password' # license
 cask 'adium'
 cask 'adobe-digital-editions'
 cask 'affinity-designer' # license
