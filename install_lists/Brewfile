@@ -34,13 +34,14 @@ brew 'pigz'
 
 
 # programming languages
-brew 'asdf' # not sure if i'll stick with asdf or fall back to brew
+# brew 'asdf' # falling back to brew for now
 
 ## main
 brew 'uv' # for Python
+brew 'python'
 brew 'node'
 brew 'deno'
-# brew 'rustup-init' # installed in provision-mac.sh
+brew 'rustup-init'
 brew 'go'
 brew 'zig'
 brew 'r'

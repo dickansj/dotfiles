@@ -119,75 +119,75 @@ mkdir -p $HOME/.parallel
 touch $HOME/.parallel/will-cite
 
 # setup asdf
-source $($HBBIN/brew --prefix asdf)/libexec/asdf.sh
-shimPath="$HOME/.asdf/shims"
-asdf plugin add python
-asdf plugin add nodejs
-asdf plugin add ruby
+## source $($HBBIN/brew --prefix asdf)/libexec/asdf.sh
+## shimPath="$HOME/.asdf/shims"
+## asdf plugin add python
+## asdf plugin add nodejs
+## asdf plugin add ruby
 
 # copying version check from envup
-env_remVer() {
-    asdf list all $1 2>&1 \
-        | grep -vE "\s*[a-zA-Z-]" \
-        | sort -V \
-        | grep "^\s*$2" \
-        | tail -1 \
-        | xargs
-}
+## env_remVer() {
+##     asdf list all $1 2>&1 \
+##         | grep -vE "\s*[a-zA-Z-]" \
+##         | sort -V \
+##         | grep "^\s*$2" \
+##         | tail -1 \
+##         | xargs
+## }
 
 # python setup
-py3version=$(env_remVer python 3)
-LDFLAGS="-L$HBBASE/opt/zlib/lib -L$HBBASE/opt/sqlite/lib" \
-  CPPFLAGS="-I$HBBASE/opt/zlib/include -I$HBBASE/opt/sqlite/include" \
-  asdf install python $py3version
+## py3version=$(env_remVer python 3)
+## LDFLAGS="-L$HBBASE/opt/zlib/lib -L$HBBASE/opt/sqlite/lib" \
+##   CPPFLAGS="-I$HBBASE/opt/zlib/include -I$HBBASE/opt/sqlite/include" \
+##   asdf install python $py3version
 
-asdf global python $py3version
-asdf reshim python
-$shimPath/python3 -m pip install --upgrade pip
-$shimPath/pip3 install wheel
-$shimPath/pip3 install -r install_lists/python3-dev-packages.txt
-asdf reshim python
+## asdf global python $py3version
+## asdf reshim python
+## $shimPath/python3 -m pip install --upgrade pip
+## $shimPath/pip3 install wheel
+## $shimPath/pip3 install -r install_lists/python3-dev-packages.txt
+## asdf reshim python
 
 # asdf install python miniconda3-latest
 # asdf global python $py3version $py2version miniconda3-latest
 # $shimPath/conda update --all -y
 
-curl -sSL https://install.python-poetry.org/ | $shimPath/python -
-$HOME/.local/bin/poetry config virtualenvs.in-project true
+## curl -sSL https://install.python-poetry.org/ | $shimPath/python -
+## $HOME/.local/bin/poetry config virtualenvs.in-project true
 
-timerData "POST-PYTHON"
+## timerData "POST-PYTHON"
 
 # ruby setup
-rbversion=$(env_remVer ruby 3)
-RUBY_CONFIGURE_OPTS="--with-openssl-dir=$($HBBIN/brew --prefix openssl@1.1)" \
-  asdf install ruby $rbversion
-asdf global ruby $rbversion
-asdf reshim ruby
+## rbversion=$(env_remVer ruby 3)
+## RUBY_CONFIGURE_OPTS="--with-openssl-dir=$($HBBIN/brew --prefix openssl@1.1)" \
+##   asdf install ruby $rbversion
+## asdf global ruby $rbversion
+## asdf reshim ruby
 
-$shimPath/gem update --system
-yes | $shimPath/gem update
-yes | $shimPath/gem install bundler
-$shimPath/gem cleanup
+## $shimPath/gem update --system
+## yes | $shimPath/gem update
+## yes | $shimPath/gem install bundler
+## $shimPath/gem cleanup
 
-timerData "POST-RUBY"
+## timerData "POST-RUBY"
 
 # node setup
-nodeversion=$(env_remVer nodejs "\d*[02468]\.")
-NODEJS_CHECK_SIGNATURES="no" asdf install nodejs $nodeversion
+## nodeversion=$(env_remVer nodejs "\d*[02468]\.")
+## NODEJS_CHECK_SIGNATURES="no" asdf install nodejs $nodeversion
 
-asdf global nodejs $nodeversion
-asdf reshim nodejs
+## asdf global nodejs $nodeversion
+## asdf reshim nodejs
 
-ASDF_SKIP_RESHIM=1 $shimPath/npm install -g npm
-ASDF_SKIP_RESHIM=1 $shimPath/npm install -g $(cat install_lists/node-packages.txt)
-asdf reshim nodejs
+## ASDF_SKIP_RESHIM=1 $shimPath/npm install -g npm
+## ASDF_SKIP_RESHIM=1 $shimPath/npm install -g $(cat install_lists/node-packages.txt)
+## asdf reshim nodejs
 
-timerData "POST-NODE"
+## timerData "POST-NODE"
 
 # rust setup
-curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path
+## curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path
 
-timerData "POST-RUST"
+## timerData "POST-RUST"
 
 # set up Terminal
 cp ./resources/FiraMod/*.ttf $HOME/Library/Fonts/
