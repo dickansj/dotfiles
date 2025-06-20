@@ -1,7 +1,5 @@
 24 Hour Wallpaper.app
-Aeon Timeline.app
 AirBuddy.app
-AlDente Pro.app
 Bartender.app
 BoltAI.app
 Boom 3D.app
@@ -11,7 +9,6 @@ CleanMyMac.app
 CleanShot X.app
 Dash.app
 Default Folder X.app
-Detail.app
 DevUtils.app
 Diagrams.app
 Downie.app
@@ -20,19 +17,13 @@ Expressions.app
 ForkLift.app
 FreeYourMusic.app
 GreenBooks.app
-Grids.app
 Hand Mirror.app
 Hookmark.app
 HoudahSpot.app
 Magic Window Air.app
 Mate Translate.app
-MathKey.app
-Meeter.app
-Mouseless.app
 NetSpot.app
 News Explorer.app
-Nitro PDF Pro.app
-PDF Pals.app
 PDF Search.app
 Paletro.app
 Path Finder.app
@@ -44,15 +35,12 @@ Remote Mouse.app
 Session.app
 Simon.app
 Sip.app
-Sizzy.app
-Speech Central.app
 Squash.app
 TaskPaper.app
 TextSniper.app
 TextSoap.app
 ToothFairy.app
 Transloader.app
-Trickster.app
 TripMode.app
 Typeface.app
 TypingMind.app
@@ -60,5 +48,3 @@ Voice Dream Reader.app
 WiFi Explorer.app
 Xnapper.app
 iStat Menus.app
-iThoughtsX.app
-superwhisper.app
