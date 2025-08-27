@@ -486,7 +486,7 @@ dockutil --remove all --no-restart
 declare -a dockList=(\
   /System/Library/CoreServices/Finder.app \
   /Applications/Setapp/Path\ Finder.app \
-  /Applications/DEVONthink\ 3.app \
+  /Applications/DEVONthink.app \
   /System/Applications/System\ Settings.app \
   /Applications/1Password. app\
   /Applications/iPhone\ Mirroring.app \
