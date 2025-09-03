@@ -154,6 +154,7 @@ brew 'openjpeg'
 brew 'webp'
 brew 'gifsicle'
 brew 'svgo'
+brew 'mupdf-tools'
 
 # various and sundry
 brew 'brightness'
