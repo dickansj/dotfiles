@@ -305,6 +305,10 @@ cask 'zerobranestudio'
 cask 'zoom'
 cask 'zotero'
 
+# updatest - https://github.com/updatest
+tap 'updatest/tap'
+cask 'updatest@beta'
+
 # swiftbar - https://github.com/swiftbar/SwiftBar
 tap 'melonamin/formulae'
 cask 'melonamin/formulae/swiftbar'
