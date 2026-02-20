@@ -214,6 +214,7 @@ cask 'bettertouchtool' # license
 cask 'bunch'
 cask 'calibre'
 cask 'carbon-copy-cloner' # license
+cask 'cleanupbuddy'
 cask 'crunch'
 cask 'cyberduck'
 cask 'devonagent' # license
@@ -411,7 +412,6 @@ mas 'Xcode', id: 497799835
 
 # BlockBlock Helper
 # CalHash
-# Cleanup Buddy
 # Consolation3
 # Displays (Jibapps)                            # license
 # Interact Scratchpad                           # https://docs.getdrafts.com/docs/misc/interact-scratchpad#download-the-interact-scratchpad
