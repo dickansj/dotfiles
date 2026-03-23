@@ -176,6 +176,9 @@ brew 'm1ddc'
 brew 'hyperfine'
 brew 'synergy-core' # license/account
 
+# AI tools
+brew 'ollama'
+
 # amusements!
 brew 'nethack'
 brew 'frotz'
@@ -214,6 +217,7 @@ cask 'bettertouchtool' # license
 cask 'bunch'
 cask 'calibre'
 cask 'carbon-copy-cloner' # license
+cask 'claude'
 cask 'cleanupbuddy'
 cask 'crunch'
 cask 'cyberduck'
@@ -221,6 +225,7 @@ cask 'devonagent' # license
 cask 'devonthink' # license
 cask 'dhs'
 cask 'discord'
+cask 'drivedx' # license
 cask 'epic-games'
 cask 'etrecheckpro'
 cask 'fing'
