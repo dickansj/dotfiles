@@ -257,7 +257,6 @@ cask 'maestral'
 cask 'marked' # license
 cask 'microsoft-office' # license
 cask 'microsoft-teams' # license
-cask 'nvalt'
 cask 'obsidian'
 cask 'omnidisksweeper'
 cask 'onyx'
@@ -268,22 +267,18 @@ cask 'pacifist'
 cask 'pdf-expert' # license
 cask 'pingplotter'
 cask 'plex-media-server'
-cask 'podcastmenu'
 cask 'post-haste'
 cask 'quitter'
 cask 'r' # seem to be cran issues if I just brew the cli
 cask 'resilio-sync'
 cask 'rocket' # license
 cask 'rstudio'
-cask 'screens' # license
 cask 'scrivener' # license
-cask 'send-to-kindle'
 # cask 'setapp' # cask has issues, use direct app
 cask 'sf-symbols'
 cask 'signal'
 cask 'silentknight'
 cask 'skim'
-cask 'skype'
 cask 'sloth'
 cask 'soundsource' # license
 cask 'steam'
@@ -297,7 +292,6 @@ cask 'tower' # edu license
 cask 'transmission'
 cask 'unclack'
 # cask 'virtualbox' # no arm support
-cask 'visual-studio'
 cask 'visual-studio-code'
 cask 'vlc'
 cask 'whatsapp'
@@ -320,7 +314,6 @@ cask 'melonamin/formulae/swiftbar'
 # quicklook stuff - https://github.com/markcarroll/quick-look-plugins
 cask 'qlstephen'
 cask 'qlmarkdown'
-cask 'quicklook-json'
 cask 'qlprettypatch'
 cask 'quicklook-csv'
 cask 'suspicious-package'
