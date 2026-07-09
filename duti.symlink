@@ -1,0 +1,12 @@
+com.readdle.pdfexpert-mac   com.adobe.pdf                       all
+com.barebones.bbedit        public.plain-text                   all
+com.barebones.bbedit        public.source-code                  all
+com.barebones.bbedit        .md                                 all
+com.barebones.bbedit        .markdown                            all
+com.colliderli.iina         public.mpeg-4                       all
+com.colliderli.iina         public.audio                        all
+com.apple.Preview           public.image                        all
+com.kapeli.dash-setapp      com.apple.xcode.docset               all
+com.kapeli.dash-setapp      com.apple.documentation.doccarchive  all
+org.m0k.transmission        org.bittorrent.torrent              all
+net.kovidgoyal.calibre      org.idpf.epub-container              all

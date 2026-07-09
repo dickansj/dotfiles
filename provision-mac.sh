@@ -223,7 +223,9 @@ qlmanage -r
 qlmanage -r cache
 
 # set up default associations
+# (Launch Services caches aggressively; a set can silently no-op without a rebuild)
 duti ~/.duti
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
 
 # this will pop a permissions window, but no way around it
 #   (this is a good thing to have security around, I will agree)
