@@ -59,6 +59,14 @@ export HOMEBREW_NO_ANALYTICS=1
 echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval $($HBBIN/brew shellenv)
 
+# validate the Brewfile against live Homebrew/App Store catalogs before
+#   sinking 20+ minutes into `brew bundle install` only to die partway
+#   through on one broken entry
+python3 utility/audit-brewfile.py || {
+  echo "Brewfile has issues (see above) - fix before provisioning a new Mac."
+  exit 1
+}
+
 # the Brewfile has a bunch of `mas` entries; those install silently-broken
 #   without being signed into the Mac App Store first, so check up front
 #   rather than found out ~150 entries into `brew bundle install`
