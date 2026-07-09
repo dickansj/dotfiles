@@ -76,6 +76,9 @@ sudo ln -sfn $HBBASE/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMa
 # in the login window
 sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
 
+# Show language menu in the top right corner of the boot screen
+sudo defaults write /Library/Preferences/com.apple.loginwindow showInputMenu -bool true
+
 # allow Touch ID to enable sudo on the command line
 sudo cp /etc/pam.d/sudo_local.template /etc/pam.d/sudo_local
 sudo sed -i "" "s/#auth/auth/" /etc/pam.d/sudo_local
@@ -371,9 +374,6 @@ defaults -currentHost write com.apple.screensaver moduleDict -dict moduleName "D
 defaults -currentHost write com.apple.ScreenSaver.Drift ColorScheme -string "blues"
 defaults -currentHost write com.apple.screensaver showClock -bool true
 
-# Show language menu in the top right corner of the boot screen
-sudo defaults write /Library/Preferences/com.apple.loginwindow showInputMenu -bool true
-
 # Show the full URL in the address bar (note: this still hides the scheme)
 defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
 
@@ -490,7 +490,7 @@ declare -a dockList=(\
   /Applications/Setapp/Path\ Finder.app \
   /Applications/DEVONthink.app \
   /System/Applications/System\ Settings.app \
-  /Applications/1Password. app\
+  /Applications/1Password.app \
   /Applications/iPhone\ Mirroring.app \
   /Applications/Pastebot.app \
   /Applications/Setapp/Session.app \

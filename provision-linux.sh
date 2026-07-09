@@ -36,7 +36,9 @@ if [[ ! -d .git ]]; then
   fi
 fi
 # swap to ssh; credentials can get added later
-$GIT remote set-url origin git@github.com:dickansj/dotfiles.git
+if [[ ${#GIT} -ne 0 ]]; then
+  $GIT remote set-url origin git@github.com:dickansj/dotfiles.git
+fi
 
 # Projects folder is where most code stuff lives; link this there, too,
 #  because otherwise I'll forget where it is
