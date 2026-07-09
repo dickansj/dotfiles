@@ -6,3 +6,4 @@ resources/Office Templates/~$*
 /.dotfiles
 utility/formula.json
 utility/cask.json
+__pycache__/
