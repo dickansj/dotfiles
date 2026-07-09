@@ -285,7 +285,6 @@ cask 'sloth'
 cask 'soundsource' # license
 cask 'steam'
 cask 'sublime-text'
-cask 'swiftdefaultappsprefpane'
 cask 'taskexplorer'
 cask 'temurin'
 cask 'textexpander'
