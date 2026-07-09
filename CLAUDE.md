@@ -117,7 +117,17 @@ No secrets live in this repo. The split points:
 ## Working conventions
 
 - This is a single-user config repo — direct commits to `main` are the norm,
-  not PRs. No CI gate to satisfy.
+  not PRs. No branch protection or required checks.
+- `.github/workflows/check-brewfile.yml` runs `utility/audit-brewfile.py` on
+  push and weekly via cron, checking every `brew`/`cask`/`mas` entry in the
+  Brewfile against the live Homebrew/App Store catalogs. Originally inherited
+  from upstream sjml and silently red for years (GitHub had auto-disabled its
+  schedule from inactivity) — fixed and re-enabled in this session. The
+  script now accounts for Homebrew's formula aliases and cask `old_tokens`
+  when checking names, so a real failure means something's actually gone
+  (confirm with `python3 utility/audit-brewfile.py` locally, which caches
+  `utility/formula.json`/`cask.json` — delete those first to force a fresh
+  fetch).
 - Commit messages: explain *why*, not just what changed; keep them to a few
   lines, no verbose bullet essays.
 - When pulling a change in from `upstream/main`, check whether it's entangled
