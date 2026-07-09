@@ -25,7 +25,5 @@ switch (uname)
     complete -c oapp -a (basename -s .app /Applications{,/Utilities}/*.app|awk '{printf "\"%s\" ", $0 }')
 
     alias clear="printf '\33c\e[3J'"
-
-		alias python=python3
 end
 
