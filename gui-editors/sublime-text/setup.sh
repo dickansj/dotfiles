@@ -9,9 +9,9 @@ source ../../utility/utility_functions.sh
 overwrite_all=false backup_all=false skip_all=false
 
 if [[ $OSTYPE == darwin* ]]; then
-  settingsBase="$HOME/Library/Application Support/Sublime Text 3"
+  settingsBase="$HOME/Library/Application Support/Sublime Text"
 else
-  settingsBase="$HOME/.config/sublime-text-3"
+  settingsBase="$HOME/.config/sublime-text"
 fi
 settingsDir="$settingsBase/Packages"
 mkdir -p "$settingsDir"
