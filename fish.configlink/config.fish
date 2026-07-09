@@ -45,11 +45,3 @@ end
 
 ## set up direnv
 direnv hook fish | source
-
-# Load DeepL translation functions
-set utility_dir ~/.dotfiles/utility/functions
-
-# Add run-translate
-if test -f $utility_dir/run-translate.fish
-    source $utility_dir/run-translate.fish
-end

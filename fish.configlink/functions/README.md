@@ -88,12 +88,11 @@ dependencies, and prompts for a DeepL API key (saved into the venv's own
 `activate-deepl.fish` so it's only set while that venv is active). Detects
 Free vs. Pro plan automatically. Sources the venv's activate/deactivate scripts
 around the translation call so your shell's Python environment is untouched
-afterward.
-
-## `activate-deepl` / `deactivate-deepl`
-Reference copies of the DeepL venv's activate/deactivate scripts (the versions
-`run-translate` actually sources live inside the generated venv at
-`utility/deepl-env/bin/`, not these). Not meant to be invoked directly — kept
-here mainly as a record of what the generated venv script does: swaps `PATH`/
-`PYTHONHOME`, sets `VIRTUAL_ENV`, and prefixes the fish prompt with
-`(deepl-env)` while active.
+afterward. The activate/deactivate scripts it sources live inside the
+generated venv (`utility/deepl-env/bin/`), not in this directory — an earlier
+pair of reference copies (`activate-deepl.fish`/`deactivate-deepl.fish`) used
+to sit here too, but they were dead weight (and a footgun: since neither
+wrapped its body in a matching `function ... end`, fish's autoloader would run
+their top-level `PATH`/`VIRTUAL_ENV`/prompt-mutating code if you ever typed
+their name directly, then report "Unknown command" as if nothing happened),
+so they've been removed.
