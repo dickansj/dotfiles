@@ -17,7 +17,7 @@ echo "Linking dotfiles; hang out for a second to answer potential prompts about 
 
 # ssh config
 echo "Creating SSH configuration..."
-mkdir -p ~/.ssh
+mkdir -p -m 700 ~/.ssh
 cp resources/ssh_config.base ~/.ssh/config
 
 # make sure we're running in a local git working copy

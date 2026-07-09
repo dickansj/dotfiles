@@ -44,7 +44,7 @@ if [[ $(uname -m) == 'arm64' ]]; then
   HBBASE=/opt/homebrew
 
   timerData "PRE-ROSETTA"
-  /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+  sudo /usr/sbin/softwareupdate --install-rosetta --agree-to-license
   timerData "POST-ROSETTA"
 else
   HBBASE=/usr/local
@@ -58,6 +58,16 @@ HBBIN=$HBBASE/bin
 export HOMEBREW_NO_ANALYTICS=1
 echo | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval $($HBBIN/brew shellenv)
+
+# the Brewfile has a bunch of `mas` entries; those install silently-broken
+#   without being signed into the Mac App Store first, so check up front
+#   rather than found out ~150 entries into `brew bundle install`
+$HBBIN/brew install mas
+if ! $HBBIN/mas account >/dev/null 2>&1; then
+  echo "You're not signed into the Mac App Store."
+  echo "Open the App Store app, sign in, and re-run this script."
+  exit 1
+fi
 
 # Turning off quarantine for casks; assuming I trust any apps that
 #   made it into the Brewfile. *slightly* perilous, though.
@@ -205,10 +215,10 @@ osascript 2>/dev/null <<EOD
     set initialOpenedWindows to id of every window
 
     do shell script "open './resources/SJML.terminal'"
-    delay 1
+    delay 2
     set default settings to settings set "SJML"
 
-    delay 5
+    delay 8
     set allOpenedWindows to id of every window
     repeat with windowID in allOpenedWindows
       if initialOpenedWindows does not contain windowID then
