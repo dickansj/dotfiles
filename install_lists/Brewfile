@@ -23,7 +23,6 @@ brew 'tldr'
 # compression stuffs
 brew 'zlib'
 brew 'p7zip'
-brew 'lbzip2'
 brew 'lz4'
 brew 'unar'
 brew 'gnupg'
@@ -378,17 +377,17 @@ mas 'iMovie', id: 408981434
 mas 'iNet Network Scanner', id: 403304796
 mas 'iPulse', id: 1028916583
 mas 'KeyKey', id: 1035137927
-mas 'Keynote', id: 409183694
+mas 'Keynote', id: 361285480
 mas 'LosslessCut', id: 1505323402
 mas 'Mactracker', id: 430255202
 mas 'Magnet', id: 441258766
 mas 'Mela', id: 1568924476
 mas 'Monodraw', id: 920404675
 mas 'Morpho', id: 1494942612
-mas 'Numbers', id: 409203825
+mas 'Numbers', id: 361304891
 # mas 'OneDrive', id: 823766827 # installed by office cask
 mas 'Overcast', id: 888422857
-mas 'Pages', id: 409201541
+mas 'Pages', id: 361309726
 mas 'Parcel', id: 639968404
 mas 'Pastebot', id: 1179623856
 mas 'PCalc', id: 403504866
@@ -397,9 +396,7 @@ mas 'PiPifier', id: 1160374471
 mas 'Slack', id: 803453959
 mas 'SwitchGlass', id: 1498546559
 mas 'The Unarchiver', id: 425424353
-mas 'uBlock', id: 1385985095
 mas 'Unclutter', id: 577085396
-mas 'Wallpaper Wizard', id: 1266674560
 mas 'Xcode', id: 497799835
 
 
