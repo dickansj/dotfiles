@@ -21,6 +21,7 @@ allow = [
     r"^rcmdnk/file/*",
     r"^melonamin/formulae/*",
     r"^ttscoff/thelab/*",
+    r"^updatest@*",
 ]
 
 brews = []
@@ -70,8 +71,16 @@ else:
     with open("./cask.json", "r") as fin:
         cask_json = fin.read()
 
-formula_list = [f['name'] for f in json.loads(formulae_json)]
-cask_list = [c['token'] for c in json.loads(cask_json)]
+formula_list = set()
+for f in json.loads(formulae_json):
+    formula_list.add(f['name'])
+    formula_list.update(f.get('aliases') or [])
+    formula_list.update(f.get('oldnames') or [])
+
+cask_list = set()
+for c in json.loads(cask_json):
+    cask_list.add(c['token'])
+    cask_list.update(c.get('old_tokens') or [])
 
 print(f"🕵️  Checking Brewfile with {len(brews)} formulae and {len(casks)} casks...")
 
