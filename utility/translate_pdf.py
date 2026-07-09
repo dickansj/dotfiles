@@ -51,7 +51,8 @@ def split_into_chunks(text, chunk_size=CHUNK_SIZE):
         if len(current_chunk) + len(para) < chunk_size:
             current_chunk += para + "\n\n"
         else:
-            chunks.append(current_chunk.strip())
+            if current_chunk.strip():
+                chunks.append(current_chunk.strip())
             current_chunk = para + "\n\n"
     if current_chunk.strip():
         chunks.append(current_chunk.strip())
@@ -103,8 +104,13 @@ def translate_chunks_adaptive(chunks, target_lang="EN"):
                     if MAX_WORKERS > 1:
                         MAX_WORKERS -= 1
                         print(f"⚠️ Reducing concurrency to {MAX_WORKERS}")
-                    # retry sequentially
-                    translated_chunks[i] = translate_chunk(chunks[i], target_lang)
+                    # retry sequentially, but don't let one bad chunk take
+                    #   down every already-translated chunk in this run
+                    try:
+                        translated_chunks[i] = translate_chunk(chunks[i], target_lang)
+                    except Exception as e2:
+                        print(f"❌ Chunk {i} failed permanently: {e2}")
+                        translated_chunks[i] = f"[TRANSLATION FAILED FOR THIS SECTION: {e2}]"
     return translated_chunks
 
 def save_txt(text, output_path):
@@ -114,14 +120,39 @@ def save_txt(text, output_path):
 def save_pdf(text, output_path):
     c = canvas.Canvas(output_path, pagesize=letter)
     width, height = letter
+    font_name, font_size = "Helvetica", 10
+    margin = 50
+    max_width = width - 2 * margin
+    c.setFont(font_name, font_size)
+
+    def wrap_line(line):
+        if not line:
+            return [""]
+        words = line.split(" ")
+        wrapped = []
+        current = ""
+        for word in words:
+            candidate = word if not current else f"{current} {word}"
+            if c.stringWidth(candidate, font_name, font_size) <= max_width:
+                current = candidate
+            else:
+                if current:
+                    wrapped.append(current)
+                current = word
+        if current:
+            wrapped.append(current)
+        return wrapped or [""]
+
     lines = text.split("\n")
-    y = height - 50
+    y = height - margin
     for line in lines:
-        c.drawString(50, y, line)
-        y -= 14
-        if y < 50:
-            c.showPage()
-            y = height - 50
+        for sub_line in wrap_line(line):
+            c.drawString(margin, y, sub_line)
+            y -= 14
+            if y < margin:
+                c.showPage()
+                c.setFont(font_name, font_size)
+                y = height - margin
     c.save()
 
 # ----- MAIN -----
