@@ -9,7 +9,6 @@
 import shutil
 
 REGISTRY = {
-    "hgrc.symlink": "hg",
     "yt-dlp.symlink": "yt-dlp",
     "paper_meta.yml.symlink": "paper",
 }
