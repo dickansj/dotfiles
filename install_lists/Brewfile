@@ -71,7 +71,6 @@ brew 'openssl'
 brew 'openconnect'
 brew 'wifi-password'
 brew 'xxhash'
-brew 'speedtest-cli'
 
 # dev tools
 ## text editors
@@ -143,7 +142,6 @@ brew 'woff2'
 brew 'pngcrush'
 brew 'pngquant'
 brew 'jpegoptim'
-brew 'zopfli'
 brew 'guetzli'
 brew 'mozjpeg'
 brew 'gifski'
@@ -309,7 +307,6 @@ cask 'melonamin/formulae/swiftbar'
 # quicklook stuff - https://github.com/markcarroll/quick-look-plugins
 cask 'qlstephen'
 cask 'qlmarkdown'
-cask 'qlprettypatch'
 cask 'quicklook-csv'
 cask 'suspicious-package'
 cask 'quicklook-video'
