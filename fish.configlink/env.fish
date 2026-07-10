@@ -29,10 +29,6 @@ set -x DYLD_FALLBACK_LIBRARY_PATH /opt/homebrew/lib
 # since we have our own plans for the prompt
 set -x VIRTUAL_ENV_DISABLE_PROMPT 1
 
-## devbox setup
-# devbox thinks it's better than me
-set -x devbox_no_prompt true
-
 ## purty colors
 set -x LSCOLORS exfxcxdxbxegedabagacad
 # set LSCOLORS GxFxCxDxBxegedabagaced
