@@ -140,9 +140,12 @@ mkdir -p $HOME/.parallel
 touch $HOME/.parallel/will-cite
 
 # rust setup
-## curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path
+# rustup itself comes from the Brewfile (keg-only, same as python/ruby -
+#   path.fish adds its bin dir to PATH); this just configures the default
+#   toolchain, which brew install alone doesn't do
+$HBBIN/rustup default stable
 
-## timerData "POST-RUST"
+timerData "POST-RUST"
 
 # set up Terminal
 cp ./resources/FiraMod/*.ttf $HOME/Library/Fonts/
