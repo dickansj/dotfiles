@@ -60,7 +60,7 @@ called directly, but harmless to run standalone.
 ## `fish_prompt`
 Not user-invoked — fish calls this automatically to draw the prompt. Renders a
 two-line boxed prompt: cwd (via `rtab`), an emoji tag when inside a Python venv
-(🐍), nested conda env (🐉), or devbox shell (📦), then user@host on the closing
+(🐍) or nested conda env (🐉), then user@host on the closing
 line (color-coded: cyan normal, green over SSH, red as root). Also defines a
 `fish_prompt`-adjacent `on_exit` hook that deactivates any active Python venv when
 the shell exits. Widens/narrows automatically to fit terminal width, dropping
