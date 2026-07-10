@@ -27,7 +27,9 @@ config immediately, no re-linking needed. New top-level `*.symlink`/
 `*.homelink`/`*.configlink` entries do need `install_symlinks.sh` re-run.
 
 Supporting directories (not part of the symlink convention):
-- `install_lists/` — Brewfile, conda envs, Python/Node/R package lists.
+- `install_lists/` — Brewfile (primary), plus `r-packages.txt` (kept manually,
+  not consumed by any script — same for anything else added here going
+  forward unless something is written to actually use it).
 - `resources/` — fonts, Terminal profile, Office templates, `ssh_config.base`.
 - `utility/` — helper scripts, git-subtree tooling, one-off Python utilities.
 - `gui-editors/`, `hazel/` — editor extensions and Hazel rules, installed
@@ -55,9 +57,26 @@ fresh machine:
    `provision-linux.sh` is the stripped-down sibling (no sudo assumed):
    symlinks, self-link into `~/Projects/dotfiles`, vim bundles, pyenv.
 
-Most of the asdf/language-runtime block (Python/Ruby/Node/Rust versions) in
-`provision-mac.sh` is currently commented out — treat that as intentionally
-disabled, not accidental, unless told otherwise.
+Python, Ruby, and Node are plain Homebrew formulae now (`brew 'python'`,
+`brew 'ruby'`, `brew 'node'`) — the old asdf-managed-multi-version setup was
+fully removed from `provision-mac.sh`, not just paused; there's no plugin
+list or version-pinning to revive. Homebrew keeps some formulae keg-only when
+macOS ships its own version (python, ruby, and the `-full` variants of
+imagemagick/ffmpeg all hit this) — keg-only means no automatic PATH entry, so
+each one needs an explicit line in `path.fish`'s "Installed stuff" block or
+the shell silently falls back to Apple's ancient bundled version. Found and
+fixed exactly this for both python and ruby this session; worth checking any
+new keg-only formula the same way (`brew info <formula>` says so explicitly).
+
+`pip` (the `bin.homelink/pip` wrapper) intentionally does *not* try to
+install anything outside an active virtualenv — Homebrew's Python is
+externally-managed (PEP 668) and refuses bare `pip install` outside a venv
+regardless, so the wrapper just fails with a pointer to `uv` instead
+(`uv tool install` for a CLI tool, `uv venv && uv pip install` for a
+project). Rust is a partial exception: `rustup-init` installs via the
+Brewfile like the others, but nothing runs it to configure an actual default
+toolchain — that's still a manual, deliberate gap, not yet resolved either
+way.
 
 ## Package management
 
@@ -65,9 +84,17 @@ Homebrew via `install_lists/Brewfile` is the primary package manager —
 formulae, casks, Mac App Store apps (`mas`), and taps all live there in one
 file, organized into commented sections (shells/utils, languages, dev tools,
 GUI apps, fonts, drivers, MAS). Add new packages to the matching section
-rather than the end of the file. `install_lists/` also holds conda envs
-(`conda-nlp.yml`, `conda-scimath.yml`) and Python/Node/R package lists for
-what's left of the asdf-based setup.
+rather than the end of the file. `utility/audit-brewfile.py` validates it
+(see Working conventions below for details — it's also run as a pre-flight
+gate in `provision-mac.sh` now, before any installing starts, not just via
+CI); `utility/check_untracked_brew.py` checks the opposite direction —
+things installed via ad-hoc `brew install` that never made it into the
+Brewfile.
+
+Some casks intentionally aren't Brewfile-managed: `marked-app` is commented
+out and pinned locally (`brew pin marked-app`) to stay on the owned/
+perpetual-license Marked 2, since the cask now tracks the subscription-based
+Marked 3.
 
 One `git subtree` is in active use: `vim.symlink/bundle/Vundle.vim` ← upstream
 `VundleVim/Vundle.vim`, tracked in `utility/git_subtrees.txt` and managed by
