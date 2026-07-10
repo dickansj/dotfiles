@@ -194,9 +194,13 @@ cask 'tailscale-app'
 # now cask apps
 cask 'adium'
 cask 'adobe-digital-editions'
-cask 'affinity-designer' # license
-cask 'affinity-photo' # license
-cask 'affinity-publisher' # license
+cask 'affinity' # free unified V3 app (Photo/Designer/Publisher merged);
+#   some features require a Canva premium account
+# cask 'affinity-designer' # license - deprecated upstream, but V2 perpetual
+#   license kept installed and pinned rather than managed here; replaced day
+#   to day by the free unified V3 app above
+# cask 'affinity-photo' # license - see affinity-designer note above
+# cask 'affinity-publisher' # license - see affinity-designer note above
 cask 'alfred' # license
 cask 'anki'
 cask 'applepi-baker'
