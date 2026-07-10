@@ -1,17 +1,15 @@
 #!/usr/bin/env zsh
 
-# Only run pip normally if we're currently running it from
-#  a virtual environment. If there's an asdf or  pyenv install,
-#  make sure stuff gets put there. Otherwise only let it
-#  install to the local user directory.
+# Use the active virtualenv's pip if there is one. Otherwise, refuse -
+#  Homebrew's Python is externally managed and won't allow a bare
+#  `pip install` outside a venv anyway. Use uv instead.
 
 if [[ -n $VIRTUAL_ENV ]]; then
   $VIRTUAL_ENV/bin/pip "$@"
-elif [[ -a $HOME/.asdf/shims/pip ]]; then
-  $HOME/.asdf/shims/pip "$@"
-elif [[ -a $HOME/.pyenv/shims/pip ]]; then
-  $HOME/.pyenv/shims/pip "$@"
 else
-  _pip="$(/usr/bin/python -m site --user-base)/bin/pip"
-  PIP_USER=1 $_pip "$@"
+  echo "Not in a virtualenv - pip won't work here (Homebrew's Python is externally managed)."
+  echo "Use uv instead:"
+  echo "  uv tool install <package>          # standalone CLI tool"
+  echo "  uv venv && uv pip install <package> # project/library dependency"
+  exit 1
 fi
