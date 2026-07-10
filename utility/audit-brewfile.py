@@ -34,8 +34,12 @@ for line in brewfile_contents.splitlines():
         continue
     elements = line.split()
     if elements[0] == "brew":
+        if elements[1].endswith(","):
+            elements[1] = elements[1][:-1]
         brews.append(elements[1][1:-1])
     elif elements[0] == "cask":
+        if elements[1].endswith(","):
+            elements[1] = elements[1][:-1]
         casks.append(elements[1][1:-1])
     elif elements[0] == "mas":
         id = elements[-1]
