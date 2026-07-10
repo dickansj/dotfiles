@@ -18,7 +18,7 @@ brew 'readline'
 brew 'htop'
 brew 'eza'
 brew 'thefuck'
-brew 'tldr'
+brew 'tlrc'
 
 # compression stuffs
 brew 'zlib'
@@ -227,7 +227,7 @@ cask 'firefox@developer-edition'
 cask 'fission' # license
 cask 'fluid'
 cask 'flux-app'
-cask 'fontforge'
+cask 'fontforge-app'
 cask 'freecad'
 cask 'gog-galaxy'
 cask 'google-chrome'
@@ -246,7 +246,6 @@ cask 'keyboard-maestro' # license
 cask 'knockknock'
 cask 'logi-options+'
 cask 'macs-fan-control'
-cask 'macupdater'
 cask 'maestral'
 # cask 'marked-app' # license - staying on Marked 2 (owned, perpetual license);
 #   the cask now tracks Marked 3, which is subscription-based. Marked 2.app is
