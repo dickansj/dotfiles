@@ -448,38 +448,48 @@ declare -a dockList=(\
   /Applications/Setapp/Path\ Finder.app \
   /Applications/DEVONthink.app \
   /System/Applications/System\ Settings.app \
-  /Applications/1Password.app \
-  /Applications/iPhone\ Mirroring.app \
+  /System/Applications/Passwords.app \
+  /System/Applications/iPhone\ Mirroring.app \
+  /Applications/Setapp/ChronoSync\ Express.app \
+  /Applications/Hazel.app \
+  /Applications/Setapp/HoudahSpot.app \
   /Applications/Pastebot.app \
   /Applications/Setapp/Session.app \
+  /Applications/Tailscale.app \
   /Applications/Anki.app \
   /System/Applications/Messages.app \
-  /System/Applications/Facetime.app \
+  /System/Applications/FaceTime.app \
   /Applications/WhatsApp.app \
   /System/Applications/Music.app \
   /Applications/Spotify.app \
   /System/Applications/Photos.app \
   /Applications/Fantastical.app \
   /Applications/Cardhop.app \
-  /Applications/CARROTweather.app \
+  /Applications/CARROT.app \
   /Applications/Firefox\ Developer\ Edition.app \
-  /System/Applications/Safari.app \
-  /Applications/Airmail.app \
+  /Applications/Safari.app \
+  /Applications/Mimestream.app \
+  /Applications/Microsoft\ Outlook.app \
   /Applications/Setapp/News\ Explorer.app \
   /Applications/Discord.app \
   /Applications/PDF\ Expert.app \
   /Applications/Setapp/TaskPaper.app \
-   /Applications/Scrivener.app \
+  /Applications/Scrivener.app \
   /Applications/Drafts.app \
   /Applications/Marked\ 2.app \
   /Applications/BBEdit.app \
-  /Applications/Visual\ Studio\ Code.app \
+  /Applications/Microsoft\ Word.app \
+  /System/Applications/Notes.app \
+  /Applications/Obsidian.app \
   /Applications/Tower.app \
   /System/Applications/Utilities/Terminal.app \
   /Applications/RStudio.app \
+  /Applications/Claude.app \
   /Applications/PCalc.app \
+  /Applications/Carbon\ Copy\ Cloner.app \
   /Applications/Setapp.app \
   /System/Applications/App\ Store.app \
+  /Applications/Updatest.app \
 )
 for app in "${dockList[@]}"; do
   dockutil --add "$app" --no-restart
