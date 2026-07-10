@@ -398,6 +398,9 @@ mas 'Xcode', id: 497799835
 
 ## Other apps to remember (not managed by brew, MAS, Setapp)
 
+# Affinity Designer/Photo/Publisher 2          # license - Serif Store account, not MAS
+                                                # superseded day-to-day by the free V3 `affinity` cask above,
+                                                # kept installed and pinned for compatibility
 # CARROT																				# iPad version, I use the MAS version above only for my menu bar
 
 # Setapp
@@ -408,6 +411,8 @@ mas 'Xcode', id: 497799835
 # Displays (Jibapps)                            # license
 # Interact Scratchpad                           # https://docs.getdrafts.com/docs/misc/interact-scratchpad#download-the-interact-scratchpad
 # IVPN                                          # license
+# Marked 2                                      # license - Sparkle self-updater, not MAS
+                                                # marked2app.com
 # Mountio																				# https://mountio.app
 # News Explorer                                 # license
 # Oracle Java 8                                 # Ubiquiti requires JRE 8 and expects Oracle Java
