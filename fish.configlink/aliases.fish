@@ -25,5 +25,11 @@ switch (uname)
     complete -c oapp -a (basename -s .app /Applications{,/Utilities}/*.app|awk '{printf "\"%s\" ", $0 }')
 
     alias clear="printf '\33c\e[3J'"
+
+    # trash silently accepts rm's flags, so this is a safe drop-in;
+    #   note trash -s means "securely empty the whole trash", not
+    #   rm's -s (there is no rm -s) or the old Apple trash's -s
+    #   (stop on error) - different tool, different meaning
+    alias rm=trash
 end
 
