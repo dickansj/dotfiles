@@ -120,8 +120,8 @@ cask_up() {
 
 mas_check() {
     # <sigh> no "--quiet" modifier for mas :-/
-    local outMas=$($bindir/mas outdated | sed -E 's/^[0-9]+[[:space:]]+(.*)[[:space:]]+\([0-9.]*[[:space:]]+->[[:space:]]+[0-9.]*\)$/\1/')
-    local outFmt=$(echo $outMas | paste -d🐼 -s - | sed -e "s/🐼/, /g")
+    local outMas=$($bindir/mas outdated | sed -E 's/^[[:space:]]*[0-9]+[[:space:]]+(.*[^[:space:]])[[:space:]]+\([0-9.]*[[:space:]]+->[[:space:]]+[0-9.]*\)$/\1/')
+    local outFmt=${(j:, :)${(f)outMas}}
     local outCount=$(echo $outMas | wc -l | xargs)
     local info=""
     if [[ ${#outMas} == 0 ]]; then
