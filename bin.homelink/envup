@@ -33,6 +33,12 @@ all_check() {
     $bindir/brew update > /dev/null 2>&1
     source $(which env_parallel.zsh)
     env_parallel --keep-order {}_check all ::: ${envs[@]}
+
+    # dotfiles-repo health checks, not package updates - see utility/
+    #   for what each one actually does
+    python3 ~/.dotfiles/utility/check_keg_only_paths.py
+    python3 ~/.dotfiles/utility/check_orphaned_symlinks.py
+    python3 ~/.dotfiles/utility/check_untracked_brew.py
 }
 
 all_up() {
