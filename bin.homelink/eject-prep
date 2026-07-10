@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Clears out processes that hold external volumes open, so a following
+#   eject doesn't fail with "disk in use"
+
 # tell Backblaze to chill for a second
 # /Applications/Backblaze.app/Contents/MacOS/bzcli action --pause-backup
 
