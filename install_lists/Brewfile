@@ -213,7 +213,6 @@ cask 'calibre'
 cask 'carbon-copy-cloner' # license
 cask 'claude'
 cask 'cleanupbuddy'
-cask 'crunch-app'
 cask 'cyberduck'
 cask 'devonagent' # license
 cask 'devonthink' # license
@@ -222,19 +221,18 @@ cask 'discord'
 cask 'drivedx' # license
 cask 'epic-games'
 cask 'etrecheckpro'
+cask 'fiji'
 cask 'firefox'
 cask 'firefox@developer-edition'
 cask 'fission' # license
 cask 'fluid'
 cask 'flux-app'
-cask 'fontforge-app'
 cask 'freecad'
 cask 'gog-galaxy'
 cask 'google-chrome'
 cask 'google-drive'
 cask 'hazel'
 cask 'iina'
-cask 'imagej'
 cask 'imageoptim'
 cask 'imazing' # license
 cask 'insomnia'
@@ -257,7 +255,6 @@ cask 'mimestream'
 cask 'obsidian'
 cask 'omnidisksweeper'
 cask 'onyx'
-cask 'openemu'
 cask 'oversight' # CAVEAT: need to quit oversight from menu bar or else brew hangs
 cask 'moom'
 cask 'pacifist'
