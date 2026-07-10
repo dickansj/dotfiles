@@ -192,9 +192,6 @@ cask 'backblaze-downloader'
 cask 'little-snitch' #license
 cask 'tailscale-app'
 
-# dependencies to be installed first
-cask 'xquartz' # wine-stable dependency
-
 # now cask apps
 cask 'adium'
 cask 'adobe-digital-editions'
@@ -297,7 +294,6 @@ cask 'visual-studio-code'
 cask 'vlc'
 cask 'whatsapp'
 cask 'whisky'
-cask 'wine-stable'
 cask 'wwdc'
 cask 'xscope'
 cask 'zerobranestudio'
