@@ -192,7 +192,7 @@ cask '1password-cli'
 # cask 'backblaze' # don't use homebrew for this; upgrade will bork things
 cask 'backblaze-downloader'
 cask 'little-snitch' #license
-cask 'tailscale'
+cask 'tailscale-app'
 
 # dependencies to be installed first
 cask 'xquartz' # wine-stable dependency
@@ -208,7 +208,7 @@ cask 'anki'
 cask 'applepi-baker'
 cask 'arduino-ide'
 cask 'audio-hijack' # license
-cask 'autodesk-fusion360' # education license
+cask 'autodesk-fusion' # education license
 # cask 'backblaze' # don't use homebrew for this; upgrade will bork things
 cask 'balenaetcher'
 cask 'basictex'
@@ -219,7 +219,7 @@ cask 'calibre'
 cask 'carbon-copy-cloner' # license
 cask 'claude'
 cask 'cleanupbuddy'
-cask 'crunch'
+cask 'crunch-app'
 cask 'cyberduck'
 cask 'devonagent' # license
 cask 'devonthink' # license
@@ -232,7 +232,7 @@ cask 'firefox'
 cask 'firefox@developer-edition'
 cask 'fission' # license
 cask 'fluid'
-cask 'flux'
+cask 'flux-app'
 cask 'fontforge'
 cask 'freecad'
 cask 'gog-galaxy'
@@ -245,7 +245,7 @@ cask 'imageoptim'
 cask 'imazing' # license
 cask 'insomnia'
 cask 'itch'
-cask 'julia'
+cask 'julia-app'
 cask 'kaleidoscope' # license
 cask 'kextviewr'
 cask 'keyboard-maestro' # license
@@ -254,7 +254,7 @@ cask 'logi-options+'
 cask 'macs-fan-control'
 cask 'macupdater'
 cask 'maestral'
-cask 'marked' # license
+cask 'marked-app' # license
 cask 'microsoft-office' # license
 cask 'microsoft-teams' # license
 cask 'mimestream'
@@ -270,7 +270,7 @@ cask 'pingplotter'
 cask 'plex-media-server'
 cask 'post-haste'
 cask 'quitter'
-cask 'r' # seem to be cran issues if I just brew the cli
+cask 'r-app' # seem to be cran issues if I just brew the cli
 cask 'resilio-sync'
 cask 'rocket' # license
 cask 'rstudio'
@@ -318,7 +318,7 @@ cask 'qlprettypatch'
 cask 'quicklook-csv'
 cask 'suspicious-package'
 cask 'qlcolorcode'
-cask 'qlvideo'
+cask 'quicklook-video'
 cask 'apparency'
 
 
