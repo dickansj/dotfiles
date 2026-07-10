@@ -1,57 +1,52 @@
 # osx-dictionaries
 
-Spell-check custom dictionaries for macOS, tracked here so a fresh machine
-inherits accumulated vocabulary instead of starting blank. Handled by
-`install_dictionaries()` in [`install_symlinks.sh`](../install_symlinks.sh),
-which runs automatically on macOS as part of both `provision-mac.sh` (fresh
-bootstrap) and any manual re-run of `install_symlinks.sh` — no separate setup
-step needed.
-
-This directory breaks from the repo's usual filename-suffix convention
-(`*.symlink`/`*.homelink`/`*.configlink`) since the two files here have
-fixed, unrelated destinations rather than a shared parent directory, so
-`install_dictionaries()` hardcodes each src/dst pair explicitly. The two are
-also handled differently from each other.
-
-The two files are deliberately kept to the **same word list**, alphabetized
-(case-insensitively) for readability — there's no mechanism enforcing that,
-it's just a convention to maintain by hand when adding words, since one file
-is UTF-16LE and the other UTF-8 so they can't be symlinked to each other.
+Spell-check vocabulary for macOS, tracked here so a fresh machine inherits
+accumulated words instead of starting blank — same idea as upstream sjml's
+`cspell-words.txt` for VS Code, just for the apps actually used day to day
+here (Word, BBEdit).
 
 ## `LocalDictionary`
-→ `~/Library/Spelling/LocalDictionary` — **symlinked**.
+The one file you actually hand-edit. Plain UTF-8, one word per line.
+Symlinked to `~/Library/Spelling/LocalDictionary` — macOS's shared system
+spell-check word list. BBEdit doesn't keep its own dictionary; like most
+Cocoa apps (Mail, TextEdit, Notes, Safari, ...) it defers to this one via
+`NSSpellChecker`. This is set up by `install_dictionaries()` in
+[`install_symlinks.sh`](../install_symlinks.sh), which — along with the rest
+of that script's suffix-based conventions — breaks from them here since this
+file's destination is a fixed, hardcoded path rather than a name-derived one.
 
-macOS's shared system spell-check word list. BBEdit doesn't keep its own
-dictionary; like most Cocoa apps (Mail, TextEdit, Notes, Safari, ...) it
-defers to this one via `NSSpellChecker`. Plain UTF-8, one word per line.
+## Word's custom dictionary
+Not tracked in this repo at all — it's a generated file, derived entirely
+from `LocalDictionary` by [`bin.homelink/syncdict`](../bin.homelink/syncdict)
+(`~/bin/syncdict` once installed), which runs automatically as part of
+`install_dictionaries()` on every install/re-run. Its live location is
+`~/Library/Group Containers/UBF8T346G9.Office/Custom Dictionary`, in Word's
+native UTF-16LE-with-CRLF format — kept in that format on write, never
+converted to plain text on disk.
 
-## `Word Custom Dictionary`
-→ `~/Library/Group Containers/UBF8T346G9.Office/Custom Dictionary` —
-**copied once, not symlinked**.
+It can't be symlinked to `LocalDictionary` the way the system dictionary is:
+symlinking it once broke Word outright ("Remove" greyed out, "Edit..." did
+nothing in Word's own Dictionaries panel, and previously-learned words
+started getting flagged as misspelled). Word tracks a custom dictionary by
+more than its path — likely a security-scoped bookmark captured against the
+file's identity at the time it was added — and swapping in a symlink
+invalidated that reference. A generated copy avoids the problem.
 
-Word keeps its own separate custom dictionary, not shared with the system
-one above. UTF-16LE with CRLF line endings — that's Word's native format for
-this file, left as-is rather than converted.
+`syncdict` is a two-way merge, not a one-way overwrite: it reads whatever's
+currently in Word's live dictionary (in case you've used "Add to Dictionary"
+inside Word since the last sync), unions it with `LocalDictionary`, sorts the
+result case-insensitively, and writes the merged list back to *both* — so
+running it is always safe and never loses words learned on either side.
+Case variants (`Pneumatological` vs. `pneumatological`) are deduped on exact
+match only, so both are kept as distinct entries.
 
-This one is copied rather than symlinked because symlinking it broke Word
-outright: "Remove" was greyed out and "Edit..." silently did nothing in
-Word's own Dictionaries panel, and previously-learned words (`Dickan`,
-`Homoiousian`, ...) started getting flagged as misspelled. Word appears to
-track a custom dictionary by more than its path — likely a security-scoped
-bookmark captured against the file's identity at the time it was added —
-and swapping in a symlink invalidated that reference. A plain copy avoids
-the problem entirely.
-
-The copy only happens if nothing already exists at the destination, so
-re-running `install_symlinks.sh` later never clobbers words Word has
-learned since. The tradeoff: unlike `LocalDictionary`, new words Word learns
-afterward do **not** flow back into this repo automatically. To pull in
-new vocabulary, manually re-copy:
+Run it manually any time after adding words directly in Word:
 ```shell-script
-cp ~/Library/Group\ Containers/UBF8T346G9.Office/Custom\ Dictionary "osx-dictionaries/Word Custom Dictionary"
+syncdict
 ```
-and commit the result.
 
-Both files were seeded from real accumulated vocabulary rather than started
-empty — same idea as upstream sjml's `cspell-words.txt` for VS Code, just
-for the apps actually used day to day here (Word, BBEdit) instead.
+Encoding-wise, the merge pipeline (`iconv` for UTF-16LE↔UTF-8, plain
+byte-safe `sed`/`sort`/`awk` for the rest) has been verified round-trip-safe
+for Greek, Arabic, and Syriac, including precomposed combining characters
+(e.g. `Bardaiṣan`'s dot-below) — nothing gets silently mangled or dropped
+converting between formats.

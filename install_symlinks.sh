@@ -71,20 +71,11 @@ install_dictionaries() {
   mkdir -p "$HOME/Library/Spelling"
   link_file "$DOTFILES_ROOT/osx-dictionaries/LocalDictionary" "$HOME/Library/Spelling/LocalDictionary"
 
-  # Word keeps its own separate custom dictionary, not shared with the above.
-  #   Copied rather than symlinked: Word tracks this file by more than its
-  #   path (likely a security-scoped bookmark captured when first added), so
-  #   a symlinked version silently stopped resolving to real content - Word's
-  #   own dictionary editor couldn't even open it. Only seed it if nothing's
-  #   there yet, so a later re-run of this script never clobbers words
-  #   learned since - unlike the LocalDictionary case above, edits made in
-  #   Word afterward won't flow back into the repo automatically.
-  mkdir -p "$HOME/Library/Group Containers/UBF8T346G9.Office"
-  wordDict="$HOME/Library/Group Containers/UBF8T346G9.Office/Custom Dictionary"
-  if [ ! -e "$wordDict" ]; then
-    cp "$DOTFILES_ROOT/osx-dictionaries/Word Custom Dictionary" "$wordDict"
-    echo "seeded $wordDict"
-  fi
+  # Word keeps its own separate custom dictionary that can't be symlinked
+  #   (see osx-dictionaries/README.md for why) - sync it from the canonical
+  #   list above instead. Safe to re-run: it merges rather than overwrites,
+  #   so it never clobbers words learned in Word since the last sync.
+  "$DOTFILES_ROOT/bin.homelink/syncdict"
 }
 if [[ $OSTYPE == darwin* ]]; then
   install_dictionaries

@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+# Merges Word's live custom dictionary with this repo's canonical
+#   osx-dictionaries/LocalDictionary word list, then writes the merged
+#   result back to both. LocalDictionary itself is symlinked (it's
+#   macOS's shared system dictionary, which BBEdit and other Cocoa apps
+#   read live), so anything learned there is already captured - this is
+#   only needed for Word, since its custom dictionary can't be symlinked
+#   (see osx-dictionaries/README.md for why).
+# Run manually after adding words in Word, or after hand-editing
+#   osx-dictionaries/LocalDictionary directly. Safe to run any time:
+#   it's a non-destructive merge, never a one-way overwrite.
+
+set -e
+
+DOTFILES_ROOT="$HOME/.dotfiles"
+canonical="$DOTFILES_ROOT/osx-dictionaries/LocalDictionary"
+wordDict="$HOME/Library/Group Containers/UBF8T346G9.Office/Custom Dictionary"
+
+mkdir -p "$(dirname "$canonical")"
+touch "$canonical"
+
+wordWords=""
+if [ -e "$wordDict" ]; then
+  # Word's file is UTF-16LE with a BOM and CRLF line endings; strip all
+  #   three down to plain UTF-8/LF for merging. `-f UTF-16LE` (not plain
+  #   UTF-16) is deliberate - it keeps iconv from guessing byte order, so
+  #   the leading BOM comes through as a literal U+FEFF character to strip
+  #   ourselves, rather than being silently consumed.
+  wordWords=$(iconv -f UTF-16LE -t UTF-8 "$wordDict" | sed '1s/^\xEF\xBB\xBF//' | tr -d '\r')
+fi
+
+# Union of both lists, sorted case-insensitively for readability, but
+#   deduped on exact match only - case variants like "Pneumatological" and
+#   "pneumatological" are kept as distinct entries on purpose.
+merged=$( { cat "$canonical"; printf '%s\n' "$wordWords"; } | sed '/^$/d' | sort -f | awk '!seen[$0]++' )
+
+printf '%s\n' "$merged" > "$canonical"
+
+mkdir -p "$(dirname "$wordDict")"
+{
+  printf '\xff\xfe'
+  printf '%s\n' "$merged" | sed $'s/$/\r/' | iconv -f UTF-8 -t UTF-16LE
+} > "$wordDict"
+
+echo "Synced $(printf '%s\n' "$merged" | wc -l | xargs) words to LocalDictionary and Word's custom dictionary."
