@@ -10,8 +10,6 @@ set --local -a myPath
 set -a addIfExists
 # Poetry (and maybe other things?)
 set -p addIfExists $HOME/.local/bin
-# Rust
-set -p addIfExists $HOME/.cargo/bin
 # itch.io
 set -p addIfExists $HOME/Library/Application\ Support/itch/bin
 # Postgres using the app
@@ -33,6 +31,7 @@ end
 set -a myPath /opt/homebrew/opt/imagemagick-full/bin
 set -a myPath /opt/homebrew/opt/ffmpeg-full/bin
 set -a myPath /opt/homebrew/opt/ruby/bin
+set -a myPath /opt/homebrew/opt/rustup/bin
 set -a myPath /opt/homebrew/bin
 set -a myPath /opt/homebrew/sbin
 set -a myPath /usr/local/bin
