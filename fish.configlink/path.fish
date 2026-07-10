@@ -32,6 +32,8 @@ set -a myPath /opt/homebrew/opt/imagemagick-full/bin
 set -a myPath /opt/homebrew/opt/ffmpeg-full/bin
 set -a myPath /opt/homebrew/opt/ruby/bin
 set -a myPath /opt/homebrew/opt/rustup/bin
+set -a myPath /opt/homebrew/opt/sqlite/bin
+set -a myPath /opt/homebrew/opt/trash/bin
 set -a myPath /opt/homebrew/bin
 set -a myPath /opt/homebrew/sbin
 set -a myPath /usr/local/bin
