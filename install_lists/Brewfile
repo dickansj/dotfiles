@@ -398,7 +398,7 @@ mas 'Xcode', id: 497799835
 
 ## Other apps to remember (not managed by brew, MAS, Setapp)
 
-# Affinity Designer/Photo/Publisher 2          # license - Serif Store account, not MAS
+# Affinity Designer/Photo/Publisher 2           # license - Serif Store account, not MAS
                                                 # superseded day-to-day by the free V3 `affinity` cask above,
                                                 # kept installed and pinned for compatibility
 # CARROT																				# iPad version, I use the MAS version above only for my menu bar
