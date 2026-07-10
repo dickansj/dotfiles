@@ -12,8 +12,6 @@ REGISTRY = {
     "hgrc.symlink": "hg",
     "yt-dlp.symlink": "yt-dlp",
     "paper_meta.yml.symlink": "paper",
-    "virtualenv.symlink": "virtualenv",
-    "ipython.symlink": "ipython",
 }
 
 
