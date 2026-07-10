@@ -11,7 +11,12 @@ This directory breaks from the repo's usual filename-suffix convention
 (`*.symlink`/`*.homelink`/`*.configlink`) since the two files here have
 fixed, unrelated destinations rather than a shared parent directory, so
 `install_dictionaries()` hardcodes each src/dst pair explicitly. The two are
-also handled differently from each other:
+also handled differently from each other.
+
+The two files are deliberately kept to the **same word list**, alphabetized
+(case-insensitively) for readability — there's no mechanism enforcing that,
+it's just a convention to maintain by hand when adding words, since one file
+is UTF-16LE and the other UTF-8 so they can't be symlinked to each other.
 
 ## `LocalDictionary`
 → `~/Library/Spelling/LocalDictionary` — **symlinked**.
@@ -19,7 +24,6 @@ also handled differently from each other:
 macOS's shared system spell-check word list. BBEdit doesn't keep its own
 dictionary; like most Cocoa apps (Mail, TextEdit, Notes, Safari, ...) it
 defers to this one via `NSSpellChecker`. Plain UTF-8, one word per line.
-Currently empty — nothing's been learned into it yet on this machine.
 
 ## `Word Custom Dictionary`
 → `~/Library/Group Containers/UBF8T346G9.Office/Custom Dictionary` —
