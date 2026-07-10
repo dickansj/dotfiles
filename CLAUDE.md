@@ -30,13 +30,20 @@ config immediately, no re-linking needed. New top-level `*.symlink`/
 `osx-dictionaries/` breaks from the filename-suffix convention since its two
 files have unrelated, fixed destinations rather than a shared parent
 directory — `install_symlinks.sh`'s `install_dictionaries()` hardcodes each
-src/dst pair explicitly rather than looping.
+src/dst pair explicitly rather than looping, and the two aren't even handled
+the same way:
 `LocalDictionary` → `~/Library/Spelling/LocalDictionary` is macOS's shared
 system spell-check word list (BBEdit and most other Cocoa apps defer to this
-instead of keeping their own).
+instead of keeping their own) and is symlinked normally.
 `Word Custom Dictionary` → `~/Library/Group Containers/UBF8T346G9.Office/Custom Dictionary`
 is Word's own separate one (UTF-16LE, CRLF — that's Word's native format for
-this file, left as-is rather than converted).
+this file, left as-is rather than converted), but is *copied* once rather
+than symlinked: Word tracks it by more than its path (likely a
+security-scoped bookmark), so a symlinked version silently stopped resolving
+to real content — Word's own dictionary editor couldn't even open it. The
+copy only happens if nothing's there yet, so a later re-run never clobbers
+words learned since; unlike the symlinked file, words Word learns afterward
+won't flow back into the repo without manually re-copying.
 Both get seeded with real accumulated vocabulary rather than starting empty,
 same spirit as upstream's `cspell-words.txt` for VS Code.
 
