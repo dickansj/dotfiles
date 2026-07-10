@@ -24,17 +24,17 @@ Running `provision-mac.sh` on a fresh Mac will:
     * `.homelink` gets the same treatment, but into `~`
   * Symlink files in `osx-launchagents` to `~/Library/LaunchAgents`
   * Install [homebrew](http://brew.sh) with analytics turned off
+  * Validate `install_lists/Brewfile` against the live Homebrew/App Store
+    catalogs, and check that you're signed into the Mac App Store, before
+    installing anything
   * Install all the brew packages, GUI apps, and fonts listed in `install_lists/Brewfile`. This includes Mac App Store apps specified under the mas section there.
   * Change the default shell to [fish](https://fishshell.com/)
   * Set Homebrew's version of OpenJDK to be used instead of system's
   * Sets up the directory to be a proper git repository if it was pulled during a bootstrap
   * Make a `~/Projects` directory and symlink the dotfiles there
   * Install a set of vim bundles, managed by [Vundle](https://github.com/VundleVim/Vundle.vim)
-  * Install latest versions of Python 2 and 3 (3 as default), Ruby, and Node.js via [asdf](https://asdf-vm.com/)
-  * Install Python packages listed in `install_lists/python{2|3}-dev-packages.txt`
-  * Install Node-based programs listed in `install_lists/node-packages.txt`
-  * Install the latest version of Rust via [rustup](https://www.rustup.rs/)
   * Set up appearance of Terminal.app
+  * Set default file-type associations (PDF, images, markdown, etc.) via `duti`
   * Set default browser to Firefox Developer Edition
   * Various and sundry macOS GUI settings (Finder behaviors, Trackpad settings, etc.)
   * Set up the Dock
