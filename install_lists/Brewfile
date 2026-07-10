@@ -33,7 +33,6 @@ brew 'pigz'
 
 
 # programming languages
-# brew 'asdf' # falling back to brew for now
 
 ## main
 brew 'uv' # for Python
