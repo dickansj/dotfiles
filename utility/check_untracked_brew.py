@@ -34,7 +34,13 @@ def tracked_names(keyword):
             token = line.split()[1]
             if token.endswith(","):
                 token = token[:-1]
-            names.add(token[1:-1])
+            token = token[1:-1]
+            names.add(token)
+            # tap-qualified entries (e.g. "sjml/sjml/beschi") install and
+            #   list under just their short name ("beschi"), not the full
+            #   tap path - track both so they're recognized either way
+            if "/" in token:
+                names.add(token.rsplit("/", 1)[-1])
     return names
 
 
