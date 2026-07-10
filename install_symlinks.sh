@@ -61,3 +61,20 @@ install_launchagents() {
 if [[ $OSTYPE == darwin* ]]; then
   install_launchagents
 fi
+
+
+install_dictionaries() {
+  local overwrite_all=false backup_all=false skip_all=false
+
+  # macOS's shared system spell-check dictionary (BBEdit and most other
+  #   Cocoa apps defer to this rather than keeping their own word list)
+  mkdir -p "$HOME/Library/Spelling"
+  link_file "$DOTFILES_ROOT/osx-dictionaries/LocalDictionary" "$HOME/Library/Spelling/LocalDictionary"
+
+  # Word keeps its own separate custom dictionary, not shared with the above
+  mkdir -p "$HOME/Library/Group Containers/UBF8T346G9.Office"
+  link_file "$DOTFILES_ROOT/osx-dictionaries/Word Custom Dictionary" "$HOME/Library/Group Containers/UBF8T346G9.Office/Custom Dictionary"
+}
+if [[ $OSTYPE == darwin* ]]; then
+  install_dictionaries
+fi

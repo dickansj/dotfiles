@@ -19,12 +19,26 @@ mechanism, there's no separate manifest:
 | `*.configlink` | `~/.config/<name>` | `fish.configlink` → `~/.config/fish` |
 | `*.homelink` | `~/<name>` | `bin.homelink` → `~/bin` |
 | `osx-launchagents/*.plist` | `~/Library/LaunchAgents/<name>` | |
+| `osx-dictionaries/*` | hardcoded per-file (see below) | |
 
 Note `*.configlink`/`*.homelink` link the whole directory in one shot (not
 file-by-file), so e.g. `~/.config/fish` is itself a symlink to
 `fish.configlink/` — editing any file under `fish.configlink/` edits the live
 config immediately, no re-linking needed. New top-level `*.symlink`/
 `*.homelink`/`*.configlink` entries do need `install_symlinks.sh` re-run.
+
+`osx-dictionaries/` breaks from the filename-suffix convention since its two
+files have unrelated, fixed destinations rather than a shared parent
+directory — `install_symlinks.sh`'s `install_dictionaries()` hardcodes each
+src/dst pair explicitly rather than looping.
+`LocalDictionary` → `~/Library/Spelling/LocalDictionary` is macOS's shared
+system spell-check word list (BBEdit and most other Cocoa apps defer to this
+instead of keeping their own).
+`Word Custom Dictionary` → `~/Library/Group Containers/UBF8T346G9.Office/Custom Dictionary`
+is Word's own separate one (UTF-16LE, CRLF — that's Word's native format for
+this file, left as-is rather than converted).
+Both get seeded with real accumulated vocabulary rather than starting empty,
+same spirit as upstream's `cspell-words.txt` for VS Code.
 
 Supporting directories (not part of the symlink convention):
 - `install_lists/` — Brewfile (primary), plus `r-packages.txt` (kept manually,
