@@ -208,7 +208,6 @@ cask 'anki'
 cask 'applepi-baker'
 cask 'arduino-ide'
 cask 'audio-hijack' # license
-cask 'autodesk-fusion' # education license
 # cask 'backblaze' # don't use homebrew for this; upgrade will bork things
 cask 'balenaetcher'
 cask 'basictex'
@@ -254,7 +253,10 @@ cask 'logi-options+'
 cask 'macs-fan-control'
 cask 'macupdater'
 cask 'maestral'
-cask 'marked-app' # license
+# cask 'marked-app' # license - staying on Marked 2 (owned, perpetual license);
+#   the cask now tracks Marked 3, which is subscription-based. Marked 2.app is
+#   kept installed manually and pinned (`brew pin marked-app`) so Homebrew
+#   never touches it - not managed via this Brewfile.
 cask 'microsoft-office' # license
 cask 'microsoft-teams' # license
 cask 'mimestream'
