@@ -13,7 +13,7 @@ set -p addIfExists $HOME/.local/bin
 # itch.io
 set -p addIfExists $HOME/Library/Application\ Support/itch/bin
 # Postgres using the app
-set -p addIfExists /Applications/Postgres.app/Contents/Versions/12/bin/
+set -p addIfExists /Applications/Postgres.app/Contents/Versions/latest/bin/
 
 for maybePath in $addIfExists
   if test -d $maybePath
