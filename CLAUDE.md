@@ -57,26 +57,40 @@ fresh machine:
    `provision-linux.sh` is the stripped-down sibling (no sudo assumed):
    symlinks, self-link into `~/Projects/dotfiles`, vim bundles, pyenv.
 
-Python, Ruby, and Node are plain Homebrew formulae now (`brew 'python'`,
-`brew 'ruby'`, `brew 'node'`) — the old asdf-managed-multi-version setup was
-fully removed from `provision-mac.sh`, not just paused; there's no plugin
-list or version-pinning to revive. Homebrew keeps some formulae keg-only when
-macOS ships its own version (python, ruby, and the `-full` variants of
-imagemagick/ffmpeg all hit this) — keg-only means no automatic PATH entry, so
-each one needs an explicit line in `path.fish`'s "Installed stuff" block or
-the shell silently falls back to Apple's ancient bundled version. Found and
-fixed exactly this for both python and ruby this session; worth checking any
-new keg-only formula the same way (`brew info <formula>` says so explicitly).
+Python, Ruby, Node, and Rust are all plain Homebrew formulae now (`brew
+'python'`, `brew 'ruby'`, `brew 'node'`, `brew 'rustup'`) — the old
+asdf-managed-multi-version setup was fully removed from `provision-mac.sh`,
+not just paused; there's no plugin list or version-pinning to revive.
+Homebrew keeps some formulae keg-only when macOS ships its own version, or
+to avoid clobbering a manually-managed toolchain (python, ruby, rustup, and
+the `-full` variants of imagemagick/ffmpeg all hit this) — keg-only means no
+automatic PATH entry, so each one needs an explicit line in `path.fish`'s
+"Installed stuff" block or the shell silently falls back to Apple's
+ancient bundled version (or, for rustup, just isn't reachable at all —
+Homebrew ships its `cargo`/`rustc`/etc. proxy binaries directly in the keg's
+own `bin/`, not in `~/.cargo/bin` the way the native rustup.rs installer
+does). Found and fixed exactly this for python, ruby, and rustup this
+session; worth checking any new keg-only formula the same way (`brew info
+<formula>` says so explicitly).
 
 `pip` (the `bin.homelink/pip` wrapper) intentionally does *not* try to
 install anything outside an active virtualenv — Homebrew's Python is
 externally-managed (PEP 668) and refuses bare `pip install` outside a venv
 regardless, so the wrapper just fails with a pointer to `uv` instead
 (`uv tool install` for a CLI tool, `uv venv && uv pip install` for a
-project). Rust is a partial exception: `rustup-init` installs via the
-Brewfile like the others, but nothing runs it to configure an actual default
-toolchain — that's still a manual, deliberate gap, not yet resolved either
-way.
+project).
+
+Rust specifically: `brew 'rustup'` only installs the toolchain multiplexer,
+not an actual toolchain (same two-step split as pyenv/asdf) — `brew info
+rustup` even shows `rustup self update` disabled in favor of `brew upgrade
+rustup`, a deliberate Homebrew choice, not a bug. `provision-mac.sh` runs
+`rustup default stable` right after the vim bundles step to close that gap.
+One quirk worth knowing: since path.fish's PATH ordering prefers the keg's
+own `bin/` over Homebrew's `rustup` wrapper script (which redirects
+`RUSTUP_OVERRIDE_UNIX_FALLBACK_SETTINGS` to `/opt/homebrew/etc/rustup/`),
+rustup's actual config lives at the standard `~/.rustup/settings.toml`, not
+the Homebrew-provided one — harmless, just two settings files existing where
+only one is actually read.
 
 ## Package management
 
