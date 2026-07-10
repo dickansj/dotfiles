@@ -32,6 +32,7 @@ end
 ## Installed stuff (mostly from Homebrew)
 set -a myPath /opt/homebrew/opt/imagemagick-full/bin
 set -a myPath /opt/homebrew/opt/ffmpeg-full/bin
+set -a myPath /opt/homebrew/opt/ruby/bin
 set -a myPath /opt/homebrew/bin
 set -a myPath /opt/homebrew/sbin
 set -a myPath /usr/local/bin
@@ -47,33 +48,6 @@ set -a myPath
 #   (https://docs.brew.sh/Homebrew-and-Python#python-3)
 #   but that means upgrades are broken until shell restart
 set PATH /opt/homebrew/opt/python/libexec/bin $PATH
-
-# set --local haveASDF 0
-# set --local havePyenv 0
-# if test -f /usr/local/opt/asdf/asdf.fish;
-#   source /usr/local/opt/asdf/asdf.fish
-#   set haveASDF 1
-# else if test -f /opt/homebrew/opt/asdf/libexec/asdf.fish
-#   set -x ASDF_DIR /opt/homebrew/opt/asdf/libexec
-#   source /opt/homebrew/opt/asdf/libexec/asdf.fish
-#   set haveASDF 1
-# else if test -f $HOME/.asdf/asdf.fish
-#   source $HOME/.asdf/asdf.fish
-#   set haveASDF 1
-# else if test -f $HOME/.pyenv/bin/pyenv
-#   set PATH $HOME/.pyenv/bin $PATH
-#   set havePyenv 1
-# end
-
-# if test $haveASDF -eq 1
-#   for asdf_plugin in (asdf plugin list)
-#     # fish can't really do backgrounding for this kind of thing :-/
-#     bash -c "asdf reshim $asdf_plugin &"
-#   end
-# else if test $havePyenv -eq 1
-#   status is-interactive; and pyenv init --path | source
-#   pyenv init - | source
-# end
 
 ## Any custom programs come first
 set PATH $HOME/bin $HOME/local/bin $PATH
