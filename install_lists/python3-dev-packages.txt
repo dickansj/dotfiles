@@ -1,8 +1,0 @@
-setuptools
-virtualenv
-pipenv
-pylint
-pyprof2calltree
-rope
-autopep8
-black
