@@ -69,9 +69,9 @@ automatic PATH entry, so each one needs an explicit line in `path.fish`'s
 ancient bundled version (or, for rustup, just isn't reachable at all —
 Homebrew ships its `cargo`/`rustc`/etc. proxy binaries directly in the keg's
 own `bin/`, not in `~/.cargo/bin` the way the native rustup.rs installer
-does). Found and fixed exactly this for python, ruby, and rustup this
-session; worth checking any new keg-only formula the same way (`brew info
-<formula>` says so explicitly).
+does). Found and fixed six of these this session (python, ruby, rustup,
+sqlite, trash, mozjpeg) before writing `utility/check_keg_only_paths.py` to
+catch the rest mechanically — see Package management below.
 
 `pip` (the `bin.homelink/pip` wrapper) intentionally does *not* try to
 install anything outside an active virtualenv — Homebrew's Python is
@@ -104,6 +104,16 @@ gate in `provision-mac.sh` now, before any installing starts, not just via
 CI); `utility/check_untracked_brew.py` checks the opposite direction —
 things installed via ad-hoc `brew install` that never made it into the
 Brewfile.
+
+Two more standalone `utility/` diagnostics, same pattern as the two above:
+`check_keg_only_paths.py` mechanizes the keg-only PATH check described
+above. `check_orphaned_symlinks.py` is a small hand-maintained registry
+checking whether a `*.symlink`'s target tool is actually installed (same
+failure mode as `devbox_no_prompt`/`condarc.symlink`/`ipython.symlink`/
+`virtualenv.symlink`, all removed this session). All three of these plus
+`check_untracked_brew.py` are hooked into `bin.homelink/envup`'s
+`all_check()`, so bare `envup` (which already defaults to `check all`)
+surfaces all four automatically.
 
 Some casks intentionally aren't Brewfile-managed: `marked-app` is commented
 out and pinned locally (`brew pin marked-app`) to stay on the owned/
