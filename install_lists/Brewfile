@@ -88,7 +88,6 @@ brew 'git-filter-repo'
 brew 'hub'
 brew 'gh'
 brew 'bfg'
-brew 'mercurial'
 brew 'subversion'
 brew 'fossil'
 brew 'libgit2' # r devtools dep
