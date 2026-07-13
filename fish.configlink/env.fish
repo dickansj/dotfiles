@@ -16,6 +16,8 @@ end
 set -x HOMEBREW_NO_ANALYTICS 1
 # let it do its business
 set -x HOMEBREW_NO_ENV_HINTS 1
+# don't update casks that update themselves
+set -x HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS 1
 # Cask otherwise adds their own quarantine flag that
 #   can break things. Figure anything I'm installing
 #   via cask is something I either trust or will be
