@@ -136,7 +136,11 @@ function fish_prompt
       $topLen - \
       $COLUMNS
     )
-    set prettyPath "…$prettyPath[$lenDiff..-1]"
+    # character slice via `string sub`, NOT $prettyPath[n..-1] - that's a
+    #   *list* slice on a one-element list, which silently yields the whole
+    #   path or nothing. Shave lenDiff+1 leading chars, spend one back on
+    #   the ellipsis, and the line comes out exactly $COLUMNS wide.
+    set prettyPath "…"(string sub --start (math $lenDiff + 2) -- $prettyPath)
   end
 
   set lcount 0
@@ -163,7 +167,9 @@ function fish_prompt
     set rcount (math (string length $hostName) + $rcount)
   end
   set_color $outlineColor
-  echo -n (string repeat -n (math $COLUMNS - $lcount - $rcount) $sep)
+  # clamped at 0: emoji widths and pathological terminal sizes can still
+  #   push the count negative, which `string repeat` rejects outright
+  echo -n (string repeat -n (math "max(0, $COLUMNS - $lcount - $rcount)") $sep)
   set_color normal
   echo -n " "
   if $incUser; and $incHost;
@@ -205,7 +211,10 @@ function fish_prompt
       set_color normal
       echo -n " $al"
       set_color normal
-      echo -n (string repeat -n (math $COLUMNS - 4 - (string length $alp)) " ")
+      # same 0-clamp as the top line: a long alert (e.g. many tmux session
+      #   names) can exceed the terminal width
+      set alpLen (string length $alp)
+      echo -n (string repeat -n (math "max(0, $COLUMNS - 4 - $alpLen)") " ")
       set_color $outlineColor
       echo $vertBar
     end

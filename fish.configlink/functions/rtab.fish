@@ -21,7 +21,8 @@ function shorten_path -a full_directory replace_tilde expand_final
     # build up the string for the directory until there
     #   is only one possible completion
     set part ""
-    for c in (string split '' $dir);
+    # `--` so a directory name starting with "-" isn't parsed as an option
+    for c in (string split '' -- $dir);
       set part $part$c
 
       set -e options
