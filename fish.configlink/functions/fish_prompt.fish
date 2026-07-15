@@ -25,6 +25,11 @@ function _sjml_tmux_data -a colorize
   if not test -z (string match 'screen*' $TERM)
     return
   end
+  # no tmux, nothing to report - and the 2>/dev/null below only covers
+  #   tmux's own stderr, not fish's "Unknown command" complaint
+  if not type -q tmux
+    return
+  end
   set icon "⛶" #"⛚" #"⚄" #"▢" #"[]"
   set tmcount (command tmux list-sessions 2>/dev/null| grep -cv 'attached')
   set tmnames (command tmux list-sessions 2>/dev/null | sed -e "s/^\([^:]*\):.*/\1/" | string join ", ")
