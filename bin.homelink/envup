@@ -179,6 +179,9 @@ if [[ $sourced -ne 1 ]]; then
     if [[ $#@ -lt 1 ]]; then
         command="check"
     fi
+    if [[ $#@ -eq 1 ]]; then
+        command=$1
+    fi
     if [[ $#@ -ge 2 ]]; then
         command=$1
         val=$2
