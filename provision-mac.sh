@@ -37,8 +37,11 @@ cp resources/ssh_config.base ~/.ssh/config
 # Ask for the administrator password
 echo "Now we need sudo access to install {(Rosetta),Homebrew,some GUI apps} and change the shell."
 sudo -v
-still_need_sudo=1
-while [ $still_need_sudo -ne 0 ]; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+# keep the sudo timestamp fresh until we're done with it; note the loop has
+#   to be killed by PID - it's a backgrounded subshell, so a flag variable
+#   set later in the parent would never reach it
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+SUDO_KEEPALIVE_PID=$!
 
 if [[ $(uname -m) == 'arm64' ]]; then
   HBBASE=/opt/homebrew
@@ -106,13 +109,12 @@ sudo cp /etc/pam.d/sudo_local.template /etc/pam.d/sudo_local
 sudo sed -i "" "s/#auth/auth/" /etc/pam.d/sudo_local
 
 # no more sudo needed!
-still_need_sudo=0
+kill "$SUDO_KEEPALIVE_PID" 2>/dev/null || true
 sudo -k
 
 # clean up after homebrew
 $HBBIN/brew cleanup -s
 rm -rf $($HBBIN/brew --cache)
-export HOMEBREW_NO_AUTO_UPDATE=0
 
 timerData "POST-BREW"
 
@@ -180,7 +182,9 @@ osascript 2>/dev/null <<EOD
 EOD
 
 # let QuickLook stuff run without Gatekeeper complaining
-xattr -cr ~/Library/QuickLook/*
+#   (|| true: with set -e, an empty glob or missing attrs would otherwise
+#   abort provisioning right here)
+xattr -cr ~/Library/QuickLook/* 2>/dev/null || true
 qlmanage -r
 qlmanage -r cache
 
@@ -266,7 +270,9 @@ defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 
 # Show the ~/Library folder
-xattr -d com.apple.FinderInfo ~/Library
+#   (|| true: the attribute doesn't exist on every fresh account, and with
+#   set -e a failed delete would abort provisioning)
+xattr -d com.apple.FinderInfo ~/Library 2>/dev/null || true
 chflags nohidden ~/Library
 
 # Expand save and print panels by default

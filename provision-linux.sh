@@ -42,8 +42,11 @@ fi
 
 # Projects folder is where most code stuff lives; link this there, too,
 #  because otherwise I'll forget where it is
-mkdir -p ~/Projects
-ln -s $DOTFILES_ROOT ~/Projects/dotfiles
+#  (guarded like the mac version so a re-run doesn't error on the ln)
+if [[ ! -d ~/Projects/dotfiles ]]; then
+  mkdir -p ~/Projects
+  ln -s $DOTFILES_ROOT ~/Projects/dotfiles
+fi
 
 # any vim bundles
 if [[ ${#VIM} -eq 0 ]]; then
