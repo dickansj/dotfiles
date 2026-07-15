@@ -68,15 +68,13 @@ user/host first if the line won't fit.
 
 ## `fish_user_key_bindings`
 Fish's designated hook for custom key bindings — called automatically on shell
-init. Here it just delegates to `fzf_key_bindings` if fzf's bindings are loaded.
-
-## `fzf_key_bindings`
-Not part of this repo — a symlink installed by Homebrew's `fzf` formula
-(`/usr/local/opt/fzf/shell/key-bindings.fish` or the `/opt/homebrew` equivalent on
-Apple Silicon) providing fzf's Ctrl-R (history search) and Ctrl-T (file search)
-bindings. Present here only because fish's function autoloading requires it to
-live in this directory; do not edit directly, it'll be overwritten on fzf
-upgrades.
+init. Here it just delegates to `fzf_key_bindings` if that function is defined.
+fzf's bindings (Ctrl-R history, Ctrl-T files, Alt-C cd) are set up by
+[`conf.d/fzf.fish`](../conf.d/fzf.fish) via `fzf --fish | source`, which defines
+and invokes `fzf_key_bindings` on its own — this hook re-invoking it is a
+harmless no-op. (An earlier setup symlinked the Homebrew keg's
+`key-bindings.fish` into this directory, but the link hardcoded the Intel
+prefix `/usr/local` and broke silently on Apple Silicon.)
 
 ## `run-translate`
 ```

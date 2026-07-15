@@ -8,4 +8,3 @@ SETUVAR __fish_git_prompt_showstashstate:true
 SETUVAR __fish_git_prompt_showuntrackedfiles:true
 SETUVAR __fish_initialized:4300
 SETUVAR fish_greeting:\x1d
-SETUVAR fish_user_paths:/usr/local/opt/fzf/bin
