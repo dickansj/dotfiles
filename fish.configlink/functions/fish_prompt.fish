@@ -146,7 +146,7 @@ function fish_prompt
   set lcount 0
   set_color $outlineColor
   echo -n "$topLt$sep"
-  set lcount $lcount + 2
+  set lcount (math $lcount + 2)
   set_color normal
   echo -n "($prettyPath)"
   set lcount (math $lcount + 2 + (string length $prettyPath))
@@ -220,9 +220,12 @@ function fish_prompt
     end
   end
 
-  if test $cmdDur -gt 10000
+  # long-command notification: macOS-only (mdls / get-frontmost / teller);
+  #   $__CFBundleIdentifier is only set by macOS GUI terminals, so its
+  #   absence (SSH, Linux, tmux from a login shell) skips the whole thing
+  if test $cmdDur -gt 10000; and test -n "$__CFBundleIdentifier"
     if ! string match --quiet " *" $history[1]
-      if test $__CFBundleIdentifier != (mdls -name kMDItemCFBundleIdentifier -r (get-frontmost))
+      if test "$__CFBundleIdentifier" != (mdls -name kMDItemCFBundleIdentifier -r (get-frontmost))
         if test $errStatus -eq 0
           teller success --message $history[1] --title Success --sound Glass
         else
@@ -236,11 +239,6 @@ function fish_prompt
   echo -n $botLt$sep
   set_color normal
   echo -n " $pchar> "
-end
-
-function ingit
-  git rev-parse --is-inside-work-tree >/dev/null 2>&1 || return 0
-  return 1
 end
 
 function fish_right_prompt

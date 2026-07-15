@@ -13,7 +13,12 @@ source $FISHDIR/aliases.fish
 
 # thefuck error correction
 # https://github.com/nvbn/thefuck
-thefuck --alias | source
+# (type -q guards here and below: this config also runs on Linux boxes
+#   that don't have every tool installed, and an unguarded `missing-cmd |
+#   source` errors at every shell start)
+if type -q thefuck
+  thefuck --alias | source
+end
 
 ## if we start a tmux session from a virtualenved environment
 if test -n "$VIRTUAL_ENV"
@@ -39,9 +44,11 @@ end
 ## brew-file maintains install list separate from dotfile list and is handy for keeping multiple Macs in sync wrt apps
 ## wraps the original `brew` command for an automatic update of Brewfile when you run `brew install` or `brew uninstall`
 ## https://homebrew-file.readthedocs.io/en/latest/installation.html
-if test -f (brew --prefix)/etc/brew-wrap.fish
+if type -q brew; and test -f (brew --prefix)/etc/brew-wrap.fish
   source (brew --prefix)/etc/brew-wrap.fish
 end
 
 ## set up direnv
-direnv hook fish | source
+if type -q direnv
+  direnv hook fish | source
+end
