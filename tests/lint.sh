@@ -125,6 +125,32 @@ done < <(find . \
   \( -path ./.git -o -path ./gui-editors -o -name node_modules \) -prune -o \
   \( -name '*.symlink' -o -name '*.homelink' -o -name '*.configlink' \) -path './*/*/*' -print)
 
+# ── 8. ShellCheck, error severity only ──────────────────────────────────
+# The error tier catches "parses fine, does the wrong thing" bugs (unquoted
+#   $@ re-splitting arguments, arrays flattened in [[ ]], iterating ls) with
+#   near-zero noise. Deliberately NOT warning/style level: the inherited
+#   scripts would drown the signal, and an ignorable check is worse than
+#   none. shellcheck comes from the Brewfile; both GitHub runner images
+#   ensure it in ci.yml.
+echo "· shellcheck (severity=error)"
+if command -v shellcheck >/dev/null; then
+  sc_files=()
+  while IFS= read -r f; do
+    case "$f" in
+      vim.symlink/bundle/*) continue ;;
+    esac
+    [ -f "$f" ] || continue
+    if head -1 "$f" | tr -d '\0' | grep -qE '^#!.*(bash|/bin/sh)'; then
+      sc_files+=("$f")
+    fi
+  done < <(git ls-files)
+  if ! shellcheck --severity=error "${sc_files[@]}"; then
+    err "shellcheck found errors (see above)"
+  fi
+else
+  echo "  (shellcheck not installed; skipped)"
+fi
+
 if [ $fails -ne 0 ]; then
   echo "lint: $fails failure(s)"
   exit 1

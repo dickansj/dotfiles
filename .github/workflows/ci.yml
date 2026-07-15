@@ -18,9 +18,9 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y fish zsh
+          sudo apt-get install -y fish zsh shellcheck
       - name: Install fish (macOS)
         if: runner.os == 'macOS'
-        run: brew install fish
+        run: brew install fish shellcheck
       - name: Run test suite
         run: ./tests/run_all.sh

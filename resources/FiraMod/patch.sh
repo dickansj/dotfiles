@@ -29,7 +29,8 @@ done
 
 # working around https://github.com/ryanoasis/nerd-fonts/issues/1679
 #  (also renaming from NerdFont -> NF)
-for bf in $(ls $OUTPUT_DIR/*.ttf); do
+for bf in $OUTPUT_DIR/*.ttf; do
+  [ -e "$bf" ] || continue # unmatched glob stays literal
   $FONTFORGE_PY -c "import fontforge; bf = fontforge.open('${bf}'); bf.appendSFNTName('English (US)', 'Preferred Family', 'FiraMod NF'); bf.generate('${bf/NerdFont/NF}'); bf.close()"
 done
 rm $OUTPUT_DIR/*NerdFont*.ttf

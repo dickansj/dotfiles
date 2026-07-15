@@ -7,9 +7,22 @@
 BASEDIR="/Volumes/"
 SKIPS=("Time Machine" "Macintosh HD" "com.apple.TimeMachine.localsnapshots")
 
+# exact-match against the skip list; the old substring-in-"${SKIPS[@]}"
+#   regex trick concatenated the array, so one entry being a prefix of a
+#   volume name could false-positive
+should_skip() {
+    local name=$1 s
+    for s in "${SKIPS[@]}"; do
+        if [[ $s == "$name" ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
 VOLS=()
-for v in $BASEDIR*; do
-    if [[ ! " ${SKIPS[@]} " =~ " ${v:${#BASEDIR}} " ]]; then
+for v in "$BASEDIR"*; do
+    if ! should_skip "${v:${#BASEDIR}}"; then
         VOLS+=("${v:${#BASEDIR}}")
     fi
 done

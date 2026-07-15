@@ -46,7 +46,7 @@ if [[ ${#servers[@]} -lt 2 ]]; then
     server=${servers[0]}
 else
     echo "Where to upload?"
-    select s in ${servers[@]}; do
+    select s in "${servers[@]}"; do
         server=$s
         break
     done

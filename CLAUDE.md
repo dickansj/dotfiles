@@ -194,9 +194,11 @@ No secrets live in this repo. The split points:
   not PRs. No branch protection or required checks.
 - `tests/run_all.sh` is the repo's regression suite; `.github/workflows/ci.yml`
   runs it on every push, on both Ubuntu and macOS. It covers: static lint of
-  every script (shebang-at-byte-zero, per-interpreter syntax checks, the
-  `functions/` wrap convention, tracked-symlink hygiene, Brewfile grammar,
-  suffix files nested too deep for `install_symlinks.sh` to find), a real
+  every script (shebang-at-byte-zero, per-interpreter syntax checks, a
+  ShellCheck pass at `--severity=error` only — the warning/style tiers would
+  drown in noise from the inherited scripts — the `functions/` wrap
+  convention, tracked-symlink hygiene, Brewfile grammar, suffix files nested
+  too deep for `install_symlinks.sh` to find), a real
   `install_symlinks.sh` run into a throwaway `$HOME` (twice — the second run
   must skip cleanly, proving idempotence), fish startup/prompt smoke tests
   in an isolated `$HOME` (including the narrow-terminal, long-path, and

@@ -100,6 +100,7 @@ brew 'automake'
 brew 'mingw-w64'
 brew 'emscripten'
 brew 'clang-format'
+brew 'shellcheck' # used by tests/lint.sh
 brew 'swiftformat'
 brew 'swift-format'
 brew 'cocoapods'

@@ -12,7 +12,7 @@
 
 # report on how it went
 if [ $? = 0 ]; then
-  teller success  --message "$(echo ${@})" --title "Success" --sound Glass
+  teller success  --message "$*" --title "Success" --sound Glass
 else
-  teller failure --message "$(echo ${@})" --title "ERROR" --sound Basso
+  teller failure --message "$*" --title "ERROR" --sound Basso
 fi
