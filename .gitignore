@@ -1,9 +1,16 @@
 *.swp
 vim.symlink/bundle/
-ipython.symlink/profile_default/history.sqlite
-ipython.symlink/profile_default/db/*
 resources/Office Templates/~$*
 /.dotfiles
 utility/formula.json
 utility/cask.json
 __pycache__/
+
+# runtime state, not config: fish rewrites this file itself (and
+#   ~/.config/fish symlinks into the repo, so every universal-variable
+#   change was dirtying the working tree); the useful settings it once
+#   seeded are all set in config.fish anyway
+fish.configlink/fish_variables
+
+# appended to by every provision-mac.sh run
+provision_timing.txt
