@@ -397,7 +397,7 @@ mas 'Xcode', id: 497799835
                                                 # superseded day-to-day by the free V3 `affinity` cask above,
                                                 # kept installed and pinned for compatibility
 # Backblaze                                     # don't use the homebrew cask; upgrading via cask borks
-                                                # things - install from backblaze.com and let it self-update
+                                                # things - install from backblaze.com (https://www.backblaze.com/status/update) and let it self-update
                                                 # (only backblaze-downloader is safe to cask, above)
 # CARROT																				# iPad version, I use the MAS version above only for my menu bar
 
