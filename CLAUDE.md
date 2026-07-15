@@ -19,7 +19,7 @@ mechanism, there's no separate manifest:
 | `*.configlink` | `~/.config/<name>` | `fish.configlink` → `~/.config/fish` |
 | `*.homelink` | `~/<name>` | `bin.homelink` → `~/bin` |
 | `osx-launchagents/*.plist` | `~/Library/LaunchAgents/<name>` | |
-| `osx-dictionaries/*` | hardcoded per-file (see below) | |
+| `osx-dictionaries/LocalDictionary` | hardcoded (see below) | |
 
 Note `*.configlink`/`*.homelink` link the whole directory in one shot (not
 file-by-file), so e.g. `~/.config/fish` is itself a symlink to
@@ -27,25 +27,23 @@ file-by-file), so e.g. `~/.config/fish` is itself a symlink to
 config immediately, no re-linking needed. New top-level `*.symlink`/
 `*.homelink`/`*.configlink` entries do need `install_symlinks.sh` re-run.
 
-`osx-dictionaries/` breaks from the filename-suffix convention since its two
-files have unrelated, fixed destinations rather than a shared parent
-directory — `install_symlinks.sh`'s `install_dictionaries()` hardcodes each
-src/dst pair explicitly rather than looping, and the two aren't even handled
-the same way:
-`LocalDictionary` → `~/Library/Spelling/LocalDictionary` is macOS's shared
-system spell-check word list (BBEdit and most other Cocoa apps defer to this
-instead of keeping their own) and is symlinked normally.
-`Word Custom Dictionary` → `~/Library/Group Containers/UBF8T346G9.Office/Custom Dictionary`
-is Word's own separate one (UTF-16LE, CRLF — that's Word's native format for
-this file, left as-is rather than converted), but is *copied* once rather
-than symlinked: Word tracks it by more than its path (likely a
-security-scoped bookmark), so a symlinked version silently stopped resolving
-to real content — Word's own dictionary editor couldn't even open it. The
-copy only happens if nothing's there yet, so a later re-run never clobbers
-words learned since; unlike the symlinked file, words Word learns afterward
-won't flow back into the repo without manually re-copying.
-Both get seeded with real accumulated vocabulary rather than starting empty,
-same spirit as upstream's `cspell-words.txt` for VS Code.
+`osx-dictionaries/` breaks from the filename-suffix convention: its one
+tracked word list, `LocalDictionary`, has a fixed destination
+(`~/Library/Spelling/LocalDictionary` — macOS's shared system spell-check
+list, which BBEdit and most other Cocoa apps defer to instead of keeping
+their own) that `install_symlinks.sh`'s `install_dictionaries()` hardcodes
+explicitly, symlinking it like everything else. Word's custom dictionary
+(`~/Library/Group Containers/UBF8T346G9.Office/Custom Dictionary`, UTF-16LE
++ CRLF) is *not* tracked here — it's generated: symlinking it once broke
+Word outright (it tracks the file by more than its path, likely a
+security-scoped bookmark), so `bin.homelink/syncdict` two-way-merges it
+with `LocalDictionary` instead — union of both lists written back to both
+sides, so words learned inside Word flow back into the repo and nothing is
+ever clobbered. `install_dictionaries()` runs it on every install/re-run;
+run `syncdict` by hand after "Add to Dictionary" in Word. Full story in
+`osx-dictionaries/README.md`. The tracked list is seeded with real
+accumulated vocabulary rather than starting empty, same spirit as
+upstream's `cspell-words.txt` for VS Code.
 
 Supporting directories (not part of the symlink convention):
 - `install_lists/` — Brewfile (primary), plus `r-packages.txt` (kept manually,

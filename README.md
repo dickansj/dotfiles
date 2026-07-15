@@ -16,6 +16,7 @@ Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw
 
 ## What it does
 Running `provision-mac.sh` on a fresh Mac will:
+  * Take an APFS snapshot first, for quick rollback if anything goes sideways
   * Take everything in this directory that ends with `.symlink` and make a
     symbolic link to it in the current user's home directory, minus the 
     `.symlink` and prepended with a `.`
@@ -23,12 +24,18 @@ Running `provision-mac.sh` on a fresh Mac will:
       without a prepended `.`
     * `.homelink` gets the same treatment, but into `~`
   * Symlink files in `osx-launchagents` to `~/Library/LaunchAgents`
+  * Symlink the shared macOS spelling dictionary (`osx-dictionaries/`) and
+    sync Word's custom dictionary from it (via `syncdict` — see
+    `osx-dictionaries/README.md`)
+  * Copy (not symlink — so private host entries stay out of the repo)
+    `resources/ssh_config.base` to `~/.ssh/config`
   * Install [homebrew](http://brew.sh) with analytics turned off
   * Validate `install_lists/Brewfile` against the live Homebrew/App Store
     catalogs, and check that you're signed into the Mac App Store, before
     installing anything
   * Install all the brew packages, GUI apps, and fonts listed in `install_lists/Brewfile`. This includes Mac App Store apps specified under the mas section there.
   * Change the default shell to [fish](https://fishshell.com/)
+  * Allow Touch ID to authorize `sudo` in the terminal
   * Set Homebrew's version of OpenJDK to be used instead of system's
   * Sets up the directory to be a proper git repository if it was pulled during a bootstrap
   * Make a `~/Projects` directory and symlink the dotfiles there
