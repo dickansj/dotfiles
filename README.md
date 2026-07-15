@@ -57,3 +57,9 @@ machines I use, and tend to not have them quite as customized. All it does:
 The Windows version (`provision-windows.ps1`) is pretty sparse. Used to use
 [Chocolatey](http://chocolatey.org/), but want to shift it to use [WinGet](https://github.com/microsoft/winget-cli) before I set up another Windows machine. 
 
+
+## Tests
+`tests/run_all.sh` runs a regression suite (script lint, a sandboxed
+`install_symlinks.sh` run, fish config smoke tests, dictionary-sync
+round-trip); CI runs it on every push on both Ubuntu and macOS, alongside a
+Brewfile audit against the live Homebrew/App Store catalogs.

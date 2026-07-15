@@ -1,0 +1,26 @@
+name: Repo Checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Install shells (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fish zsh
+      - name: Install fish (macOS)
+        if: runner.os == 'macOS'
+        run: brew install fish
+      - name: Run test suite
+        run: ./tests/run_all.sh

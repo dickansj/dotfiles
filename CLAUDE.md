@@ -192,6 +192,18 @@ No secrets live in this repo. The split points:
 
 - This is a single-user config repo — direct commits to `main` are the norm,
   not PRs. No branch protection or required checks.
+- `tests/run_all.sh` is the repo's regression suite; `.github/workflows/ci.yml`
+  runs it on every push, on both Ubuntu and macOS. It covers: static lint of
+  every script (shebang-at-byte-zero, per-interpreter syntax checks, the
+  `functions/` wrap convention, tracked-symlink hygiene, Brewfile grammar,
+  suffix files nested too deep for `install_symlinks.sh` to find), a real
+  `install_symlinks.sh` run into a throwaway `$HOME` (twice — the second run
+  must skip cleanly, proving idempotence), fish startup/prompt smoke tests
+  in an isolated `$HOME` (including the narrow-terminal, long-path, and
+  dash-named-directory cases that have broken the prompt before), and a
+  `syncdict` encoding round-trip. Each check pins a bug class that actually
+  happened — when fixing a shell bug, add its reproduction here so it stays
+  fixed. Run locally before committing anything touching shell code.
 - `.github/workflows/check-brewfile.yml` runs `utility/audit-brewfile.py` on
   push and weekly via cron, checking every `brew`/`cask`/`mas` entry in the
   Brewfile against the live Homebrew/App Store catalogs. Originally inherited
