@@ -69,10 +69,14 @@ python3 utility/audit-brewfile.py || {
 
 # the Brewfile has a bunch of `mas` entries; those install silently-broken
 #   without being signed into the Mac App Store first, so check up front
-#   rather than found out ~150 entries into `brew bundle install`
+#   rather than find out ~150 entries into `brew bundle install`.
+#   `mas account` used to verify this mechanically, but mas 2.x removed the
+#   subcommand (macOS dropped the private API it relied on), so asking is
+#   the only check left.
 $HBBIN/brew install mas
-if ! $HBBIN/mas account >/dev/null 2>&1; then
-  echo "You're not signed into the Mac App Store."
+read -r -n 1 -p "Are you signed into the Mac App Store? [y/N] " masSignedIn
+echo
+if [[ ! $masSignedIn =~ ^[Yy]$ ]]; then
   echo "Open the App Store app, sign in, and re-run this script."
   exit 1
 fi
