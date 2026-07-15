@@ -7,6 +7,7 @@ import sys
 import json
 import http.client
 import re
+import time
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -14,14 +15,18 @@ brewfile_contents = open("../install_lists/Brewfile", "r").read()
 
 # patterns for things to allow if they're not found in the list (for taps and things)
 #   could get fancy and try to follow the taps and see if they're there, but ain't
-#   nobody got time for that and I only use a few non-standard taps
+#   nobody got time for that and I only use a few non-standard taps.
+#   NB these are regex prefixes (re.match), not globs - an earlier version
+#   wrote them glob-style ('^font-*'), where the * quantified the preceding
+#   character and matched more than intended. font-* is gone entirely:
+#   homebrew/cask-fonts merged into the main cask API in 2024, so fonts get
+#   audited for real now.
 allow = [
-    r"^font-*",
-    r"^sjml/sjml/*",
-    r"^rcmdnk/file/*",
-    r"^melonamin/formulae/*",
-    r"^ttscoff/thelab/*",
-    r"^updatest@*",
+    r"^sjml/sjml/",
+    r"^rcmdnk/file/",
+    r"^melonamin/formulae/",
+    r"^ttscoff/thelab/",
+    r"^updatest@",
 ]
 
 brews = []
@@ -59,21 +64,27 @@ def get_url(server, url):
         raise RuntimeError(f"Could not load remote URL: {url}, status code {code}")
     return resp.read().decode("utf-8")
 
-if not os.path.exists("./formula.json"):
-    formulae_json = get_url("formulae.brew.sh", "/api/formula.json")
-    with open("./formula.json", "w") as fout:
-        fout.write(formulae_json)
-else:
-    with open("./formula.json", "r") as fin:
-        formulae_json = fin.read()
+# a week: fresh enough to catch renames/removals, without re-downloading
+#   ~30MB of catalog on every run. Delete the cached files to force a
+#   fresh fetch sooner.
+MAX_CACHE_AGE = 7 * 24 * 60 * 60
 
-if not os.path.exists("./cask.json"):
-    cask_json = get_url("formulae.brew.sh", "/api/cask.json")
-    with open("./cask.json", "w") as fout:
-        fout.write(cask_json)
-else:
-    with open("./cask.json", "r") as fin:
-        cask_json = fin.read()
+def get_catalog(path, url):
+    stale = (
+        not os.path.exists(path)
+        or time.time() - os.path.getmtime(path) > MAX_CACHE_AGE
+    )
+    if stale:
+        data = get_url("formulae.brew.sh", url)
+        with open(path, "w") as fout:
+            fout.write(data)
+    else:
+        with open(path, "r") as fin:
+            data = fin.read()
+    return data
+
+formulae_json = get_catalog("./formula.json", "/api/formula.json")
+cask_json = get_catalog("./cask.json", "/api/cask.json")
 
 formula_list = set()
 for f in json.loads(formulae_json):

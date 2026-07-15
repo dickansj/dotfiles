@@ -198,8 +198,12 @@ No secrets live in this repo. The split points:
   script now accounts for Homebrew's formula aliases and cask `old_tokens`
   when checking names, so a real failure means something's actually gone
   (confirm with `python3 utility/audit-brewfile.py` locally, which caches
-  `utility/formula.json`/`cask.json` — delete those first to force a fresh
-  fetch).
+  `utility/formula.json`/`cask.json` for a week — delete them to force a
+  fresh fetch sooner). `check_untracked_brew.py` shares the same cache
+  files and expiry, and keeps a `KNOWN_UNMANAGED` allowlist for apps
+  that are installed on purpose but deliberately not Brewfile-managed
+  (the pinned Affinity V2 trio, Marked 2, etc.) so routine `envup` runs
+  stay quiet.
 - Commit messages: explain *why*, not just what changed; keep them to a few
   lines, no verbose bullet essays.
 - When pulling a change in from `upstream/main`, check whether it's entangled

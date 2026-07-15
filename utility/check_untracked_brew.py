@@ -7,13 +7,34 @@
 import json
 import os
 import subprocess
+import time
 import urllib.request
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
+# installed on purpose but deliberately NOT Brewfile-managed - see the
+#   Brewfile's own comments for the full story on each. Without this list,
+#   every envup run re-flags them, which just trains the eye to ignore
+#   this check entirely.
+KNOWN_UNMANAGED = {
+    "affinity-designer",  # V2 perpetual license, kept alongside the V3 'affinity' cask
+    "affinity-photo",  # (same)
+    "affinity-publisher",  # (same)
+    "marked-app",  # owned Marked 2; the cask now tracks subscription Marked 3
+    "microsoft-auto-update",  # dragged in by the microsoft-office cask, not installed directly
+}
+
+# a week: fresh enough to catch renames/removals, without re-downloading
+#   ~30MB of catalog on every envup run
+MAX_CACHE_AGE = 7 * 24 * 60 * 60
+
 
 def get_json(path, url):
-    if not os.path.exists(path):
+    stale = (
+        not os.path.exists(path)
+        or time.time() - os.path.getmtime(path) > MAX_CACHE_AGE
+    )
+    if stale:
         with urllib.request.urlopen(url) as resp:
             data = resp.read().decode("utf-8")
         with open(path, "w") as fout:
@@ -60,6 +81,8 @@ cask_by_token = {c["token"]: c for c in cask_data}
 
 print("Formulae not in Brewfile:")
 for name in installed(["brew", "leaves"]):
+    if name in KNOWN_UNMANAGED:
+        continue
     f = formula_by_name.get(name)
     names = {name}
     if f:
@@ -71,6 +94,8 @@ for name in installed(["brew", "leaves"]):
 print()
 print("Casks not in Brewfile:")
 for token in installed(["brew", "list", "--cask"]):
+    if token in KNOWN_UNMANAGED:
+        continue
     c = cask_by_token.get(token)
     names = {token}
     if c:
