@@ -252,7 +252,7 @@ cask 'maestral'
 #   never touches it - not managed via this Brewfile.
 cask 'microsoft-office' # license
 cask 'microsoft-teams' # license
-cask 'mimestream'
+cask 'mimestream' # license
 cask 'moom'
 cask 'obsidian'
 cask 'omnidisksweeper'
