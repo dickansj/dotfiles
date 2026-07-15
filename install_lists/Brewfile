@@ -186,8 +186,7 @@ brew 'solarus'
 # infrastructure
 cask '1password' #license
 cask '1password-cli'
-# cask 'backblaze' # don't use homebrew for this; upgrade will bork things
-cask 'backblaze-downloader'
+cask 'backblaze-downloader' # Backblaze itself is deliberately not casked - see list at bottom
 cask 'little-snitch' #license
 cask 'tailscale-app'
 
