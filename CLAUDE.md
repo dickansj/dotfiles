@@ -50,7 +50,11 @@ same spirit as upstream's `cspell-words.txt` for VS Code.
 Supporting directories (not part of the symlink convention):
 - `install_lists/` — Brewfile (primary), plus `r-packages.txt` (kept manually,
   not consumed by any script — same for anything else added here going
-  forward unless something is written to actually use it).
+  forward unless something is written to actually use it) and
+  `setapp-install.txt` (generated, don't hand-edit: a Hazel rule regenerates
+  it via an embedded copy of `utility/setapp-install.sh` whenever a Setapp
+  app is added — and since `hazel/Setapp.hazelrules` is a binary export,
+  changing that script means updating the rule inside Hazel by hand too).
 - `resources/` — fonts, Terminal profile, Office templates, `ssh_config.base`.
 - `utility/` — helper scripts, git-subtree tooling, one-off Python utilities.
 - `gui-editors/`, `hazel/` — editor extensions and Hazel rules, installed
