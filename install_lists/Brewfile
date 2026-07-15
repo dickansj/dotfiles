@@ -204,7 +204,6 @@ cask 'anki'
 cask 'applepi-baker'
 cask 'arduino-ide'
 cask 'audio-hijack' # license
-# cask 'backblaze' # don't use homebrew for this; upgrade will bork things
 cask 'balenaetcher'
 cask 'basictex'
 cask 'bbedit' # license
@@ -253,11 +252,11 @@ cask 'maestral'
 cask 'microsoft-office' # license
 cask 'microsoft-teams' # license
 cask 'mimestream'
+cask 'moom'
 cask 'obsidian'
 cask 'omnidisksweeper'
 cask 'onyx'
 cask 'oversight' # CAVEAT: need to quit oversight from menu bar or else brew hangs
-cask 'moom'
 cask 'pacifist'
 cask 'pdf-expert' # license
 cask 'pingplotter'
