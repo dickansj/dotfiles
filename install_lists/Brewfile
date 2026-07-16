@@ -184,7 +184,8 @@ brew 'solarus'
 # now getting into full macOS apps
 
 # infrastructure
-cask '1password' #license
+cask '1password' # membership canceled - kept installed as read-only fallback
+                 #   (primary is Apple Passwords; see dotfiles-private README)
 cask '1password-cli'
 cask 'backblaze-downloader' # Backblaze itself is deliberately not casked - see list at bottom
 cask 'little-snitch' #license
