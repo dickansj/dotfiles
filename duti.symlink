@@ -10,3 +10,4 @@ com.kapeli.dash-setapp      com.apple.xcode.docset               all
 com.kapeli.dash-setapp      com.apple.documentation.doccarchive  all
 org.m0k.transmission        org.bittorrent.torrent              all
 com.bilingify.readest        org.idpf.epub-container              all
+com.flexibits.fantastical2.mac  com.apple.ical.ics                all
