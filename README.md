@@ -25,8 +25,13 @@ Running `provision-mac.sh` on a fresh Mac will:
     * `.homelink` gets the same treatment, but into `~`
   * Symlink files in `osx-launchagents` to `~/Library/LaunchAgents`
   * Symlink the shared macOS spelling dictionary (`osx-dictionaries/`) and
-    sync Word's custom dictionary from it (via `syncdict` — see
-    `osx-dictionaries/README.md`)
+    keep Word's custom dictionary synced with it automatically via a
+    LaunchAgent (`syncdict`/`syncdict-agent` — see
+    `osx-dictionaries/README.md`). **Manual one-time step this doesn't
+    automate**: grant Full Disk Access to
+    `~/.dotfiles/bin.homelink/syncdict-agent` in System Settings → Privacy
+    & Security, or the automatic sync fails silently (running `syncdict`
+    by hand still works regardless)
   * Copy (not symlink — so private host entries stay out of the repo)
     `resources/ssh_config.base` to `~/.ssh/config`
   * Install [homebrew](http://brew.sh) with analytics turned off

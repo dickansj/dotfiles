@@ -117,7 +117,12 @@ Rust specifically: `brew 'rustup'` only installs the toolchain multiplexer,
 not an actual toolchain (same two-step split as pyenv/asdf) — `brew info
 rustup` even shows `rustup self update` disabled in favor of `brew upgrade
 rustup`, a deliberate Homebrew choice, not a bug. `provision-mac.sh` runs
-`rustup default stable` right after the vim bundles step to close that gap.
+`rustup default stable` right after the vim bundles step to close that gap,
+then immediately re-runs `install_symlinks.sh` a second time — that's not
+redundant, it's what lets `install_dictionaries()`'s `rustc`-gated
+`syncdict-agent` build (see osx-dictionaries above) actually happen during
+the same bootstrap, since the first `install_symlinks.sh` run happens
+before Homebrew (and therefore `rustc`) exists at all.
 One quirk worth knowing: since path.fish's PATH ordering prefers the keg's
 own `bin/` over Homebrew's `rustup` wrapper script (which redirects
 `RUSTUP_OVERRIDE_UNIX_FALLBACK_SETTINGS` to `/opt/homebrew/etc/rustup/`),
