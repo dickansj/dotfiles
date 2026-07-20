@@ -39,11 +39,21 @@ Word outright (it tracks the file by more than its path, likely a
 security-scoped bookmark), so `bin.homelink/syncdict` two-way-merges it
 with `LocalDictionary` instead — union of both lists written back to both
 sides, so words learned inside Word flow back into the repo and nothing is
-ever clobbered. `install_dictionaries()` runs it on every install/re-run;
-run `syncdict` by hand after "Add to Dictionary" in Word. Full story in
-`osx-dictionaries/README.md`. The tracked list is seeded with real
-accumulated vocabulary rather than starting empty, same spirit as
-upstream's `cspell-words.txt` for VS Code.
+ever clobbered. This now runs automatically: a `WatchPaths` LaunchAgent
+(`osx-launchagents/com.jdickan.syncdict.plist`) fires the sync the moment
+either file changes. It runs a *compiled* binary
+(`utility/syncdict-agent.rs`, built by `install_dictionaries()` via a bare
+`rustc` when available) rather than the `syncdict` script itself — macOS's
+Full Disk Access protection on Word's Group Container checks the identity
+of whatever process performs the file I/O, which for a shell script is
+always the interpreter (`/bin/bash`) regardless of which script triggered
+it, so only a real compiled binary can be granted access narrowly instead
+of handing it to `/bin/bash` wholesale. `syncdict` itself is still there for
+running by hand (e.g. right after "Add to Dictionary" in Word, without
+waiting on the watcher). Full story, including the one-time Full Disk
+Access grant a new machine needs, in `osx-dictionaries/README.md`. The
+tracked list is seeded with real accumulated vocabulary rather than
+starting empty, same spirit as upstream's `cspell-words.txt` for VS Code.
 
 Supporting directories (not part of the symlink convention):
 - `install_lists/` — Brewfile (primary), plus `r-packages.txt` (kept manually,

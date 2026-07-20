@@ -40,10 +40,59 @@ running it is always safe and never loses words learned on either side.
 Case variants (`Pneumatological` vs. `pneumatological`) are deduped on exact
 match only, so both are kept as distinct entries.
 
-Run it manually any time after adding words directly in Word:
+Runs automatically via a LaunchAgent
+([`osx-launchagents/com.jdickan.syncdict.plist`](../osx-launchagents/com.jdickan.syncdict.plist))
+watching both files with `WatchPaths` — edit either one and the other picks
+it up within moments, no manual step needed. Can still be run by hand any
+time (e.g. right after adding a word in Word, if you don't want to wait for
+the watcher):
 ```shell-script
 syncdict
 ```
+
+### Why the LaunchAgent runs a different binary than the `syncdict` command
+
+The LaunchAgent doesn't actually run `syncdict` - it runs a separate
+compiled binary, [`utility/syncdict-agent.rs`](../utility/syncdict-agent.rs),
+built to `bin.homelink/syncdict-agent` (gitignored - it's a build artifact,
+not tracked). This exists only because of a macOS permissions wrinkle:
+Word's Group Container is behind Full Disk Access protection. Running
+`syncdict` by hand from a terminal works fine because Terminal already has
+its own Full Disk Access grant, but a LaunchAgent-spawned process has none
+of its own - and critically, **that grant can't be scoped to a shell
+script**. macOS checks the identity of whatever process is actually
+performing the file I/O, which for an interpreted script is always the
+interpreter (`/bin/bash` under launchd's minimal environment, regardless of
+which script triggered it) - so granting Full Disk Access to the script's
+own path does nothing; it would have to go to `/bin/bash` itself, a much
+broader grant than just this one task. A compiled binary doesn't have that
+problem: it's its own process identity, so Full Disk Access can be granted
+to just this one executable. Hence `syncdict-agent.rs` duplicates
+`syncdict`'s merge logic natively (`iconv`'s job replaced by
+`char::decode_utf16`/`str::encode_utf16`) instead of calling it - it has to
+own the actual file I/O itself to be the thing macOS is checking permissions
+against.
+
+`install_symlinks.sh`'s `install_dictionaries()` compiles it with a plain
+`rustc -O` (no Cargo project - it's dependency-free, std library only) if
+`rustc` is available, skipping quietly otherwise since this script runs
+before Homebrew exists on a truly fresh machine; `provision-mac.sh` re-runs
+`install_symlinks.sh` right after setting up the Rust toolchain to pick it
+up then. One-time manual step on a new machine: grant Full Disk Access to
+`~/.dotfiles/bin.homelink/syncdict-agent` in System Settings → Privacy &
+Security → Full Disk Access, or the LaunchAgent will fail silently (check
+`/tmp/syncdict.err` if words stop syncing).
+
+Being a union merge, it only ever *adds* words, never removes them - deleting
+a word from just one file doesn't stick, since the next sync (automatic or
+manual) re-adds it from whichever side still has it. To actually remove a
+word, delete it from both `LocalDictionary` and Word's live dictionary before
+the next sync runs.
+
+`syncdict` only writes a file when its content would actually change, which
+matters beyond avoiding needless mtime churn - it's what keeps the
+LaunchAgent from retriggering itself in an infinite loop, since it watches
+the very two files it writes to.
 
 Encoding-wise, the merge pipeline (`iconv` for UTF-16LE↔UTF-8, plain
 byte-safe `sed`/`sort`/`awk` for the rest) has been verified round-trip-safe

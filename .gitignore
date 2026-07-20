@@ -6,6 +6,11 @@ utility/formula.json
 utility/cask.json
 __pycache__/
 
+# compiled from utility/syncdict-agent.rs by install_symlinks.sh - see
+#   osx-dictionaries/README.md for why this one needs to be a real binary
+#   rather than a tracked script like the rest of bin.homelink
+bin.homelink/syncdict-agent
+
 # runtime state, not config: fish rewrites this file itself (and
 #   ~/.config/fish symlinks into the repo, so every universal-variable
 #   change was dirtying the working tree); the useful settings it once

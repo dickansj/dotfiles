@@ -151,6 +151,11 @@ touch $HOME/.parallel/will-cite
 #   toolchain, which brew install alone doesn't do
 $HBBIN/rustup default stable
 
+# install_symlinks.sh already ran once before Homebrew existed, so its
+#   rustc-gated syncdict-agent compile step (see install_dictionaries())
+#   skipped quietly back then - safe to re-run now that rustc is real
+./install_symlinks.sh
+
 timerData "POST-RUST"
 
 # set up Terminal

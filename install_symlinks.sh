@@ -76,6 +76,23 @@ install_dictionaries() {
   #   list above instead. Safe to re-run: it merges rather than overwrites,
   #   so it never clobbers words learned in Word since the last sync.
   "$DOTFILES_ROOT/bin.homelink/syncdict"
+
+  # The LaunchAgent (osx-launchagents/com.jdickan.syncdict.plist) that
+  #   keeps the two in sync automatically needs a *compiled* binary at
+  #   bin.homelink/syncdict-agent, not a script - see
+  #   utility/syncdict-agent.rs and osx-dictionaries/README.md for why.
+  #   rustc comes from the Brewfile, so this may not be available yet on
+  #   a truly fresh machine (this script runs before Homebrew is even
+  #   installed) - skip quietly rather than failing the whole install;
+  #   provision-mac.sh re-runs this script after setting up Rust, which
+  #   picks it up then.
+  local agentSrc="$DOTFILES_ROOT/utility/syncdict-agent.rs"
+  local agentBin="$DOTFILES_ROOT/bin.homelink/syncdict-agent"
+  if command -v rustc > /dev/null 2>&1; then
+    if [ ! -e "$agentBin" ] || [ "$agentSrc" -nt "$agentBin" ]; then
+      rustc -O -o "$agentBin" "$agentSrc" && echo "compiled $agentBin"
+    fi
+  fi
 }
 if [[ $OSTYPE == darwin* ]]; then
   install_dictionaries

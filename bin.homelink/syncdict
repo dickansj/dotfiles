@@ -35,12 +35,34 @@ fi
 #   "pneumatological" are kept as distinct entries on purpose.
 merged=$( { cat "$canonical"; printf '%s\n' "$wordWords"; } | sed '/^$/d' | sort -f | awk '!seen[$0]++' )
 
-printf '%s\n' "$merged" > "$canonical"
+# Only write a file if its content would actually change. Matters beyond
+#   just avoiding needless mtime churn: the osx-launchagents/ LaunchAgent
+#   that runs this on file changes watches both of these paths, so a
+#   write that doesn't change content is what keeps that from looping
+#   forever (write -> watcher fires -> write -> ...).
+changed=0
+
+if ! diff -q <(printf '%s\n' "$merged") "$canonical" > /dev/null 2>&1; then
+  printf '%s\n' "$merged" > "$canonical"
+  changed=1
+fi
 
 mkdir -p "$(dirname "$wordDict")"
+newWordDict=$(mktemp)
 {
   printf '\xff\xfe'
   printf '%s\n' "$merged" | sed $'s/$/\r/' | iconv -f UTF-8 -t UTF-16LE
-} > "$wordDict"
+} > "$newWordDict"
+if ! cmp -s "$newWordDict" "$wordDict" 2>/dev/null; then
+  mv "$newWordDict" "$wordDict"
+  changed=1
+else
+  rm -f "$newWordDict"
+fi
 
-echo "Synced $(printf '%s\n' "$merged" | wc -l | xargs) words to LocalDictionary and Word's custom dictionary."
+count=$(printf '%s\n' "$merged" | wc -l | xargs)
+if [ "$changed" -eq 1 ]; then
+  echo "Synced $count words to LocalDictionary and Word's custom dictionary."
+else
+  echo "Already in sync ($count words)."
+fi

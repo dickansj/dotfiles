@@ -52,8 +52,11 @@ else
 fi
 
 # ── 2. Entry points must be executable with a shebang at byte zero ──────
+# bin.homelink/* is git-tracked files only, not a raw filesystem glob -
+#   bin.homelink/syncdict-agent is a compiled (gitignored) binary once
+#   built locally, and has no shebang by design; it isn't a script.
 echo "· entry-point executability"
-for f in bootstrap.sh install_symlinks.sh provision-mac.sh provision-linux.sh bin.homelink/*; do
+for f in bootstrap.sh install_symlinks.sh provision-mac.sh provision-linux.sh $(git ls-files bin.homelink); do
   [ -f "$f" ] || continue
   [ -x "$f" ] || err "$f is not executable"
   [ "$(head -c 2 "$f")" = "#!" ] || err "$f has no shebang at byte zero"

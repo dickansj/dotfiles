@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+   <key>Label</key>
+   <string>com.jdickan.syncdict</string>
+   <key>ProgramArguments</key>
+    <array>
+      <string>/Users/joe/bin/syncdict-agent</string>
+    </array>
+   <key>WatchPaths</key>
+    <array>
+      <string>/Users/joe/.dotfiles/osx-dictionaries/LocalDictionary</string>
+      <string>/Users/joe/Library/Group Containers/UBF8T346G9.Office/Custom Dictionary</string>
+    </array>
+   <key>RunAtLoad</key>
+   <true/>
+   <key>StandardOutPath</key>
+   <string>/tmp/syncdict.out</string>
+   <key>StandardErrorPath</key>
+   <string>/tmp/syncdict.err</string>
+</dict>
+</plist>
