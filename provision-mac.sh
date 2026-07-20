@@ -156,6 +156,23 @@ $HBBIN/rustup default stable
 #   skipped quietly back then - safe to re-run now that rustc is real
 ./install_symlinks.sh
 
+# Full Disk Access can't be checked mechanically the way `mas account`
+#   used to for MAS sign-in above - macOS dropped that kind of API too.
+#   Actually running syncdict-agent once and looking for stderr output is
+#   the only real signal available. Doesn't block provisioning (unlike the
+#   MAS check): low stakes if missed, since `syncdict` still works fine by
+#   hand in the meantime - this is just a heads-up so it isn't discovered
+#   later as "why did Word's dictionary silently stop updating."
+if [ -x "$HOME/bin/syncdict-agent" ]; then
+  syncdictErr=$("$HOME/bin/syncdict-agent" 2>&1 >/dev/null)
+  if [ -n "$syncdictErr" ]; then
+    echo "⚠️  syncdict-agent couldn't access Word's dictionary - Full Disk Access"
+    echo "   probably isn't granted yet. Automatic dictionary sync won't work"
+    echo "   until you add it: System Settings → Privacy & Security → Full Disk"
+    echo "   Access → + → $HOME/.dotfiles/bin.homelink/syncdict-agent"
+  fi
+fi
+
 timerData "POST-RUST"
 
 # set up Terminal
