@@ -4,7 +4,11 @@
 #   $HOME (mirroring the layout bootstrap.sh creates), runs the installer
 #   non-interactively, and checks every suffix convention produced the link
 #   it promises. Then runs it a second time to prove idempotence - a re-run
-#   must skip cleanly, never prompt, never relink.
+#   must skip cleanly, never prompt, never relink. Then a third time with
+#   rustc stripped from PATH, proving the syncdict-agent compile step skips
+#   gracefully instead of failing the whole install - the situation on a
+#   truly fresh machine, since this script runs before Homebrew (and
+#   therefore rustc) exists at all.
 
 set -u
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd -P)"
@@ -93,6 +97,35 @@ if grep -q "^linked" "$FAKE_HOME/run2.log"; then
   err "re-run re-linked files instead of skipping them"
 fi
 check_all_links
+
+echo "· rustc unavailable (stripped PATH): compile step skips gracefully"
+FAKE_HOME2="$(cd "$(mktemp -d)" && pwd -P)"
+mkdir -p "$FAKE_HOME2/.dotfiles"
+tar -C "$REPO_ROOT" \
+  --exclude '.git' \
+  --exclude 'utility/deepl-env' \
+  --exclude 'utility/formula.json' \
+  --exclude 'utility/cask.json' \
+  -cf - . | tar -xf - -C "$FAKE_HOME2/.dotfiles"
+DOTS2="$FAKE_HOME2/.dotfiles"
+# this repo's own working tree may already have a real compiled binary
+#   here (a local build from earlier) - remove it so the test genuinely
+#   exercises "does rustc unavailability get handled gracefully", not
+#   "does an already-copied-in binary just happen to sit there"
+rm -f "$DOTS2/bin.homelink/syncdict-agent"
+
+if ! HOME="$FAKE_HOME2" PATH="/usr/bin:/bin:/usr/sbin:/sbin" \
+  "$DOTS2/install_symlinks.sh" </dev/null >"$FAKE_HOME2/run3.log" 2>&1; then
+  err "install_symlinks.sh exited nonzero with no rustc on PATH"
+  cat "$FAKE_HOME2/run3.log"
+fi
+if grep -q "^compiled" "$FAKE_HOME2/run3.log"; then
+  err "install_symlinks.sh claims it compiled syncdict-agent with no rustc on PATH"
+fi
+if [ -e "$DOTS2/bin.homelink/syncdict-agent" ]; then
+  err "syncdict-agent exists even though rustc wasn't on PATH"
+fi
+rm -rf "$FAKE_HOME2"
 
 if [ $fails -ne 0 ]; then
   echo "test_install_symlinks: $fails failure(s)"
