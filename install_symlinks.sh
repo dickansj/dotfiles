@@ -86,11 +86,20 @@ install_dictionaries() {
   #   installed) - skip quietly rather than failing the whole install;
   #   provision-mac.sh re-runs this script after setting up Rust, which
   #   picks it up then.
+  # `command -v rustc` isn't enough of a check: rustup provides a `rustc`
+  #   shim on PATH even with no default toolchain configured, which fails
+  #   at runtime ("rustup could not choose a version of rustc to run") -
+  #   seen for real on GitHub's macos-latest CI runner. `rustc --version`
+  #   actually exercises it.
   local agentSrc="$DOTFILES_ROOT/utility/syncdict-agent.rs"
   local agentBin="$DOTFILES_ROOT/bin.homelink/syncdict-agent"
-  if command -v rustc > /dev/null 2>&1; then
+  if rustc --version > /dev/null 2>&1; then
     if [ ! -e "$agentBin" ] || [ "$agentSrc" -nt "$agentBin" ]; then
-      rustc -O -o "$agentBin" "$agentSrc" && echo "compiled $agentBin"
+      if rustc -O -o "$agentBin" "$agentSrc"; then
+        echo "compiled $agentBin"
+      else
+        echo "warning: failed to compile $agentBin (see above) - syncdict-agent LaunchAgent won't work until this is fixed"
+      fi
     fi
   fi
 }

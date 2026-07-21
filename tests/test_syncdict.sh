@@ -100,7 +100,11 @@ check_impl() {
 
 check_impl "syncdict (bash)" "$REPO_ROOT/bin.homelink/syncdict"
 
-if command -v rustc >/dev/null; then
+# `command -v rustc` isn't enough: rustup provides a `rustc` shim on PATH
+#   even with no default toolchain configured, which fails at runtime -
+#   seen for real on GitHub's macos-latest CI runner. `rustc --version`
+#   actually exercises it (see install_symlinks.sh for the same fix).
+if rustc --version >/dev/null 2>&1; then
   agent_bin="$(mktemp -t syncdict-agent)"
   CLEANUP_PATHS+=("$agent_bin")
   if compile_log=$(rustc -O -o "$agent_bin" "$REPO_ROOT/utility/syncdict-agent.rs" 2>&1); then
