@@ -105,7 +105,10 @@ check_impl "syncdict (bash)" "$REPO_ROOT/bin.homelink/syncdict"
 #   seen for real on GitHub's macos-latest CI runner. `rustc --version`
 #   actually exercises it (see install_symlinks.sh for the same fix).
 if rustc --version >/dev/null 2>&1; then
-  agent_bin="$(mktemp -t syncdict-agent)"
+  # `-t NAME` without explicit X's works on BSD/macOS mktemp but fails on
+  #   GNU/Linux mktemp ("too few X's in template") - seen for real on
+  #   GitHub's ubuntu-latest CI runner. Explicit XXXXXX is portable to both.
+  agent_bin="$(mktemp -t 'syncdict-agent.XXXXXX')"
   CLEANUP_PATHS+=("$agent_bin")
   if compile_log=$(rustc -O -o "$agent_bin" "$REPO_ROOT/utility/syncdict-agent.rs" 2>&1); then
     check_impl "syncdict-agent (rust)" "$agent_bin"
