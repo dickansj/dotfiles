@@ -1,16 +1,20 @@
 #!/usr/bin/env bash
 
-# Round-trips syncdict's encoding pipeline in an isolated $HOME: seeds a
-#   canonical UTF-8/LF list and a Word-style UTF-16LE+BOM+CRLF dictionary
-#   with partially-overlapping words (including non-Latin scripts and
-#   combining characters), then checks the merge is a true union written
-#   correctly to both sides, that no BOM leaks into the canonical list,
-#   and that a second run changes nothing.
+# Round-trips the dictionary-sync encoding pipeline in an isolated $HOME:
+#   seeds a canonical UTF-8/LF list and a Word-style UTF-16LE+BOM+CRLF
+#   dictionary with partially-overlapping words (including non-Latin
+#   scripts and combining characters), then checks the merge is a true
+#   union written correctly to both sides, that no BOM leaks into the
+#   canonical list, and that a second run changes nothing.
+#
+# Runs this against *both* implementations - bin.homelink/syncdict (bash,
+#   for interactive use) and utility/syncdict-agent.rs (compiled, what the
+#   LaunchAgent actually runs - see osx-dictionaries/README.md for why
+#   there are two). They're independent implementations of the same merge
+#   logic, so nothing else catches them drifting apart.
 
 set -u
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd -P)"
-FAKE_HOME="$(mktemp -d)"
-trap 'rm -rf "$FAKE_HOME"' EXIT
 
 fails=0
 err() {
@@ -18,61 +22,95 @@ err() {
   fails=$((fails + 1))
 }
 
-# syncdict hardcodes $HOME/.dotfiles, so build just enough of it
-mkdir -p "$FAKE_HOME/.dotfiles/osx-dictionaries" "$FAKE_HOME/.dotfiles/bin.homelink"
-cp "$REPO_ROOT/bin.homelink/syncdict" "$FAKE_HOME/.dotfiles/bin.homelink/"
-canonical="$FAKE_HOME/.dotfiles/osx-dictionaries/LocalDictionary"
-worddict="$FAKE_HOME/Library/Group Containers/UBF8T346G9.Office/Custom Dictionary"
-
-printf 'zebra\napple\nBardaiṣan\n' >"$canonical"
-
-mkdir -p "$(dirname "$worddict")"
-{
-  printf '\xff\xfe'
-  printf 'apple\r\nmango\r\nΣυρία\r\n' | iconv -f UTF-8 -t UTF-16LE
-} >"$worddict"
-
-echo "· first sync"
-if ! HOME="$FAKE_HOME" "$FAKE_HOME/.dotfiles/bin.homelink/syncdict" >"$FAKE_HOME/sync1.log" 2>&1; then
-  err "syncdict exited nonzero"
-  cat "$FAKE_HOME/sync1.log"
-fi
+CLEANUP_PATHS=()
+cleanup() {
+  local p
+  for p in "${CLEANUP_PATHS[@]:-}"; do
+    [ -n "$p" ] && rm -rf "$p"
+  done
+}
+trap cleanup EXIT
 
 expected_words=$(printf 'apple\nBardaiṣan\nmango\nzebra\nΣυρία\n' | sort)
 
-# canonical side: UTF-8/LF union, no BOM, no CRs
-if [ "$(sort "$canonical")" != "$expected_words" ]; then
-  err "canonical list is not the expected union:"
-  sed 's/^/      /' "$canonical"
-fi
-if grep -q $'\xef\xbb\xbf' "$canonical"; then
-  err "a BOM leaked into the canonical list"
-fi
-if grep -q $'\r' "$canonical"; then
-  err "carriage returns leaked into the canonical list"
-fi
+# $1 = label, $2 = path to the sync binary/script to test
+check_impl() {
+  local label="$1" bin="$2"
+  local fake_home canonical worddict
 
-# Word side: BOM intact, CRLF line endings, same union after decoding
-if [ "$(head -c 2 "$worddict" | od -An -tx1 | tr -d ' ')" != "fffe" ]; then
-  err "Word dictionary lost its UTF-16LE BOM"
-fi
-decoded=$(iconv -f UTF-16LE -t UTF-8 "$worddict" | sed '1s/^\xEF\xBB\xBF//')
-if [ "$(printf '%s' "$decoded" | tr -d '\r' | sort)" != "$expected_words" ]; then
-  err "Word dictionary is not the expected union after decoding"
-fi
-if printf '%s' "$decoded" | grep -qv $'\r$'; then
-  err "Word dictionary has lines without CRLF endings"
-fi
+  fake_home="$(mktemp -d)"
+  CLEANUP_PATHS+=("$fake_home")
 
-echo "· second sync (idempotence)"
-sum_before=$(cksum "$canonical"; cksum "$worddict")
-if ! HOME="$FAKE_HOME" "$FAKE_HOME/.dotfiles/bin.homelink/syncdict" >"$FAKE_HOME/sync2.log" 2>&1; then
-  err "syncdict exited nonzero on re-run"
-  cat "$FAKE_HOME/sync2.log"
-fi
-sum_after=$(cksum "$canonical"; cksum "$worddict")
-if [ "$sum_before" != "$sum_after" ]; then
-  err "re-running syncdict changed the files (not idempotent)"
+  # both implementations hardcode $HOME/.dotfiles, so build just enough of it
+  mkdir -p "$fake_home/.dotfiles/osx-dictionaries"
+  canonical="$fake_home/.dotfiles/osx-dictionaries/LocalDictionary"
+  worddict="$fake_home/Library/Group Containers/UBF8T346G9.Office/Custom Dictionary"
+
+  printf 'zebra\napple\nBardaiṣan\n' >"$canonical"
+
+  mkdir -p "$(dirname "$worddict")"
+  {
+    printf '\xff\xfe'
+    printf 'apple\r\nmango\r\nΣυρία\r\n' | iconv -f UTF-8 -t UTF-16LE
+  } >"$worddict"
+
+  echo "· $label: first sync"
+  if ! HOME="$fake_home" "$bin" >"$fake_home/sync1.log" 2>&1; then
+    err "$label: exited nonzero"
+    cat "$fake_home/sync1.log"
+  fi
+
+  # canonical side: UTF-8/LF union, no BOM, no CRs
+  if [ "$(sort "$canonical")" != "$expected_words" ]; then
+    err "$label: canonical list is not the expected union:"
+    sed 's/^/      /' "$canonical"
+  fi
+  if grep -q $'\xef\xbb\xbf' "$canonical"; then
+    err "$label: a BOM leaked into the canonical list"
+  fi
+  if grep -q $'\r' "$canonical"; then
+    err "$label: carriage returns leaked into the canonical list"
+  fi
+
+  # Word side: BOM intact, CRLF line endings, same union after decoding
+  if [ "$(head -c 2 "$worddict" | od -An -tx1 | tr -d ' ')" != "fffe" ]; then
+    err "$label: Word dictionary lost its UTF-16LE BOM"
+  fi
+  local decoded
+  decoded=$(iconv -f UTF-16LE -t UTF-8 "$worddict" | sed '1s/^\xEF\xBB\xBF//')
+  if [ "$(printf '%s' "$decoded" | tr -d '\r' | sort)" != "$expected_words" ]; then
+    err "$label: Word dictionary is not the expected union after decoding"
+  fi
+  if printf '%s' "$decoded" | grep -qv $'\r$'; then
+    err "$label: Word dictionary has lines without CRLF endings"
+  fi
+
+  echo "· $label: second sync (idempotence)"
+  local sum_before sum_after
+  sum_before=$(cksum "$canonical"; cksum "$worddict")
+  if ! HOME="$fake_home" "$bin" >"$fake_home/sync2.log" 2>&1; then
+    err "$label: exited nonzero on re-run"
+    cat "$fake_home/sync2.log"
+  fi
+  sum_after=$(cksum "$canonical"; cksum "$worddict")
+  if [ "$sum_before" != "$sum_after" ]; then
+    err "$label: re-running changed the files (not idempotent)"
+  fi
+}
+
+check_impl "syncdict (bash)" "$REPO_ROOT/bin.homelink/syncdict"
+
+if command -v rustc >/dev/null; then
+  agent_bin="$(mktemp -t syncdict-agent)"
+  CLEANUP_PATHS+=("$agent_bin")
+  if compile_log=$(rustc -O -o "$agent_bin" "$REPO_ROOT/utility/syncdict-agent.rs" 2>&1); then
+    check_impl "syncdict-agent (rust)" "$agent_bin"
+  else
+    err "syncdict-agent.rs failed to compile:"
+    echo "$compile_log" | sed 's/^/      /'
+  fi
+else
+  echo "  (rustc not installed; skipped syncdict-agent test)"
 fi
 
 if [ $fails -ne 0 ]; then
