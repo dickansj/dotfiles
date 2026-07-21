@@ -68,3 +68,35 @@ The Windows version (`provision-windows.ps1`) is pretty sparse. Used to use
 `install_symlinks.sh` run, fish config smoke tests, dictionary-sync
 round-trip); CI runs it on every push on both Ubuntu and macOS, alongside a
 Brewfile audit against the live Homebrew/App Store catalogs.
+
+## Ejecting external volumes
+`bin.homelink/eject-prep` kills the Finder/QuickLook thumbnail-generation
+processes that sometimes hold external volumes open, causing spurious "disk
+in use" failures when trying to eject
+([reference](https://github.com/Marginal/QuickLookVideo/issues/188)) — pulled
+in from upstream, not something written here originally.
+
+Actual ejecting is handled by [Mountio](https://mountio.app), which has no
+scripting, hotkey, or automation API of any kind — it's a pure point-and-click
+menu bar utility. So the two are chained together with a Keyboard Maestro
+macro (not tracked in this repo — Keyboard Maestro stores macros in its own
+library, not as files) bound to `Shift+Option+Cmd+E`:
+
+1. **Execute Shell Script**: `~/bin/eject-prep`
+2. **Execute AppleScript**, targeting Mountio's status item by its
+   accessibility role/hierarchy rather than screen pixels — deliberately not
+   image matching, which broke under badge-count/Retina/light-dark changes:
+   ```applescript
+   tell application "System Events"
+       tell process "Mountio"
+           click menu bar item 1 of menu bar 1
+           delay 0.3
+           click menu item "Unmount all" of menu 1 of menu bar item 1 of menu bar 1
+       end tell
+   end tell
+   ```
+
+Requires granting **Accessibility** access (System Settings → Privacy &
+Security → Accessibility) to **Keyboard Maestro Engine** specifically — the
+background process that actually runs macros, a different process identity
+than the Keyboard Maestro editor app itself.
