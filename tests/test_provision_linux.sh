@@ -90,7 +90,15 @@ elif ! diff -q "$REPO_ROOT/resources/ssh_config.base" "$FAKE_HOME/.ssh/config" >
   err "SSH config content doesn't match resources/ssh_config.base"
 fi
 if [ -d "$FAKE_HOME/.ssh" ]; then
-  perms=$(stat -f '%Lp' "$FAKE_HOME/.ssh" 2>/dev/null || stat -c '%a' "$FAKE_HOME/.ssh" 2>/dev/null)
+  # GNU stat's -f means "filesystem status" (a different, unrelated flag),
+  #   not "use this format string" like BSD/macOS stat - it doesn't error,
+  #   it just succeeds with garbage output, so a `||` fallback can't tell
+  #   them apart. Branch on OS explicitly instead.
+  if [ "$(uname)" = "Darwin" ]; then
+    perms=$(stat -f '%Lp' "$FAKE_HOME/.ssh")
+  else
+    perms=$(stat -c '%a' "$FAKE_HOME/.ssh")
+  fi
   [ "$perms" = "700" ] || err "~/.ssh is mode $perms, expected 700"
 fi
 
