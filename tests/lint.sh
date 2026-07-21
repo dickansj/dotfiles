@@ -154,6 +154,20 @@ else
   echo "  (shellcheck not installed; skipped)"
 fi
 
+# ── 9. plist well-formedness ─────────────────────────────────────────────
+# .plist files are skipped by the syntax-check loop above (not scripts),
+#   and nothing else validates them - a malformed osx-launchagents/*.plist
+#   would go undetected until someone actually tried `launchctl load` it.
+#   macOS only (plutil isn't available on the ubuntu-latest CI runner).
+echo "· plist well-formedness"
+if command -v plutil >/dev/null; then
+  while IFS= read -r f; do
+    plutil -lint "$f" >/dev/null || err "$f is not a well-formed plist"
+  done < <(git ls-files '*.plist')
+else
+  echo "  (plutil not installed; skipped - macOS only)"
+fi
+
 if [ $fails -ne 0 ]; then
   echo "lint: $fails failure(s)"
   exit 1
