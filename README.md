@@ -64,7 +64,10 @@ The Windows version (`provision-windows.ps1`) is pretty sparse. Used to use
 
 
 ## Tests
-`tests/run_all.sh` runs a regression suite (script lint, a sandboxed
-`install_symlinks.sh` run, fish config smoke tests, dictionary-sync
-round-trip); CI runs it on every push on both Ubuntu and macOS, alongside a
-Brewfile audit against the live Homebrew/App Store catalogs.
+`tests/run_all.sh` runs a regression suite (script lint including `.plist`
+validation, sandboxed `install_symlinks.sh` and `provision-linux.sh` runs,
+fish config smoke tests, and a dictionary-sync round-trip verifying both
+the `syncdict` script and the compiled `syncdict-agent` binary behave
+identically); CI runs it on every push on both Ubuntu and macOS, alongside
+a Brewfile audit against the live Homebrew/App Store catalogs. See
+CLAUDE.md for what each check actually covers.

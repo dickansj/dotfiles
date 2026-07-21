@@ -208,19 +208,55 @@ No secrets live in this repo. The split points:
 - This is a single-user config repo — direct commits to `main` are the norm,
   not PRs. No branch protection or required checks.
 - `tests/run_all.sh` is the repo's regression suite; `.github/workflows/ci.yml`
-  runs it on every push, on both Ubuntu and macOS. It covers: static lint of
-  every script (shebang-at-byte-zero, per-interpreter syntax checks, a
-  ShellCheck pass at `--severity=error` only — the warning/style tiers would
-  drown in noise from the inherited scripts — the `functions/` wrap
-  convention, tracked-symlink hygiene, Brewfile grammar, suffix files nested
-  too deep for `install_symlinks.sh` to find), a real
-  `install_symlinks.sh` run into a throwaway `$HOME` (twice — the second run
-  must skip cleanly, proving idempotence), fish startup/prompt smoke tests
-  in an isolated `$HOME` (including the narrow-terminal, long-path, and
-  dash-named-directory cases that have broken the prompt before), and a
-  `syncdict` encoding round-trip. Each check pins a bug class that actually
-  happened — when fixing a shell bug, add its reproduction here so it stays
-  fixed. Run locally before committing anything touching shell code.
+  runs it on every push, on both Ubuntu and macOS. Each check pins a bug
+  class that actually happened — when fixing a shell bug, add its
+  reproduction here so it stays fixed. Run locally before committing
+  anything touching shell code. It covers:
+  - `lint.sh`: static checks over every tracked file — shebang-at-byte-zero,
+    per-interpreter syntax checks, a ShellCheck pass at `--severity=error`
+    only (the warning/style tiers would drown in noise from the inherited
+    scripts), the `functions/` wrap convention, tracked-symlink hygiene,
+    Brewfile grammar, suffix files nested too deep for `install_symlinks.sh`
+    to find, and `.plist` well-formedness (`plutil -lint`, macOS only —
+    skips quietly on Ubuntu since nothing else validates these and a
+    malformed `osx-launchagents/*.plist` would otherwise go undetected
+    until someone actually tried to `launchctl load` it).
+  - `test_install_symlinks.sh`: a real `install_symlinks.sh` run into a
+    throwaway `$HOME` (twice — the second run must skip cleanly, proving
+    idempotence), plus a third run with `PATH` stripped to just the base
+    system dirs, proving the `rustc`-gated `syncdict-agent` compile step
+    skips gracefully instead of failing the whole install when Rust isn't
+    available yet (the situation on a truly fresh machine).
+  - `test_provision_linux.sh`: `provision-linux.sh`'s own logic beyond what
+    `install_symlinks.sh` already covers — the SSH config copy, the
+    `~/Projects/dotfiles` symlink (including that a second run doesn't
+    error on it), and the git re-init sequence's exact command
+    order/arguments. `git`/`vim`/`curl` are stubbed with logging no-ops
+    rather than skipped, to actually exercise the script's real control
+    flow without hitting the real network (git re-init talks to the real
+    GitHub repo; the pyenv step curls and runs a real installer
+    unconditionally, with no availability guard at all).
+  - `test_fish.sh`: login-shell startup and prompt smoke tests in an
+    isolated `$HOME` (including the narrow-terminal, long-path, and
+    dash-named-directory cases that have broken the prompt before).
+  - `test_syncdict.sh`: an encoding round-trip run against *both*
+    dictionary-sync implementations — the `syncdict` bash script and a
+    freshly-compiled `syncdict-agent` — asserting identical behavior, since
+    they're independent implementations of the same merge logic and
+    nothing else would catch them drifting apart.
+  - Two portability bugs specifically worth remembering if writing more
+    shell-based tests: `mktemp -t NAME` needs an explicit `XXXXXX` template
+    (BSD mktemp tolerates a bare prefix; GNU mktemp errors on it), and
+    `stat -f` means completely different things on BSD vs. GNU (a format
+    string vs. "show filesystem status" — GNU's doesn't even error, it
+    just silently succeeds with garbage output, so branch on `uname`
+    explicitly rather than relying on one command failing).
+  - Not covered, and not easily fixable: `provision-mac.sh` itself (real,
+    non-idempotent system mutation — Homebrew, `defaults write`, Dock,
+    Rosetta — can't safely run in CI), and the `utility/check_*.py`/
+    `audit-brewfile.py` scripts (need live Homebrew state; installing the
+    whole ~270-package Brewfile just to test hygiene scripts isn't worth
+    it for a single-user repo).
 - `.github/workflows/check-brewfile.yml` runs `utility/audit-brewfile.py` on
   push and weekly via cron, checking every `brew`/`cask`/`mas` entry in the
   Brewfile against the live Homebrew/App Store catalogs. Originally inherited
