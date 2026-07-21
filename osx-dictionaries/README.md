@@ -83,6 +83,15 @@ up then. One-time manual step on a new machine: grant Full Disk Access to
 Security → Full Disk Access, or the LaunchAgent will fail silently (check
 `/tmp/syncdict.err` if words stop syncing).
 
+Plain `rustc` output is ad-hoc signed with no fixed identifier, so its
+identity isn't stable across rebuilds - macOS's TCC treated every rebuild as
+a brand-new, never-seen-before binary and kept re-prompting ("syncdict-agent
+would like to access data from other apps") instead of remembering a prior
+grant. Fixed by explicitly re-signing after compiling
+(`codesign --force --sign - --identifier com.jdickan.syncdict-agent`) so the
+identity stays the same across every future rebuild - the grant should only
+ever need to happen once now.
+
 Being a union merge, it only ever *adds* words, never removes them - deleting
 a word from just one file doesn't stick, since the next sync (automatic or
 manual) re-adds it from whichever side still has it. To actually remove a

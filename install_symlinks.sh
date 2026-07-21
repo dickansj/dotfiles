@@ -96,6 +96,16 @@ install_dictionaries() {
   if rustc --version > /dev/null 2>&1; then
     if [ ! -e "$agentBin" ] || [ "$agentSrc" -nt "$agentBin" ]; then
       if rustc -O -o "$agentBin" "$agentSrc"; then
+        # plain rustc output has no stable identity (ad-hoc signed with no
+        #   fixed identifier) - macOS's TCC treats every rebuild as a
+        #   brand-new, never-seen-before binary and keeps re-prompting for
+        #   Full Disk Access / "access data from other apps" instead of
+        #   remembering a prior grant. codesign with a fixed --identifier
+        #   keeps that identity stable across rebuilds. -s - means ad-hoc
+        #   sign (no certificate needed).
+        if command -v codesign > /dev/null 2>&1; then
+          codesign --force --sign - --identifier "com.jdickan.syncdict-agent" "$agentBin"
+        fi
         echo "compiled $agentBin"
       else
         echo "warning: failed to compile $agentBin (see above) - syncdict-agent LaunchAgent won't work until this is fixed"
