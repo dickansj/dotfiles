@@ -138,6 +138,9 @@ brew 'xmlto'
 brew 'imagemagick-full'
 brew 'ghostscript'
 brew 'pdf2svg'
+brew 'poppler' # was only present as a pdf2svg dependency; the
+                # presider-scheduling Claude skill uses pdftoppm/pdftocairo
+                # directly to rasterize PDF schedules, so track it explicitly
 brew 'svg2png'
 brew 'librsvg'
 brew 'woff2'
