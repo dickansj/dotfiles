@@ -153,6 +153,20 @@ failure mode as `devbox_no_prompt`/`condarc.symlink`/`ipython.symlink`/
 `all_check()`, so bare `envup` (which already defaults to `check all`)
 surfaces all four automatically.
 
+`envup`'s `cask_check`/`cask_up` have their own small hand-maintained
+allowlist, `greedyCasks`, for casks Homebrew flags `auto_updates true` (so
+plain `brew outdated --cask` skips them, assuming they keep themselves
+current) but that were confirmed by hand — comparing the actual installed
+app version against the cask's target version — to not reliably self-update
+in practice. Those get checked and upgraded explicitly with
+`--greedy-auto-updates` instead of trusting the auto-update assumption.
+Most `auto_updates` casks self-update fine and should stay off this list;
+only add one after actually observing it go stale, or the list just becomes
+noise again (which is the whole reason `--greedy`/`--greedy-auto-updates`
+isn't just turned on unconditionally — a spot check found ~30 casks flagged
+`auto_updates` in this Brewfile, and only a handful were ever genuinely
+behind).
+
 Some casks intentionally aren't Brewfile-managed: `marked-app` is commented
 out and pinned locally (`brew pin marked-app`) to stay on the owned/
 perpetual-license Marked 2, since the cask now tracks the subscription-based

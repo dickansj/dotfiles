@@ -16,6 +16,15 @@
 local -a envs=(brew cask mas rust)
 local -a cmds=(check up)
 
+# Casks Homebrew flags auto_updates true, so plain `brew outdated --cask`
+# skips them on the assumption they keep themselves current. Checked by hand
+# against the actual installed app version and found NOT to reliably
+# self-update in practice, so these get checked (and upgraded) explicitly
+# with --greedy-auto-updates instead of trusting that assumption. Most
+# auto_updates casks are fine left alone - only add one here after actually
+# confirming it goes stale, or this just becomes noise again.
+local -a greedyCasks=(fiji zoom gog-galaxy)
+
 if [[ $(uname -m) == 'arm64' ]]; then
   hbdir=/opt/homebrew
 else
@@ -95,7 +104,22 @@ cask_check() {
         echo "  ❌  Couldn’t check Homebrew casks. Internet down?"
         return
     fi
-    local outCask=$($bindir/brew outdated --cask --quiet)
+    local -a outCaskArr
+    outCaskArr=(${(f)"$($bindir/brew outdated --cask --quiet)"})
+
+    if (( ${#greedyCasks} > 0 )); then
+        local -a outGreedy
+        outGreedy=(${(f)"$($bindir/brew outdated --cask --greedy-auto-updates --quiet)"})
+        local c
+        for c in $outGreedy; do
+            if (( ${greedyCasks[(Ie)$c]} )); then
+                outCaskArr+=($c)
+            fi
+        done
+        outCaskArr=(${(u)outCaskArr})
+    fi
+
+    local outCask=${(F)outCaskArr}
     local outFmt=$(echo $outCask | xargs | sed -e "s/ /, /g")
     local outCount=$(echo $outCask | wc -l | xargs)
     local info=""
@@ -112,6 +136,9 @@ cask_check() {
 
 cask_up() {
     HOMEBREW_NO_AUTO_UPDATE=1 $bindir/brew upgrade --cask -v --no-ask
+    if (( ${#greedyCasks} > 0 )); then
+        HOMEBREW_NO_AUTO_UPDATE=1 $bindir/brew upgrade --cask --greedy-auto-updates -v --no-ask $greedyCasks
+    fi
     # $bindir/brew cleanup
     rm -rf $($bindir/brew --cache)
     echo "  ✅  Homebrew casks are up to date."
