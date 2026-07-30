@@ -132,6 +132,7 @@ brew 'testdisk'
 
 # document and graphics tools
 brew 'pandoc'
+brew 'typst'
 brew 'multimarkdown'
 brew 'sphinx-doc'
 brew 'xmlto'
