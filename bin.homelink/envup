@@ -17,13 +17,13 @@ local -a envs=(brew cask mas rust)
 local -a cmds=(check up)
 
 # Casks Homebrew flags auto_updates true, so plain `brew outdated --cask`
-# skips them on the assumption they keep themselves current. Checked by hand
-# against the actual installed app version and found NOT to reliably
-# self-update in practice, so these get checked (and upgraded) explicitly
-# with --greedy-auto-updates instead of trusting that assumption. Most
-# auto_updates casks are fine left alone - only add one here after actually
-# confirming it goes stale, or this just becomes noise again.
-local -a greedyCasks=(fiji zoom gog-galaxy)
+# skips them on the assumption they keep themselves current. Add a cask here
+# only after confirming BY HAND, on this machine, that it doesn't reliably
+# self-update in practice (compare its actual installed app version against
+# the cask's target version) - otherwise this just becomes noise. Left empty
+# until a real case shows up; entries get checked (and upgraded) explicitly
+# with --greedy-auto-updates instead of trusting the auto_updates assumption.
+local -a greedyCasks=()
 
 if [[ $(uname -m) == 'arm64' ]]; then
   hbdir=/opt/homebrew

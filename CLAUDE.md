@@ -156,16 +156,15 @@ surfaces all four automatically.
 `envup`'s `cask_check`/`cask_up` have their own small hand-maintained
 allowlist, `greedyCasks`, for casks Homebrew flags `auto_updates true` (so
 plain `brew outdated --cask` skips them, assuming they keep themselves
-current) but that were confirmed by hand — comparing the actual installed
-app version against the cask's target version — to not reliably self-update
-in practice. Those get checked and upgraded explicitly with
-`--greedy-auto-updates` instead of trusting the auto-update assumption.
-Most `auto_updates` casks self-update fine and should stay off this list;
-only add one after actually observing it go stale, or the list just becomes
-noise again (which is the whole reason `--greedy`/`--greedy-auto-updates`
-isn't just turned on unconditionally — a spot check found ~30 casks flagged
-`auto_updates` in this Brewfile, and only a handful were ever genuinely
-behind).
+current) but that get confirmed by hand — on the actual machine, comparing
+the real installed app version against the cask's target version — to not
+reliably self-update in practice. Entries get checked and upgraded
+explicitly with `--greedy-auto-updates` instead of trusting the auto-update
+assumption. Starts empty and should stay that way except for confirmed
+cases: an early attempt to seed it (fiji/zoom/gog-galaxy) turned out to be
+based on a stale Homebrew snapshot that no longer matched the real machine,
+so nothing goes on this list without verifying directly against `brew info
+--cask <name>` run on the machine in question, right before adding it.
 
 Some casks intentionally aren't Brewfile-managed: `marked-app` is commented
 out and pinned locally (`brew pin marked-app`) to stay on the owned/
