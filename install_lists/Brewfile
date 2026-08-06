@@ -390,6 +390,7 @@ mas 'Readest', id: 6738622779
 mas 'Slack', id: 803453959
 mas 'SwitchGlass', id: 1498546559
 mas 'The Unarchiver', id: 425424353
+mas 'TypeIt4Me', id: 6474688391
 mas 'Unclutter', id: 577085396
 mas 'Xcode', id: 497799835
 
@@ -415,6 +416,8 @@ mas 'Xcode', id: 497799835
 # Marked 2                                      # license - Sparkle self-updater, not MAS
                                                 # marked2app.com
 # Mountio																				# https://mountio.app
+# NanoClip																			# https://www.getnano.dev/clip
+																								# license
 # News Explorer                                 # license
 # Oracle Java 8                                 # Ubiquiti requires JRE 8 and expects Oracle Java
                                                 # https://www.java.com/en/download/
