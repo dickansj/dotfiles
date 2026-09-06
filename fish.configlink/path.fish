@@ -10,6 +10,10 @@ set --local -a myPath
 set -a addIfExists
 # Poetry (and maybe other things?)
 set -p addIfExists $HOME/.local/bin
+# `cargo install`'s own output dir - NOT where Homebrew's rustup keg puts
+#   cargo/rustc themselves (those are $HBBASE/opt/rustup/bin below), just
+#   where things *built by* cargo (e.g. pay-respects) land
+set -p addIfExists $HOME/.cargo/bin
 # itch.io
 set -p addIfExists $HOME/Library/Application\ Support/itch/bin
 # Postgres using the app

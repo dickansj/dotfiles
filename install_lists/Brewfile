@@ -16,7 +16,12 @@ brew 'tmux'
 brew 'readline'
 brew 'htop'
 brew 'eza'
-brew 'thefuck'
+# thefuck replaced with pay-respects (Rust, no per-shell Python startup
+#   cost) - https://github.com/iffse/pay-respects - but its only Homebrew
+#   route is a third-party personal tap that Homebrew's tap-trust gate
+#   refuses to load without an explicit `brew trust`, so it's installed via
+#   `cargo install pay-respects` in provision-mac.sh instead, right after
+#   the rust setup step, rather than tracked here.
 brew 'tlrc'
 
 # compression stuffs

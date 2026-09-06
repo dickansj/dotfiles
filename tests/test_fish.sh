@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # Fish config smoke tests in an isolated $HOME: a login shell must start
-#   with zero stderr on a machine missing optional tools (thefuck, direnv,
-#   brew...), every functions/ file must autoload, and the prompt must
+#   with zero stderr on a machine missing optional tools (pay-respects,
+#   direnv, brew...), every functions/ file must autoload, and the prompt must
 #   render without errors in the exact situations that have broken it
 #   before: narrow terminals, over-long paths, and directories whose names
 #   start with a dash.

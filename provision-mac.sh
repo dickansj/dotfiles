@@ -151,6 +151,15 @@ touch $HOME/.parallel/will-cite
 #   toolchain, which brew install alone doesn't do
 $HBBIN/rustup default stable
 
+# pay-respects (thefuck replacement, config.fish sources it if present):
+#   installed via cargo rather than Homebrew - its only Homebrew route is a
+#   third-party personal tap (timescam/homebrew-tap) that Homebrew's tap-trust
+#   gate refuses to load without an explicit `brew trust`, so crates.io (the
+#   maintainer's own publish) is the more trustworthy path here.
+#   cargo lives in the rustup keg's own bin/, not yet on PATH at this point
+#   in provisioning - same reason rustup itself is called via $HBBIN above.
+$HBBASE/opt/rustup/bin/cargo install pay-respects
+
 # install_symlinks.sh already ran once before Homebrew existed, so its
 #   rustc-gated syncdict-agent compile step (see install_dictionaries())
 #   skipped quietly back then - safe to re-run now that rustc is real

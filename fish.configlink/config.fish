@@ -11,13 +11,14 @@ end
 ## load up aliases
 source $FISHDIR/aliases.fish
 
-# thefuck error correction
-# https://github.com/nvbn/thefuck
+# pay-respects error correction (thefuck replacement, written in Rust -
+#   no per-shell Python startup cost)
+# https://github.com/iffse/pay-respects
 # (type -q guards here and below: this config also runs on Linux boxes
 #   that don't have every tool installed, and an unguarded `missing-cmd |
 #   source` errors at every shell start)
-if type -q thefuck
-  thefuck --alias | source
+if type -q pay-respects
+  pay-respects fish --alias | source
 end
 
 ## if we start a tmux session from a virtualenved environment
