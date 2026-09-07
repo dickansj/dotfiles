@@ -8,12 +8,16 @@
 #     Mac App Store (flakily, as the mas tool struggles at times)
 #     Stable branch of Rust toolchain (via rustup, itself a brew formula -
 #       see rust_check/rust_up below for why this needs its own check)
+#     cargo-installed binaries (e.g. pay-respects) - via the cargo-update
+#       crate (`cargo install cargo-update`, done in provision-mac.sh),
+#       since rustup updating the toolchain doesn't touch anything cargo
+#       itself installed into ~/.cargo/bin
 #
 # Specifically does not monitor packages within script environments;
 #   those might be pinned to specific versions and need to be checked
 #   individually.
 
-local -a envs=(brew cask mas rust)
+local -a envs=(brew cask mas rust cargo)
 local -a cmds=(check up)
 
 # Casks Homebrew flags auto_updates true, so plain `brew outdated --cask`
@@ -186,6 +190,35 @@ rust_check() {
 rust_up() {
     rustup update stable
     rust_check
+}
+
+
+cargo_check() {
+    if ! command -v cargo-install-update > /dev/null 2>&1; then
+        echo "  ❌  cargo-update isn't installed. (cargo install cargo-update)"
+        return
+    fi
+    # cargo-update's own listing marks each row Yes/No in its last column;
+    #   grepping for that beats counting header lines, which shift around
+    #   depending on whether it printed a "Polling registry..." line first
+    local outCargo=$(cargo install-update --list 2>/dev/null | grep -E "  Yes$" | awk '{print $1}')
+    local outFmt=$(echo $outCargo | xargs | sed -e "s/ /, /g")
+    local outCount=$(echo $outCargo | wc -l | xargs)
+    local info=""
+    if [[ ${#outCargo} == 0 ]]; then
+        info="  ✅  Cargo-installed binaries are up to date."
+    elif [[ $outCount == 1 ]]; then
+        info="  ⚠️   Cargo has 1 outdated binary. ($outFmt)"
+    else
+        info="  ⚠️   Cargo has $outCount outdated binaries. ($outFmt)"
+    fi
+
+    echo ${info} | fold -s -w $COLUMNS
+}
+
+cargo_up() {
+    cargo install-update --all --quiet
+    cargo_check
 }
 
 

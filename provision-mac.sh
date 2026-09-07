@@ -160,6 +160,11 @@ $HBBIN/rustup default stable
 #   in provisioning - same reason rustup itself is called via $HBBIN above.
 $HBBASE/opt/rustup/bin/cargo install pay-respects
 
+# cargo-update: lets `envup cargo check`/`up` (see bin.homelink/envup) spot
+#   and refresh cargo-installed binaries like pay-respects above - rustup
+#   updating the toolchain doesn't touch anything cargo itself installed
+$HBBASE/opt/rustup/bin/cargo install cargo-update
+
 # install_symlinks.sh already ran once before Homebrew existed, so its
 #   rustc-gated syncdict-agent compile step (see install_dictionaries())
 #   skipped quietly back then - safe to re-run now that rustc is real

@@ -14,6 +14,9 @@ source $FISHDIR/aliases.fish
 # pay-respects error correction (thefuck replacement, written in Rust -
 #   no per-shell Python startup cost)
 # https://github.com/iffse/pay-respects
+# usage: after a command fails, type `f` to get a corrected suggestion
+#   (confirm to run it); Ctrl-X Ctrl-X rewrites the current command line
+#   inline instead
 # (type -q guards here and below: this config also runs on Linux boxes
 #   that don't have every tool installed, and an unguarded `missing-cmd |
 #   source` errors at every shell start)
