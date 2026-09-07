@@ -233,12 +233,18 @@ sort the file by its second, microsecond column) is how to check before
 assuming a line is fine. Two real instances found and fixed this way:
 `config.fish`'s brew-wrap block used to call `(brew --prefix)` twice,
 spawning Homebrew's own Ruby interpreter twice per shell just to resolve a
-value that's static per machine — now it checks `/opt/homebrew` and
-`/usr/local` directly instead, no subprocess at all. `conf.d/fzf.fish`
-used to run `fzf --fish` (fzf regenerating its whole integration script
-from scratch) on every shell start — now that output is cached to
-`$__fish_cache_dir/fzf-init.fish` and only regenerated when the cache is
-older than the fzf binary itself, i.e. after an upgrade. Combined, these
+value that's static per machine — now it checks `/opt/homebrew` before
+`/usr/local` directly instead (that order is deliberate: if a Rosetta
+Homebrew ever exists at `/usr/local` alongside the native arm64 one, arm64
+should win, matching the precedence `provision-mac.sh`'s `uname -m` branch
+would give it), no subprocess at all. `conf.d/fzf.fish` used to run `fzf
+--fish` (fzf regenerating its whole integration script from scratch) on
+every shell start — now that output is cached to
+`$__fish_cache_dir/fzf-init.fish`, invalidated by comparing the fzf
+binary's mtime against a marker stamped at cache-build time (an equality
+check via two `-nt`/`-ot` comparisons, not a one-directional "newer than" —
+a Homebrew bottle reinstall/downgrade can preserve a build mtime *older*
+than the cache, which `-nt` alone would silently miss). Combined, these
 cut `config.fish`'s total load time (per the same profiler) from ~64ms to
 ~13ms.
 

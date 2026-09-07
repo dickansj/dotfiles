@@ -51,7 +51,12 @@ end
 ## (checking both known prefixes directly, instead of `(brew --prefix)`,
 ##  avoids spawning Homebrew's own Ruby interpreter twice on every shell
 ##  start just to resolve a value that's static per machine - ~36ms
-##  combined in `fish --profile-startup` testing)
+##  combined in `fish --profile-startup` testing. /opt/homebrew is checked
+##  first deliberately: if a Rosetta Homebrew ever exists at /usr/local
+##  alongside the native arm64 one, arm64 should win - same precedence
+##  provision-mac.sh's `uname -m` branch would give it. If those two ever
+##  disagree on which prefix is "the" one, that's a bug to fix here, not a
+##  reason to add a third source of truth.)
 if type -q brew
   for brewPrefix in /opt/homebrew /usr/local
     if test -f $brewPrefix/etc/brew-wrap.fish
