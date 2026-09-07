@@ -48,8 +48,17 @@ end
 ## brew-file maintains install list separate from dotfile list and is handy for keeping multiple Macs in sync wrt apps
 ## wraps the original `brew` command for an automatic update of Brewfile when you run `brew install` or `brew uninstall`
 ## https://homebrew-file.readthedocs.io/en/latest/installation.html
-if type -q brew; and test -f (brew --prefix)/etc/brew-wrap.fish
-  source (brew --prefix)/etc/brew-wrap.fish
+## (checking both known prefixes directly, instead of `(brew --prefix)`,
+##  avoids spawning Homebrew's own Ruby interpreter twice on every shell
+##  start just to resolve a value that's static per machine - ~36ms
+##  combined in `fish --profile-startup` testing)
+if type -q brew
+  for brewPrefix in /opt/homebrew /usr/local
+    if test -f $brewPrefix/etc/brew-wrap.fish
+      source $brewPrefix/etc/brew-wrap.fish
+      break
+    end
+  end
 end
 
 ## set up direnv
