@@ -225,6 +225,23 @@ territory, deliberately not using `fish_user_paths`) — new entries go in
 either the `addIfExists` block (existence-checked) or the "Installed stuff"
 block (unconditional, mirrors what Homebrew itself provides).
 
+Anything sourced unconditionally from `config.fish`/`conf.d/` runs on
+*every* interactive shell start, so a subprocess spawn there is worth
+questioning if it's resolving something that doesn't actually change
+between shells — `fish --profile-startup /tmp/out.prof -i -c exit` (then
+sort the file by its second, microsecond column) is how to check before
+assuming a line is fine. Two real instances found and fixed this way:
+`config.fish`'s brew-wrap block used to call `(brew --prefix)` twice,
+spawning Homebrew's own Ruby interpreter twice per shell just to resolve a
+value that's static per machine — now it checks `/opt/homebrew` and
+`/usr/local` directly instead, no subprocess at all. `conf.d/fzf.fish`
+used to run `fzf --fish` (fzf regenerating its whole integration script
+from scratch) on every shell start — now that output is cached to
+`$__fish_cache_dir/fzf-init.fish` and only regenerated when the cache is
+older than the fzf binary itself, i.e. after an upgrade. Combined, these
+cut `config.fish`'s total load time (per the same profiler) from ~64ms to
+~13ms.
+
 ## Public vs. private split
 
 No secrets live in this repo. The split points:
