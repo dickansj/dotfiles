@@ -45,7 +45,7 @@ Running `provision-mac.sh` on a fresh Mac will:
   * Sets up the directory to be a proper git repository if it was pulled during a bootstrap
   * Make a `~/Projects` directory and symlink the dotfiles there
   * Install a set of vim bundles, managed by [Vundle](https://github.com/VundleVim/Vundle.vim)
-  * Configure a default stable [Rust](https://www.rust-lang.org/) toolchain via [rustup](https://rust-lang.github.io/rustup/) (rustup itself comes from the Brewfile)
+  * Configure a default stable [Rust](https://www.rust-lang.org/) toolchain via [rustup](https://rust-lang.github.io/rustup/) (rustup itself comes from the Brewfile), then `cargo install` [pay-respects](https://github.com/iffse/pay-respects) (a `thefuck` replacement sourced by `config.fish`) and the `cargo-update` crate that keeps it (and anything else cargo installs) update-checkable via `envup`
   * Set up appearance of Terminal.app
   * Set default file-type associations (PDF, images, markdown, etc.) via `duti`
   * Set default browser to Firefox Developer Edition

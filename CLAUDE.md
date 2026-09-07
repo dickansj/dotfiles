@@ -130,6 +130,20 @@ rustup's actual config lives at the standard `~/.rustup/settings.toml`, not
 the Homebrew-provided one — harmless, just two settings files existing where
 only one is actually read.
 
+One cargo-installed tool worth knowing about: `pay-respects` (config.fish's
+thefuck replacement — see Fish shell conventions below — swapped in this
+session because thefuck's Python startup cost is paid on every new shell)
+isn't Brewfile-tracked at all. Its only Homebrew route is a third-party
+personal tap (`timescam/homebrew-tap`) that Homebrew's tap-trust gate
+refuses to load without an explicit `brew trust`, so `provision-mac.sh`
+installs it via `cargo install pay-respects` instead, right after `rustup
+default stable`. That same step also installs the `cargo-update` crate,
+purely so `envup`'s `cargo` check/up (see Package management below) has
+something to shell out to — `rustup update stable` only touches the
+toolchain itself, never anything cargo installed into `~/.cargo/bin`, which
+needed its own entry in path.fish's `addIfExists` block (distinct from the
+keg's own `bin/`, already on PATH per above).
+
 ## Package management
 
 Homebrew via `install_lists/Brewfile` is the primary package manager —
@@ -152,6 +166,15 @@ failure mode as `devbox_no_prompt`/`condarc.symlink`/`ipython.symlink`/
 `check_untracked_brew.py` are hooked into `bin.homelink/envup`'s
 `all_check()`, so bare `envup` (which already defaults to `check all`)
 surfaces all four automatically.
+
+`envup` also has a fifth env, `cargo`, alongside the original
+`brew`/`cask`/`mas`/`rust` — it checks/updates cargo-installed binaries
+(currently just `pay-respects`) via the `cargo-update` crate rather than a
+hand-rolled diagnostic like the four above, since `cargo install-update`
+already does that job generically for anything cargo installs, not just
+one hardcoded tool. See the Rust specifically note above for why this
+needed its own env in the first place (`rustup update stable` doesn't
+cover it).
 
 `envup`'s `cask_check`/`cask_up` have their own small hand-maintained
 allowlist, `greedyCasks`, for casks Homebrew flags `auto_updates true` (so
