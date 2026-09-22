@@ -10,10 +10,9 @@ else
 fi
 
 email="jdickan@ucla.edu"
-byteSize=4096
 keyPath=$HOME/.ssh
 
-privateKey=$keyPath/${keyname}_rsa
+privateKey=$keyPath/${keyname}_ed25519
 if [[ -a $privateKey ]]; then
     echo "$privateKey already exists." >&2
     return 1
@@ -39,12 +38,10 @@ while [[ $finished -eq 0 ]]; do
     finished=1
 done
 
-if [[ ${#pass1} -gt 0 ]]; then
-    pass_param="-N $pass1"
-else
-    pass_param=""
-fi
-ssh-keygen -t rsa -b $byteSize -C $email $pass_param -f $privateKey
+# Always pass -N (even empty) so ssh-keygen doesn't prompt a second time;
+#  as a single word, since zsh won't split "-N $pass1" and the passphrase
+#  would silently gain a leading space.
+ssh-keygen -t ed25519 -C $email -N "$pass1" -f $privateKey
 
 if [[ $OSTYPE == darwin* ]]; then
     if type expect > /dev/null; then
@@ -64,13 +61,12 @@ echo "(Leave blank to keep it generic.)"
 echo -n "Target domain: "
 read domainTarget
 if [[ -n $domainTarget ]]; then
-    # TODO: https://www.ssh.com/ssh/copy-id
     echo "Upload key to server?"
     echo "(Leave blank to skip upload.)"
     echo -n "Username: "
     read userNameTarget
     if [[ -n $userNameTarget ]]; then
-        cat ${privateKey}.pub | ssh $userNameTarget@$domainTarget -o PasswordAuthentication=yes -o PubkeyAuthentication=no 'mkdir -p .ssh; cat >> .ssh/authorized_keys2'
+        ssh-copy-id -i ${privateKey}.pub -o PasswordAuthentication=yes -o PubkeyAuthentication=no $userNameTarget@$domainTarget
     fi
 
     lineBreak=$(grep -n "####" $HOME/.ssh/config | cut -f1 -d:)
