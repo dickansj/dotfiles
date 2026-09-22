@@ -55,6 +55,21 @@ Access grant a new machine needs, in `osx-dictionaries/README.md`. The
 tracked list is seeded with real accumulated vocabulary rather than
 starting empty, same spirit as upstream's `cspell-words.txt` for VS Code.
 
+`osx-launchagents/com.jdickan.homilist-themes.plist` is a second `WatchPaths`
+agent, unrelated to the dictionary sync: it fires `tools/themes.py` in the
+(separate, cloned-elsewhere) `homilist-cli` repo whenever
+`~/Parish/Mirror/Homilies/Homily Summaries` changes, rebuilding that repo's
+homily-themes index. Unlike `syncdict`, its target isn't behind Full Disk
+Access, so it runs the script directly — no compiled binary, no permissions
+grant. It's the first LaunchAgent here whose `ProgramArguments` points outside
+this repo, which makes it order-sensitive: `install_launchagents()` symlinks
+it early in `provision-mac.sh`, before a fresh machine has cloned
+`homilist-cli` at all, so it'll fail quietly (see its `StandardErrorPath`)
+until that clone exists. It self-heals from the next `Homily Summaries` write
+after that — no re-symlink or reload needed — but see the "Liturgy toolchains"
+step in `dotfiles-private/README.md` for the manual nudge if you don't want to
+wait for one.
+
 Supporting directories (not part of the symlink convention):
 - `install_lists/` — Brewfile (primary), plus `r-packages.txt` (kept manually,
   not consumed by any script — same for anything else added here going
