@@ -274,6 +274,7 @@ cask 'plex-media-server'
 cask 'post-haste'
 cask 'quitter'
 cask 'r-app' # seem to be cran issues if I just brew the cli
+cask 'raspberry-pi-imager'
 cask 'resilio-sync'
 cask 'rocket' # license
 cask 'rstudio'
