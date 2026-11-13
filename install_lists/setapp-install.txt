@@ -1,6 +1,5 @@
 24 Hour Wallpaper.app
 AirBuddy.app
-Bartender.app
 BoltAI.app
 Boom 3D.app
 BusyContacts.app
