@@ -46,7 +46,6 @@ brew 'deno'
 brew 'rustup'
 brew 'go'
 brew 'zig'
-brew 'r'
 brew 'lua'
 brew 'ruby'
 brew 'php' # look, i'm not proud of it, but
@@ -179,7 +178,7 @@ brew 'entr'
 brew 'molten-vk'
 brew 'm1ddc'
 brew 'hyperfine'
-brew 'synergy-core' # license/account
+brew 'smartmontools'
 
 # AI tools
 brew 'ollama'
@@ -275,7 +274,6 @@ cask 'post-haste'
 cask 'quitter'
 cask 'r-app' # seem to be cran issues if I just brew the cli
 cask 'raspberry-pi-imager'
-cask 'resilio-sync'
 cask 'rocket' # license
 cask 'rstudio'
 cask 'scrivener' # license
@@ -292,6 +290,7 @@ cask 'sublime-text'
 cask 'taskexplorer'
 cask 'temurin'
 cask 'textexpander'
+cask 'thaw'
 cask 'tor-browser'
 cask 'tower' # edu license
 cask 'transmission'
@@ -311,13 +310,10 @@ tap 'updatest/tap'
 cask 'updatest@beta'
 
 # swiftbar - https://github.com/swiftbar/SwiftBar
-tap 'melonamin/formulae'
-cask 'melonamin/formulae/swiftbar'
+cask 'swiftbar'
 
 # quicklook stuff - https://github.com/markcarroll/quick-look-plugins
-cask 'qlstephen'
 cask 'qlmarkdown'
-cask 'quicklook-csv'
 cask 'suspicious-package'
 cask 'quicklook-video'
 cask 'apparency'
@@ -385,7 +381,6 @@ mas 'Monodraw', id: 920404675
 mas 'Morpho', id: 1494942612
 mas 'Numbers', id: 361304891
 # mas 'OneDrive', id: 823766827 # installed by office cask
-mas 'Overcast', id: 888422857
 mas 'Pages', id: 361309726
 mas 'Parcel', id: 639968404
 mas 'PCalc', id: 403504866
@@ -426,8 +421,6 @@ mas 'Xcode', id: 497799835
 # News Explorer                                 # license
 # Oracle Java 8                                 # Ubiquiti requires JRE 8 and expects Oracle Java
                                                 # https://www.java.com/en/download/
-# Synergy (v3)                                  # https://symless.com/synergy/
-                                                # license
 # TrackerZapper                                 # https://github.com/rknightuk/TrackerZapper
 
 # Gather (URLs to Markdown)
