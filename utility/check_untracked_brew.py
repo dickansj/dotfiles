@@ -20,7 +20,6 @@ KNOWN_UNMANAGED = {
     "affinity-designer",  # V2 perpetual license, kept alongside the V3 'affinity' cask
     "affinity-photo",  # (same)
     "affinity-publisher",  # (same)
-    "marked-app",  # owned Marked 2; the cask now tracks subscription Marked 3
     "microsoft-auto-update",  # dragged in by the microsoft-office cask, not installed directly
 }
 

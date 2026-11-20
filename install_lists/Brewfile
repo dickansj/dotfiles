@@ -254,10 +254,6 @@ cask 'knockknock'
 cask 'logi-options+'
 cask 'macs-fan-control'
 cask 'maestral'
-# cask 'marked-app' # license - staying on Marked 2 (owned, perpetual license);
-#   the cask now tracks Marked 3, which is subscription-based. Marked 2.app is
-#   kept installed manually and pinned (`brew pin marked-app`) so Homebrew
-#   never touches it - not managed via this Brewfile.
 cask 'microsoft-office' # license
 cask 'microsoft-teams' # license
 cask 'mimestream' # license
@@ -413,8 +409,6 @@ mas 'Xcode', id: 497799835
 # Displays (Jibapps)                            # license
 # Interact Scratchpad                           # https://docs.getdrafts.com/docs/misc/interact-scratchpad#download-the-interact-scratchpad
 # IVPN                                          # license
-# Marked 2                                      # license - Sparkle self-updater, not MAS
-                                                # marked2app.com
 # Mountio																				# https://mountio.app
 # NanoClip																			# https://www.getnano.dev/clip
 																								# license

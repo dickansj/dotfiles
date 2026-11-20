@@ -204,10 +204,10 @@ based on a stale Homebrew snapshot that no longer matched the real machine,
 so nothing goes on this list without verifying directly against `brew info
 --cask <name>` run on the machine in question, right before adding it.
 
-Some casks intentionally aren't Brewfile-managed: `marked-app` is commented
-out and pinned locally (`brew pin marked-app`) to stay on the owned/
-perpetual-license Marked 2, since the cask now tracks the subscription-based
-Marked 3.
+Marked is deliberately not Brewfile-managed: Marked 3 comes from Setapp
+(`/Applications/Setapp/Marked.app`), which handles its installs and updates.
+Don't add the `marked-app` cask back or pin it — it would install a second
+copy alongside the Setapp one.
 
 One `git subtree` is in active use: `vim.symlink/bundle/Vundle.vim` ← upstream
 `VundleVim/Vundle.vim`, tracked in `utility/git_subtrees.txt` and managed by
@@ -343,7 +343,7 @@ No secrets live in this repo. The split points:
   fresh fetch sooner). `check_untracked_brew.py` shares the same cache
   files and expiry, and keeps a `KNOWN_UNMANAGED` allowlist for apps
   that are installed on purpose but deliberately not Brewfile-managed
-  (the pinned Affinity V2 trio, Marked 2, etc.) so routine `envup` runs
+  (the pinned Affinity V2 trio, etc.) so routine `envup` runs
   stay quiet.
 - Commit messages: explain *why*, not just what changed; keep them to a few
   lines, no verbose bullet essays.

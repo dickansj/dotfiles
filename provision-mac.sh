@@ -525,7 +525,7 @@ declare -a dockList=(\
   /Applications/Setapp/TaskPaper.app \
   /Applications/Scrivener.app \
   /Applications/Drafts.app \
-  /Applications/Marked\ 2.app \
+  /Applications/Setapp/Marked.app \
   /Applications/BBEdit.app \
   /Applications/Microsoft\ Word.app \
   /System/Applications/Notes.app \

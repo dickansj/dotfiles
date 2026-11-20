@@ -20,6 +20,8 @@ Hand Mirror.app
 Hookmark.app
 HoudahSpot.app
 Magic Window Air.app
+Marked QL.app
+Marked.app
 Mate Translate.app
 NetSpot.app
 News Explorer.app
